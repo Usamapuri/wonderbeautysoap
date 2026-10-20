@@ -1,0 +1,301 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Wonder design tokens — values lifted from the Replit starter's compiled CSS (brief §3).
+ * Every colour used in page code must come from here; no one-off hex values in components.
+ */
+:root {
+  /* Brand core */
+  --paper: #f6f0e5; /* page base, cream/ivory */
+  --ink: #30251e; /* deep bronze-brown text */
+  --gold: #9a7131; /* antique gold: rules, links, hovers */
+  --gilt: #d6c48d; /* light gold on dark bands */
+  --leaf: #53664b; /* primary button, eyebrows */
+  --rose: #a95e68;
+  --rule: #3c302233; /* hairlines */
+
+  /* Section surfaces */
+  --sand: #e9e2d3; /* range section */
+  --linen: #e8dfcf; /* botanical edit */
+  --stone: #ded3bc; /* closing CTA */
+  --clay: #ded4c0; /* product image well */
+  --oat: #e8e0ce; /* topline */
+  --moss: #4e614b; /* campaign film band */
+  --fern: #526c50; /* "real world" band, In the City real-photo band */
+  --parchment: #f0ebdf; /* values cells */
+  --wheat: #e5dccb; /* alternate panels: values, collection feature + rows, contact social */
+  --vellum: #eee8dc; /* collection rows */
+  --taupe: #b49b7f; /* packaging studio background */
+  --glow: #ddcca466; /* hero halo */
+  --shell: #f0eadd; /* footer band */
+  --header-rule: #493a2529; /* header hairline */
+
+  /* Text tones on paper */
+  --ink-soft: #6b6256; /* body copy */
+  --ink-muted: #857968; /* captions, labels */
+
+  /* Per-variety botanical accents — product cards only, used sparingly */
+  --botanical-coconut: #8a5a33;
+  --botanical-aloe-vera: #5f8a4a;
+  --botanical-lemon: #d9a915;
+  --botanical-lavender: #8a72b5;
+  --botanical-rose: #a8323a;
+
+  /* shadcn semantic tokens mapped onto the brand */
+  --background: hsl(39 43% 93%);
+  --foreground: hsl(25 24% 16%);
+  --card: hsl(39 45% 96%);
+  --card-foreground: hsl(25 24% 16%);
+  --popover: hsl(39 45% 96%);
+  --popover-foreground: hsl(25 24% 16%);
+  --primary: hsl(41 52% 40%);
+  --primary-foreground: hsl(39 43% 93%);
+  --secondary: hsl(104 14% 36%);
+  --secondary-foreground: hsl(39 43% 93%);
+  --muted: hsl(39 25% 87%);
+  --muted-foreground: hsl(27 12% 40%);
+  --accent: hsl(350 31% 52%);
+  --accent-foreground: hsl(39 43% 93%);
+  --destructive: hsl(0 60% 44%);
+  --border: hsl(36 21% 78%);
+  --input: hsl(36 21% 78%);
+  --ring: hsl(41 52% 40%);
+  --chart-1: hsl(41 52% 40%);
+  --chart-2: hsl(104 14% 36%);
+  --chart-3: hsl(350 31% 52%);
+  --chart-4: hsl(270 20% 48%);
+  --chart-5: hsl(54 48% 52%);
+  --radius: 0rem;
+  --sidebar: hsl(39 45% 96%);
+  --sidebar-foreground: hsl(25 24% 16%);
+  --sidebar-primary: hsl(41 52% 40%);
+  --sidebar-primary-foreground: hsl(39 43% 93%);
+  --sidebar-accent: hsl(41 36% 86%);
+  --sidebar-accent-foreground: hsl(25 24% 16%);
+  --sidebar-border: hsl(36 21% 78%);
+  --sidebar-ring: hsl(41 52% 40%);
+
+  --header-height: 74px;
+}
+
+@theme inline {
+  --font-sans: var(--font-against), sans-serif;
+  --font-serif: var(--font-abhaya), Georgia, serif;
+  --font-heading: var(--font-abhaya), Georgia, serif;
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-gold: var(--gold);
+  --color-gilt: var(--gilt);
+  --color-leaf: var(--leaf);
+  --color-rose: var(--rose);
+  --color-rule: var(--rule);
+  --color-sand: var(--sand);
+  --color-linen: var(--linen);
+  --color-stone: var(--stone);
+  --color-clay: var(--clay);
+  --color-oat: var(--oat);
+  --color-moss: var(--moss);
+  --color-fern: var(--fern);
+  --color-parchment: var(--parchment);
+  --color-wheat: var(--wheat);
+  --color-vellum: var(--vellum);
+  --color-taupe: var(--taupe);
+  --color-shell: var(--shell);
+  --color-header-rule: var(--header-rule);
+
+  /* Starter polish layer: soft warm shadows + entrance motion. */
+  --shadow-lift: 0 8px 20px #36452f1f; /* primary button */
+  --shadow-note: 0 14px 35px #47351d14; /* hero badge */
+  --shadow-raise: 0 18px 36px #362b1d14; /* product card hover */
+  --animate-rise-in: rise-in 0.65s both;
+  --color-botanical-coconut: var(--botanical-coconut);
+  --color-botanical-aloe-vera: var(--botanical-aloe-vera);
+  --color-botanical-lemon: var(--botanical-lemon);
+  --color-botanical-lavender: var(--botanical-lavender);
+  --color-botanical-rose: var(--botanical-rose);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --animate-marquee: marquee 38s linear infinite;
+}
+
+/* Starter breakpoints: 560px (phone) and 850px (tablet). */
+@theme {
+  --breakpoint-sm: 35rem;
+  --breakpoint-md: 53.125rem;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply bg-paper font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-height) + 12px);
+  }
+  body {
+    @apply bg-paper text-ink;
+    font-size: 14px;
+    letter-spacing: 0.012em;
+  }
+  ::selection {
+    @apply bg-leaf text-paper;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+  }
+}
+
+@media (max-width: 850px) {
+  :root {
+    --header-height: 66px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Serif display headings (starter: 600 weight Abhaya Libre, tight tracking, tight leading). */
+@utility font-display {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+/* Section spacing (starter .section: 115px / clamp(24px,8vw,128px), 82px / 22px on phones). */
+@utility px-section {
+  padding-inline: clamp(22px, 8vw, 128px);
+}
+@utility py-section {
+  padding-block: clamp(82px, 11vw, 115px);
+}
+
+/*
+ * Entrance motion.
+ * .rise-group — CSS-only staggered rise-in for first-screen content (plays on load, no JS needed).
+ * [data-reveal] / [data-reveal-group] — fade up when scrolled into view; RevealObserver adds
+ * [data-revealed]. Content is only hidden when JS is running (html.js) and motion is allowed, so it
+ * can never get stuck invisible. Animations use `transform` + `opacity`, leaving the `translate` /
+ * `scale` properties free for hover effects.
+ */
+@layer components {
+  .rise-group > * {
+    animation: var(--animate-rise-in);
+  }
+  .rise-group > :nth-child(1) {
+    animation-delay: 60ms;
+  }
+  .rise-group > :nth-child(2) {
+    animation-delay: 130ms;
+  }
+  .rise-group > :nth-child(3) {
+    animation-delay: 200ms;
+  }
+  .rise-group > :nth-child(4) {
+    animation-delay: 270ms;
+  }
+  .rise-group > :nth-child(n + 5) {
+    animation-delay: 340ms;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal]:not([data-revealed]),
+  .js [data-reveal-group]:not([data-revealed]) > * {
+    opacity: 0;
+  }
+  .js [data-reveal][data-revealed],
+  .js [data-reveal-group][data-revealed] > * {
+    animation: reveal-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+}
