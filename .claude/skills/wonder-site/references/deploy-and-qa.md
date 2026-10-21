@@ -9,7 +9,8 @@
 
 1. The project lives under a Vercel team **the client owns** (signed up with `hello@royalbasketgroup.com`), with the developer added as a member.
 2. Import the GitHub repo. Framework preset **Next.js** (auto-detected), build `next build`, default output. **No `vercel.json` rewrite is needed**: routes are real pages, so deep links and refreshes work.
-3. Production branch is `main`, with previews for every branch/PR. No secrets at launch. Set the two public env vars `NEXT_PUBLIC_FORMSPREE_ID` and `NEXT_PUBLIC_MAILCHIMP_ACTION` for Production and Preview. They are inlined at build time, so redeploy after changing them.
+3. Current review deploy (until the client team + Git link exist): `https://wonder-beauty-soap.vercel.app`, CLI-linked (`.vercel/`, gitignored). Redeploy with `vercel deploy --prod` from a clean `main`. `next.config.ts` sends `X-Robots-Tag: noindex` on `*.vercel.app` hosts; `.vercelignore` excludes `brand-assets/`, `scripts/`, `.claude/`. Git-linking needs Vercel's GitHub app on the `Usamapuri` account (owner-only), then `vercel git connect`.
+4. Production branch is `main`, with previews for every branch/PR. No secrets at launch. Set the two public env vars `NEXT_PUBLIC_FORMSPREE_ID` and `NEXT_PUBLIC_MAILCHIMP_ACTION` for Production and Preview. They are inlined at build time, so redeploy after changing them.
 
 ## Custom domain + Spaceship DNS (§7.3). Read step 3 twice.
 

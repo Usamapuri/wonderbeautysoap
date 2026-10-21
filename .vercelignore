@@ -1,0 +1,4 @@
+# Not needed to build the site. Keeps the client originals (dielines, mockups) and tooling out of Vercel.
+/brand-assets
+/scripts
+/.claude

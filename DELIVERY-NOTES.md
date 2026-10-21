@@ -15,6 +15,13 @@ Open placeholders, interim assets and decisions, per brief §0 rule 3. Keep this
 
 Verified on the production build: every route returns 200 and prerenders statically · no horizontal scroll at 360/390/768/1440 px on any page · 30/30 behaviour checks pass (form validation, `?product=`/`?type=bulk` pre-fill, bulk CTA, Formspree success/failure/retry + subject pattern, collection anchors, pop-up timing/ESC/backdrop/30-day snooze/2-impression cap/contact suppression/mobile bottom sheet/Mailchimp JSONP).
 
+## Deployment
+
+- **Review URL:** https://wonder-beauty-soap.vercel.app, deployed 2026-10-21 with the Vercel CLI (`vercel deploy --prod`) to the developer's Hobby team (`abdullah-yaqoobs-projects/wonder-beauty-soap`). No custom domain; Spaceship DNS untouched.
+- `*.vercel.app` hosts send `X-Robots-Tag: noindex` (`next.config.ts`), so the placeholder-bearing review URL stays out of search. The custom domain is unaffected. `.vercelignore` keeps `brand-assets/`, `scripts/` and `.claude/` out of the upload.
+- **Not Git-connected yet:** linking `Usamapuri/wonderbeautysoap` failed because Vercel's GitHub app isn't installed on that account. Until it is (repo owner installs it, then `vercel git connect`), redeploy with `vercel deploy --prod` from a clean `main`.
+- **Before launch (§7.2):** transfer the project to the client-owned Vercel team (Project → Settings → Transfer), then add the env vars below and the domain.
+
 ## Open placeholders (client to supply, §10)
 
 | Page | Content file | Placeholder |
