@@ -30,7 +30,7 @@ export default function InTheCityPage() {
         image={hero.image}
       />
 
-      <section {...reveal()} aria-label="About these images" className="bg-sand px-[22px] py-9 sm:flex sm:items-start sm:gap-6 sm:px-[clamp(24px,10vw,160px)] sm:py-[54px] md:gap-[45px]">
+      <section {...reveal()} aria-label="About these images" className="bg-stone px-[22px] py-9 sm:flex sm:items-start sm:gap-6 sm:px-[clamp(24px,10vw,160px)] sm:py-[54px] md:gap-[45px]">
         <Eyebrow className="mb-[19px] shrink-0 pt-1 sm:mb-0 sm:basis-[190px] md:basis-[250px]">{disclaimer.eyebrow}</Eyebrow>
         <p className="max-w-[650px] text-[13px] leading-[1.85] text-ink">{disclaimer.text}</p>
       </section>

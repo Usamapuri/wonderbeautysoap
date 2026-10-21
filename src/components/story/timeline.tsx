@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 export function TimelineItem({ milestone, last }: { milestone: Milestone; last: boolean }) {
   return (
     <li {...reveal()} className="relative grid gap-2 pb-11 pl-9 last:pb-0 sm:grid-cols-[150px_1fr] sm:gap-8 sm:pl-12">
-      <span aria-hidden className="absolute top-1.5 left-0 size-[13px] rotate-45 border border-gold bg-paper" />
+      <span aria-hidden className="absolute top-1.5 left-0 size-[13px] rotate-45 border border-gold bg-sand" />
       {!last && <span aria-hidden className="absolute top-6 bottom-1 left-1.5 w-px bg-gold/40" />}
       <div
         className={cn(
@@ -38,7 +38,7 @@ export function TimelineItem({ milestone, last }: { milestone: Milestone; last: 
 export function Timeline() {
   const { timeline } = story
   return (
-    <section aria-labelledby="timeline-heading" className="bg-card/50 px-section py-section">
+    <section aria-labelledby="timeline-heading" className="bg-sand px-section py-section">
       <div className="mx-auto grid max-w-[1100px] gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-[clamp(40px,7vw,110px)]">
         <div {...reveal()}>
           <Eyebrow>

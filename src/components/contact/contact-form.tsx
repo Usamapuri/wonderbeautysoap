@@ -43,7 +43,8 @@ const markTouched = () => {
   } catch {}
 }
 
-const inputClass = "h-auto rounded-none border-ink/25 bg-card/75 px-3 py-[13px] text-xs md:text-xs"
+// Fields are light parchment wells so they read clearly on the card's warmer stone surface.
+const inputClass = "h-auto rounded-lg border-ink/20 bg-parchment px-3 py-[13px] text-xs md:text-xs"
 const labelClass = "text-[9px] font-normal uppercase tracking-[0.12em]"
 
 // §5.2 — validated enquiry form. ?product=<slug> and ?type=bulk pre-fill it (must render under <Suspense>).
@@ -114,14 +115,20 @@ export function ContactForm() {
   )
 
   return (
-    <section id="enquiry" aria-labelledby="enquiry-heading" className="scroll-mt-[calc(var(--header-height)+16px)] bg-sand px-5 py-7 sm:p-[clamp(28px,5vw,60px)]">
+    // The page's key card, so it stands apart from the cream: warmer stone gradient, gold-tinted
+    // edge, a gold accent bar along the top and a deeper shadow.
+    <section
+      id="enquiry"
+      aria-labelledby="enquiry-heading"
+      className="relative scroll-mt-[calc(var(--header-height)+16px)] overflow-hidden rounded-lg border border-gold/30 bg-linear-to-br from-stone via-stone to-wheat px-5 py-7 shadow-pop before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-linear-to-r before:from-gold before:via-gilt before:to-gold sm:p-[clamp(28px,5vw,60px)]"
+    >
       <Eyebrow>{form.eyebrow}</Eyebrow>
       <h2 id="enquiry-heading" className="font-display mt-[18px] mb-6 text-[39px] leading-[0.95] sm:text-[clamp(36px,4vw,53px)]">
         {form.heading}
       </h2>
 
       {status === "sent" || status === "mailto" || status === "error" ? (
-        <div role="status" className="border border-gold/50 bg-card/70 p-6 sm:p-8">
+        <div role="status" className="rounded-lg border border-gold/50 bg-parchment p-6 sm:p-8">
           <h3 ref={panelRef} tabIndex={-1} className="font-display text-[32px] tracking-normal outline-none">
             {status === "sent" ? form.success.heading : status === "mailto" ? form.mailtoSuccess.heading : form.error.heading}
           </h3>
@@ -198,9 +205,9 @@ export function ContactForm() {
               <SelectTrigger id="enquiry-type" aria-invalid={!!errors.type || undefined} className={cn(inputClass, "w-full data-[size=default]:h-auto")}>
                 <SelectValue placeholder={form.fields.typePlaceholder} />
               </SelectTrigger>
-              <SelectContent className="rounded-none">
+              <SelectContent className="rounded-lg">
                 {enquiryTypes.map((t) => (
-                  <SelectItem key={t.value} value={t.value} className="rounded-none text-xs">
+                  <SelectItem key={t.value} value={t.value} className="rounded-md text-xs">
                     {t.label}
                   </SelectItem>
                 ))}
@@ -218,9 +225,9 @@ export function ContactForm() {
               <SelectTrigger id="enquiry-product" className={cn(inputClass, "w-full data-[size=default]:h-auto")}>
                 <SelectValue placeholder={form.fields.productPlaceholder} />
               </SelectTrigger>
-              <SelectContent className="rounded-none">
+              <SelectContent className="rounded-lg">
                 {productOptions.map((p) => (
-                  <SelectItem key={p.value} value={p.value} className="rounded-none text-xs">
+                  <SelectItem key={p.value} value={p.value} className="rounded-md text-xs">
                     {p.label}
                   </SelectItem>
                 ))}
@@ -249,7 +256,7 @@ export function ContactForm() {
               checked={values.consent}
               onCheckedChange={(c) => set("consent", c === true)}
               aria-invalid={!!errors.consent || undefined}
-              className="size-5 rounded-none border-ink/40"
+              className="size-5 rounded-sm border-ink/40 bg-parchment"
             />
             <FieldLabel htmlFor="enquiry-consent" className="text-xs font-normal">
               {form.fields.consent}

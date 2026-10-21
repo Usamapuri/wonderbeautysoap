@@ -10,28 +10,34 @@
  */
 :root {
   /* Brand core */
-  --paper: #f6f0e5; /* page base, cream/ivory */
+  --paper: #f6f0e5; /* ivory: light text on dark bands, button text (no longer a page background) */
   --ink: #30251e; /* deep bronze-brown text */
   --gold: #9a7131; /* antique gold: rules, links, hovers */
+  --gold-deep: #7d5a24; /* outline-button hover fill */
   --gilt: #d6c48d; /* light gold on dark bands */
   --leaf: #53664b; /* primary button, eyebrows */
+  --leaf-deep: #3c4b36; /* primary-button hover fill */
   --rose: #a95e68;
   --rule: #3c302233; /* hairlines */
 
-  /* Section surfaces */
-  --sand: #e9e2d3; /* range section */
-  --linen: #e8dfcf; /* botanical edit */
-  --stone: #ded3bc; /* closing CTA */
+  /*
+   * Section surfaces. The site is cream, not white: `sand` is the base for every page, header and
+   * footer. Bands that need separation from it use `stone`; raised surfaces (cards, form panel) use
+   * the lighter `parchment`/`vellum`; dark bands are `moss`/`fern`.
+   */
+  --sand: #e9e2d3; /* PRIMARY page cream (body, header, footer, heroes) */
+  --linen: #e8dfcf;
+  --stone: #ded3bc; /* contrast bands: botanical edit, then & now, notes, closing CTAs */
   --clay: #ded4c0; /* product image well */
-  --oat: #e8e0ce; /* topline */
+  --oat: #e8e0ce;
   --moss: #4e614b; /* campaign film band */
   --fern: #526c50; /* "real world" band, In the City real-photo band */
-  --parchment: #f0ebdf; /* values cells */
-  --wheat: #e5dccb; /* alternate panels: values, collection feature + rows, contact social */
-  --vellum: #eee8dc; /* collection rows */
+  --parchment: #f0ebdf; /* raised surfaces: cards, form panel, values cells */
+  --wheat: #e5dccb; /* topline, promise strip, card hover end, values middle cell */
+  --vellum: #eee8dc; /* card gradient middle */
   --taupe: #b49b7f; /* packaging studio background */
   --glow: #ddcca466; /* hero halo */
-  --shell: #f0eadd; /* footer band */
+  --shell: #f0eadd;
   --header-rule: #493a2529; /* header hairline */
 
   /* Text tones on paper */
@@ -46,17 +52,17 @@
   --botanical-rose: #a8323a;
 
   /* shadcn semantic tokens mapped onto the brand */
-  --background: hsl(39 43% 93%);
+  --background: hsl(41 33% 87%); /* = sand */
   --foreground: hsl(25 24% 16%);
-  --card: hsl(39 45% 96%);
+  --card: hsl(42 36% 91%); /* = parchment */
   --card-foreground: hsl(25 24% 16%);
-  --popover: hsl(39 45% 96%);
+  --popover: hsl(42 36% 91%);
   --popover-foreground: hsl(25 24% 16%);
   --primary: hsl(41 52% 40%);
   --primary-foreground: hsl(39 43% 93%);
   --secondary: hsl(104 14% 36%);
   --secondary-foreground: hsl(39 43% 93%);
-  --muted: hsl(39 25% 87%);
+  --muted: hsl(39 33% 85%); /* = wheat */
   --muted-foreground: hsl(27 12% 40%);
   --accent: hsl(350 31% 52%);
   --accent-foreground: hsl(39 43% 93%);
@@ -69,8 +75,8 @@
   --chart-3: hsl(350 31% 52%);
   --chart-4: hsl(270 20% 48%);
   --chart-5: hsl(54 48% 52%);
-  --radius: 0rem;
-  --sidebar: hsl(39 45% 96%);
+  --radius: 0.5rem; /* rounded-lg = 8px: the one corner for cards, buttons, images, fields, panels */
+  --sidebar: hsl(42 36% 91%);
   --sidebar-foreground: hsl(25 24% 16%);
   --sidebar-primary: hsl(41 52% 40%);
   --sidebar-primary-foreground: hsl(39 43% 93%);
@@ -80,6 +86,7 @@
   --sidebar-ring: hsl(41 52% 40%);
 
   --header-height: 74px;
+  --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 @theme inline {
@@ -92,8 +99,10 @@
   --color-ink-soft: var(--ink-soft);
   --color-ink-muted: var(--ink-muted);
   --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
   --color-gilt: var(--gilt);
   --color-leaf: var(--leaf);
+  --color-leaf-deep: var(--leaf-deep);
   --color-rose: var(--rose);
   --color-rule: var(--rule);
   --color-sand: var(--sand);
@@ -114,6 +123,8 @@
   --shadow-lift: 0 8px 20px #36452f1f; /* primary button */
   --shadow-note: 0 14px 35px #47351d14; /* hero badge */
   --shadow-raise: 0 18px 36px #362b1d14; /* product card hover */
+  --shadow-card: 0 1px 2px #362b1d0f, 0 6px 16px #362b1d0a; /* cards at rest */
+  --shadow-pop: 0 22px 44px #362b1d24, 0 4px 10px #362b1d12; /* cards + buttons on hover */
   --animate-rise-in: rise-in 0.65s both;
   --color-botanical-coconut: var(--botanical-coconut);
   --color-botanical-aloe-vera: var(--botanical-aloe-vera);
@@ -183,7 +194,7 @@
 @keyframes reveal-in {
   from {
     opacity: 0;
-    transform: translateY(26px);
+    transform: translateY(36px);
   }
   to {
     opacity: 1;
@@ -197,17 +208,51 @@
   }
 }
 
+/*
+ * Page transitions — each page sits in <PageTransition> (React <ViewTransition>). On navigation the
+ * old page fades out quickly and the new one fades up. Browsers without view transitions just swap.
+ */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(.page-exit) {
+  animation: 160ms var(--ease-soft) both page-fade reverse;
+}
+::view-transition-new(.page-enter) {
+  animation: 560ms var(--ease-soft) 90ms both page-rise;
+}
+
+@keyframes page-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes page-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   html {
-    @apply bg-paper font-sans;
+    @apply bg-sand font-sans;
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--header-height) + 12px);
   }
   body {
-    @apply bg-paper text-ink;
+    @apply bg-sand text-ink;
     font-size: 14px;
     letter-spacing: 0.012em;
   }
@@ -241,6 +286,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 /* Serif display headings (starter: 600 weight Abhaya Libre, tight tracking, tight leading). */
@@ -257,6 +307,88 @@
 }
 @utility py-section {
   padding-block: clamp(82px, 11vw, 115px);
+}
+
+/*
+ * Surfaces & hover. Lifts use the `translate` property so they compose with the scroll-reveal
+ * `transform` animation; hover styles apply on pointer devices only (and to keyboard focus).
+ *
+ * .card-pop — rounded-lg card: hairline border, warm cream gradient surface (a step lighter than
+ *   the sand page). Hover lifts it, deepens the shadow, warms the border and slides the surface
+ *   gradient a shade darker.
+ * .tile-pop — rounded-lg image tile (caption over the photo): hover lifts it and fades in a soft
+ *   gilt sheen. Captions need z-index ≥ 2 to sit above the sheen.
+ * .btn-sweep — brand buttons: a slanted fill (--btn-fill) wipes across on hover.
+ */
+@utility card-pop {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--ink) 11%, transparent);
+  border-radius: var(--radius-lg);
+  background-color: var(--vellum);
+  background-image: linear-gradient(170deg, var(--parchment) 0%, var(--vellum) 50%, var(--wheat) 100%);
+  background-size: 100% 200%;
+  background-position: 0% 0%;
+  box-shadow: var(--shadow-card);
+  transition:
+    translate 450ms var(--ease-soft),
+    box-shadow 450ms var(--ease-soft),
+    border-color 450ms var(--ease-soft),
+    background-position 700ms var(--ease-soft);
+  &:has(:focus-visible) {
+    translate: 0 -6px;
+    box-shadow: var(--shadow-pop);
+  }
+  @media (hover: hover) {
+    &:hover {
+      translate: 0 -6px;
+      border-color: color-mix(in oklab, var(--gold) 45%, transparent);
+      background-position: 0% 100%;
+      box-shadow: var(--shadow-pop);
+    }
+  }
+}
+
+@utility tile-pop {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition:
+    translate 450ms var(--ease-soft),
+    box-shadow 450ms var(--ease-soft);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(200deg, color-mix(in oklab, var(--gilt) 40%, transparent), transparent 60%);
+    opacity: 0;
+    transition: opacity 600ms var(--ease-soft);
+  }
+  @media (hover: hover) {
+    &:hover {
+      translate: 0 -6px;
+      box-shadow: var(--shadow-pop);
+    }
+    &:hover::before {
+      opacity: 1;
+    }
+  }
+}
+
+@utility btn-sweep {
+  background-image: linear-gradient(115deg, var(--btn-fill) 0 50%, transparent 50%);
+  background-size: 225% 100%;
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+  @media (hover: hover) {
+    &:hover {
+      background-position: 0 0;
+    }
+  }
 }
 
 /*

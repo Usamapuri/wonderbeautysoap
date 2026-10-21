@@ -9,7 +9,7 @@ import { BulkCta } from "./bulk-cta"
 export function BulkPanel() {
   const { bulk } = contact
   return (
-    <section aria-labelledby="bulk-heading" className="bg-moss p-7 text-paper sm:p-10">
+    <section aria-labelledby="bulk-heading" className="rounded-lg bg-moss p-7 text-paper shadow-card sm:p-10">
       <Eyebrow tone="gilt">{bulk.eyebrow}</Eyebrow>
       <h2 id="bulk-heading" className="font-display mt-5 mb-4 text-[clamp(36px,4vw,50px)]">
         <Lines lines={bulk.heading} />

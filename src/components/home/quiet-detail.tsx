@@ -14,7 +14,7 @@ export function QuietDetail() {
       aria-labelledby="quiet-detail-heading"
       className="grid items-center gap-[34px] px-6 py-[72px] sm:grid-cols-[1fr_0.8fr] sm:gap-[42px] sm:px-[8vw] sm:py-[85px] md:gap-[clamp(40px,9vw,130px)] md:px-[clamp(22px,12vw,190px)] md:py-[120px]"
     >
-      <div {...reveal()} className="relative aspect-[1.08] sm:aspect-[0.9]">
+      <div {...reveal()} className="relative aspect-square overflow-hidden rounded-lg shadow-card">
         <Image src={quietDetail.image.src} alt={quietDetail.image.alt} fill sizes="(max-width: 560px) 100vw, 45vw" className="object-cover" />
       </div>
       <div {...reveal(150)}>

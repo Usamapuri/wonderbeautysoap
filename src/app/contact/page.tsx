@@ -34,12 +34,12 @@ export default function ContactPage() {
           <ContactDetails />
           <BulkPanel />
         </div>
-        <Suspense fallback={<div className="min-h-[640px] bg-sand" />}>
+        <Suspense fallback={<div className="min-h-[640px] rounded-lg bg-stone shadow-pop" />}>
           <ContactForm />
         </Suspense>
       </div>
 
-      <section {...revealGroup} aria-labelledby="social-heading" className="bg-wheat px-5 pt-[55px] pb-[68px] text-center sm:pt-[70px] sm:pb-[85px]">
+      <section {...revealGroup} aria-labelledby="social-heading" className="bg-stone px-5 pt-[55px] pb-[68px] text-center sm:pt-[70px] sm:pb-[85px]">
         <Eyebrow center>{social.eyebrow}</Eyebrow>
         <h2 id="social-heading" className="font-display mt-5 mb-6 text-[clamp(44px,5vw,68px)]">
           {social.heading}

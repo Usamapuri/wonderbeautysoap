@@ -8,14 +8,15 @@ import { cn } from "@/lib/utils"
 /** Collection preview card (starter .product-card). Links to the variety's anchor on /collection. */
 export function ProductCard({ product, index, className }: { product: Product; index: number; className?: string }) {
   return (
-    <article className={cn("group/card flex min-w-0 flex-col border border-ink/15 bg-card/60 transition-[translate,box-shadow] duration-350 hover:-translate-y-[5px] hover:shadow-raise", className)}>
-      <div className="relative grid aspect-[0.85] place-items-center overflow-hidden bg-clay sm:aspect-[0.98]">
+    <article className={cn("card-pop group/card flex h-full min-w-0 flex-col", className)}>
+      {/* 6:5 well = the render's own ratio, so the whole pack shows. */}
+      <div className="relative aspect-[6/5] overflow-hidden bg-clay">
         <Image
           src={product.image}
           alt={`${product.name} package`}
           fill
           sizes="(max-width: 850px) 50vw, 240px"
-          className="object-cover mix-blend-multiply transition-transform duration-500 ease-[cubic-bezier(.2,.7,.2,1)] group-hover/card:scale-[1.07]"
+          className="object-cover mix-blend-multiply transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover/card:scale-[1.05]"
         />
       </div>
       <div className="flex flex-1 flex-col px-[11px] pt-3.5 pb-[17px] sm:px-[15px] sm:pt-[18px] sm:pb-5">

@@ -12,7 +12,7 @@ export function ThenAndNow() {
   const { thenAndNow } = story
   if (thenAndNow.pairs.length === 0) return null
   return (
-    <section aria-labelledby="then-now-heading" className="bg-sand px-section py-section">
+    <section aria-labelledby="then-now-heading" className="bg-stone px-section py-section">
       <div {...reveal()} className="mx-auto mb-10 max-w-[1100px] sm:mb-14 sm:flex sm:items-end sm:justify-between sm:gap-10">
         <div>
           <Eyebrow>
@@ -37,7 +37,7 @@ export function ThenAndNow() {
                     { label: thenAndNow.afterLabel, src: product.image, alt: `The ${product.variety} bar in today's gold-and-white packaging`, multiply: true },
                   ].map((side) => (
                     <div key={side.label}>
-                      <div className="relative aspect-[6/5] overflow-hidden bg-clay">
+                      <div className="relative aspect-[6/5] overflow-hidden rounded-lg bg-clay shadow-card">
                         <Image
                           src={side.src}
                           alt={side.alt}

@@ -15,16 +15,13 @@ export function CollectionPreview() {
       className="relative overflow-hidden bg-sand px-section py-section before:pointer-events-none before:absolute before:top-[-205px] before:left-[-190px] before:size-[390px] before:rounded-full before:border before:border-gold/25 after:pointer-events-none after:absolute after:top-[-280px] after:left-[-265px] after:size-[540px] after:rounded-full after:border after:border-gold/25"
     >
       <SectionHeading id="collection-heading" eyebrow={collection.eyebrow} heading={collection.heading} body={collection.body} />
-      <div {...revealGroup} className="relative z-10 mx-auto grid max-w-[1210px] grid-cols-2 gap-2 sm:gap-3 md:grid-cols-5">
+      <div {...revealGroup} className="relative z-10 mx-auto grid max-w-[1210px] grid-cols-2 gap-2.5 sm:gap-3.5 md:grid-cols-5">
         {products.map((p, i) => (
           <ProductCard
             key={p.slug}
             product={p}
             index={i}
-            className={cn(
-              i % 2 === 0 && "md:mt-7",
-              i === products.length - 1 && "col-span-2 w-full justify-self-center sm:max-w-[50%] md:col-span-1 md:max-w-none",
-            )}
+            className={cn(i === products.length - 1 && "col-span-2 w-[calc(50%-5px)] justify-self-center sm:w-[calc(50%-7px)] md:col-span-1 md:w-auto md:justify-self-stretch")}
           />
         ))}
       </div>

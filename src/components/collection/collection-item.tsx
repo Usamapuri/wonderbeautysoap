@@ -13,27 +13,23 @@ export function CollectionItem({ product, index }: { product: Product; index: nu
   const { labels } = collection
   return (
     <article
-      {...reveal(index % 2 === 1 ? 120 : 0)}
+      {...reveal((index % 3) * 110)}
       id={product.slug}
       aria-labelledby={`${product.slug}-name`}
-      className={cn(
-        "group grid scroll-mt-[calc(var(--header-height)+16px)] grid-cols-1 overflow-hidden sm:grid-cols-[1fr_0.9fr]",
-        index === 1 || index === 4 ? "bg-wheat" : "bg-vellum",
-        // The odd fifth bar sits centred under the two-column grid.
-        index === 4 && "md:col-span-2 md:mx-auto md:w-[calc(50%-9px)]",
-      )}
+      className="card-pop group flex w-full scroll-mt-[calc(var(--header-height)+16px)] flex-col sm:w-[calc(50%-9px)] lg:w-[calc((100%-36px)/3)]"
     >
-      <div className="relative grid aspect-[6/5] place-items-center overflow-hidden bg-clay sm:aspect-auto sm:min-h-[260px]">
+      {/* 6:5 = the render's own ratio, so the whole pack shows. */}
+      <div className="relative aspect-[6/5] overflow-hidden bg-clay">
         <Image
           src={product.image}
           alt={`${product.name} package`}
           fill
-          sizes="(max-width: 560px) 100vw, (max-width: 850px) 50vw, 25vw"
-          className="object-cover mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.04]"
+          sizes="(max-width: 560px) 100vw, (max-width: 1024px) 50vw, 400px"
+          className="object-cover mix-blend-multiply transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04]"
         />
       </div>
 
-      <div className="flex flex-col px-5 py-6 sm:p-[clamp(18px,2vw,30px)]">
+      <div className="flex flex-1 flex-col px-5 py-6 sm:px-6">
         <div className="flex items-start justify-between gap-2">
           <span className="flex items-center gap-2 pt-1 text-[8px] tracking-[0.18em] text-ink-muted">
             <span aria-hidden className={cn("size-1.5 rounded-full", product.accent)} />
@@ -48,9 +44,7 @@ export function CollectionItem({ product, index }: { product: Product; index: nu
           />
         </div>
         <h2 id={`${product.slug}-name`} className="font-display mt-1 mb-3 text-[30px] leading-[0.95] tracking-normal sm:text-[clamp(28px,3vw,43px)]">
-          <span className="mb-1.5 block font-sans text-[8px] font-normal tracking-[0.18em] text-ink-muted uppercase">
-            Wonder Beauty Bar —
-          </span>
+          <span className="mb-1.5 block font-sans text-[8px] font-normal tracking-[0.18em] text-ink-muted uppercase">Wonder Beauty Bar</span>
           {product.variety}
         </h2>
         <p className="text-[9px] leading-[1.7] text-ink-soft sm:text-[10px]">{product.note}</p>
@@ -80,14 +74,14 @@ export function CollectionItem({ product, index }: { product: Product; index: nu
         </Link>
       </div>
 
-      <figure className="relative col-span-full m-0 overflow-hidden bg-stone">
-        <div className="relative h-[210px] md:h-[clamp(160px,18vw,250px)]">
+      <figure className="relative m-0 overflow-hidden bg-stone">
+        <div className="relative aspect-[16/10]">
           <Image
             src={product.artwork.src}
             alt={product.artwork.alt}
             fill
-            sizes="(max-width: 850px) 100vw, 50vw"
-            className="object-cover transition-transform duration-[650ms] group-hover:scale-[1.025]"
+            sizes="(max-width: 560px) 100vw, (max-width: 1024px) 50vw, 400px"
+            className="object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04]"
           />
         </div>
         <figcaption className="absolute inset-x-0 bottom-0 flex flex-col gap-1.5 bg-linear-to-b from-transparent to-ink/60 px-5 pt-[30px] pb-[15px] text-paper">

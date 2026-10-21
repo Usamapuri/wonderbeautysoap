@@ -32,7 +32,6 @@ export default function OurStoryPage() {
         body={hero.body}
         image={hero.image}
         multiply
-        className="bg-sand"
       />
       <FounderNote />
       <ValuesBand cells={story.values} />

@@ -96,10 +96,12 @@ export const home = {
   },
 
   // Retail shots from the starter. Captions must not name a retailer until the client confirms it (§10).
+  // width/height = the WebP's pixel size; the strip sizes each column so every photo fits uncropped.
+  // On phones the first two sit side by side and the third spans the row, so keep a landscape shot last.
   retail: [
-    { src: "/brand-assets/lifestyle/in-store.webp", alt: "Wonder Beauty Soap among products in a shopping basket", caption: "A moment in a shop" },
-    { src: "/brand-assets/lifestyle/rose-at-retail.webp", alt: "Wonder Rose Beauty Soap held in a retail setting", caption: "Rose, on the go" },
-    { src: "/brand-assets/lifestyle/collection-basket.webp", alt: "Wonder Beauty Soap packages in a shopping basket", caption: "Everyday discoveries" },
+    { src: "/brand-assets/lifestyle/in-store.webp", width: 801, height: 1200, alt: "Wonder Beauty Soap among products in a shopping basket", caption: "A moment in a shop" },
+    { src: "/brand-assets/lifestyle/rose-at-retail.webp", width: 900, height: 1200, alt: "Wonder Rose Beauty Soap held in a retail setting", caption: "Rose, on the go" },
+    { src: "/brand-assets/lifestyle/collection-basket.webp", width: 1200, height: 801, alt: "Wonder Beauty Soap packages in a shopping basket", caption: "Everyday discoveries" },
   ],
 
   closing: {

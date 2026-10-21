@@ -67,7 +67,7 @@ src/components/<page>/      one file per page section: home/ collection/ story/ 
 1. Read the page's spec and acceptance criteria in [references/pages.md](references/pages.md), and the matching brief section.
 2. **Put the copy in `src/content/<page>.ts` first.** Use starter wording where it exists. Use client copy where it was supplied. Otherwise use `placeholder()`. Components only read content.
 3. Build each section as a component in `src/components/<page>/`, then compose them in `src/app/<route>/page.tsx` in the brief's order. Export `metadata` with a unique title and description.
-4. Style only with tokens and brand components (design-system.md). No raw hex values, no one-off colours, and square corners.
+4. Style only with tokens and brand components (design-system.md). No raw hex values, no one-off colours. Backgrounds are cream (`sand` base, `stone` contrast bands, `parchment` cards/panels; never white). Corners are `rounded-lg` on cards, buttons, image frames, fields and panels (bands stay square); cards use `.card-pop`, photo tiles `.tile-pop`; frames take their image's aspect ratio (design-system.md).
 5. Give new sections entrance motion: `rise-group` for first-screen content, `{...reveal()}` / `{...revealGroup}` below the fold (design-system.md → Entrance motion).
 6. Images go through `next/image` with real `sizes`. Product renders use `mix-blend-multiply` on a `bg-clay` well. Hero is `preload`; everything else is lazy. Alt text names the variety and scene.
 7. Verify: `npm run build` (must pass), `npm run lint`, then check at 360/390/768/1440 px with no horizontal scroll (see deploy-and-qa.md for the screenshot recipe). Update `DELIVERY-NOTES.md`.

@@ -36,7 +36,7 @@ function Film({ src }: { src: string }) {
       preload="none"
       poster={home.film.poster}
       aria-label={home.film.label}
-      className="block aspect-[0.98] w-full bg-clay object-cover sm:aspect-[1.6] md:aspect-[1.42]"
+      className="block aspect-square w-full bg-clay object-cover sm:aspect-[4/3]"
     >
       <source src={src} type="video/mp4" />
     </video>
@@ -62,14 +62,23 @@ export function CampaignFilm() {
       </div>
 
       <figure {...reveal(150)} className="m-0">
-        <div className="relative before:pointer-events-none before:absolute before:inset-[-8px_8px_8px_-8px] before:z-10 before:border before:border-gilt/70 sm:before:inset-[-12px_12px_12px_-12px]">
-          {film.src ? (
-            <Film src={film.src} />
-          ) : (
-            <div className="relative aspect-[0.98] w-full bg-clay sm:aspect-[1.6] md:aspect-[1.42]">
-              <Image src={film.poster} alt={film.label} fill sizes="(max-width: 850px) 100vw, 60vw" className="object-cover" />
-            </div>
-          )}
+        {/* Even gilt frame around the picture: the image fills it, with the same inset on every side. */}
+        <div className="group rounded-[calc(var(--radius-lg)+0.625rem)] border border-gilt/60 p-2.5">
+          <div className="overflow-hidden rounded-lg">
+            {film.src ? (
+              <Film src={film.src} />
+            ) : (
+              <div className="relative aspect-square w-full bg-clay sm:aspect-[4/3]">
+                <Image
+                  src={film.poster}
+                  alt={film.label}
+                  fill
+                  sizes="(max-width: 850px) 100vw, 60vw"
+                  className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.03]"
+                />
+              </div>
+            )}
+          </div>
         </div>
         <figcaption className="pt-3 text-[8px] uppercase tracking-[0.15em] text-paper/70">{film.frameCaption}</figcaption>
       </figure>

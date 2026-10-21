@@ -29,20 +29,25 @@ export default function CollectionPage() {
         <p className="mt-4 text-[9px] uppercase tracking-[0.18em] text-gold">{heading.formula}</p>
       </section>
 
-      <figure className="mx-3 mt-3 mb-10 animate-[rise-in_0.85s_0.25s_both] bg-wheat p-3 text-center sm:mx-[clamp(18px,7vw,110px)] sm:mt-[15px] sm:mb-[65px] sm:p-[25px]">
+      {/* The lineup fills its frame edge to edge (no inner mat), at its own 1800×1020 ratio. */}
+      <figure className="mx-4 mt-3 mb-10 animate-[rise-in_0.85s_0.25s_both] text-center sm:mx-auto sm:mt-[15px] sm:mb-[65px] sm:w-[min(1100px,calc(100%-48px))]">
         <Image
           src={feature.src}
           alt={feature.alt}
           width={1800}
           height={1020}
           preload
-          sizes="(max-width: 560px) 100vw, 86vw"
-          className="mx-auto block max-h-[510px] w-full object-contain mix-blend-multiply"
+          sizes="(max-width: 560px) 100vw, 1100px"
+          className="block w-full rounded-lg shadow-card"
         />
-        <figcaption className="pt-2 text-[8px] uppercase tracking-[0.19em] text-ink-muted">{feature.caption}</figcaption>
+        <figcaption className="pt-3 text-[8px] uppercase tracking-[0.19em] text-ink-muted">{feature.caption}</figcaption>
       </figure>
 
-      <section aria-label="All Wonder Beauty Bar varieties" className="grid grid-cols-1 gap-3 px-4 pb-[65px] sm:gap-[18px] sm:px-6 sm:pb-[100px] md:grid-cols-2 md:px-[clamp(18px,8vw,125px)]">
+      {/* Aligned card grid: 1 / 2 / 3 per row; a short last row is centred. Cards in a row share a height. */}
+      <section
+        aria-label="All Wonder Beauty Bar varieties"
+        className="mx-auto flex max-w-[1240px] flex-wrap justify-center gap-3.5 px-4 pb-[65px] sm:gap-[18px] sm:px-6 sm:pb-[100px] md:px-[clamp(18px,4vw,60px)]"
+      >
         {products.map((p, i) => (
           <CollectionItem key={p.slug} product={p} index={i} />
         ))}

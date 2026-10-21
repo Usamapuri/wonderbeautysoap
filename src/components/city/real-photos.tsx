@@ -20,11 +20,18 @@ export function RealPhotos() {
         </h2>
         <p className="max-w-[360px] text-xs leading-[1.8] text-paper/80">{real.body}</p>
       </div>
-      <div {...revealGroup} className="grid max-w-[650px] grid-cols-2 items-start gap-[9px] sm:gap-[13px] md:max-w-none">
-        {real.photos.map((p, i) => (
-          <figure key={p.src} className={i % 2 === 1 ? "m-0 mt-[30px] sm:mt-[55px]" : "m-0"}>
-            <div className="relative aspect-[0.78] sm:aspect-[0.86]">
-              <Image src={p.src} alt={p.alt} fill sizes="(max-width: 850px) 50vw, 30vw" className="object-cover" />
+      <div {...revealGroup} className="grid w-full max-w-[650px] grid-cols-2 items-start gap-[9px] sm:gap-[13px] md:max-w-[620px] md:justify-self-end">
+        {real.photos.map((p) => (
+          <figure key={p.src} className="m-0">
+            {/* 2:3 frame = the portrait photos' own ratio, so they fill it uncropped. */}
+            <div className="tile-pop group relative aspect-[2/3] bg-moss">
+              <Image
+                src={p.src}
+                alt={p.alt}
+                fill
+                sizes="(max-width: 850px) 50vw, 310px"
+                className="object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04]"
+              />
             </div>
             <figcaption className="pt-2.5 text-[9px] uppercase tracking-[0.1em] text-paper/80">{p.caption}</figcaption>
           </figure>

@@ -19,10 +19,10 @@ export function SiteHeader() {
 
   return (
     <>
-      <div className="flex min-h-[34px] items-center justify-center bg-oat px-[18px] py-1.5 text-center text-[8px] uppercase tracking-[0.17em] text-ink-soft sm:text-[10px]">
+      <div className="flex min-h-[34px] items-center justify-center bg-wheat px-[18px] py-1.5 text-center text-[8px] uppercase tracking-[0.17em] text-ink-soft sm:text-[10px]">
         {site.topline}
       </div>
-      <header className="sticky top-0 z-30 flex h-(--header-height) items-center justify-between border-b border-header-rule bg-paper/95 px-[22px] backdrop-blur-md md:px-[clamp(22px,6vw,88px)]">
+      <header className="sticky top-0 z-30 flex h-(--header-height) items-center justify-between border-b border-header-rule bg-sand/95 px-[22px] backdrop-blur-md md:px-[clamp(22px,6vw,88px)]">
         <BrandMark />
 
         <nav aria-label="Main navigation" className="hidden items-center gap-[17px] sm:flex md:gap-[clamp(20px,3.6vw,54px)]">
@@ -53,7 +53,7 @@ export function SiteHeader() {
           >
             <Menu className="size-5" />
           </SheetTrigger>
-          <SheetContent side="top" className="gap-0 border-rule bg-paper pt-[calc(var(--header-height)+8px)] shadow-none">
+          <SheetContent side="top" className="gap-0 border-rule bg-sand pt-[calc(var(--header-height)+8px)] shadow-none">
             <SheetTitle className="sr-only">Navigation</SheetTitle>
             <nav aria-label="Mobile navigation" className="flex flex-col">
               {nav.map((item) => {

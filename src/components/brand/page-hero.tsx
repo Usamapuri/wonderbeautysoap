@@ -51,7 +51,8 @@ export function PageHero({
           framed && "before:absolute before:inset-[-12px_12px_12px_-12px] before:-z-10 before:border before:border-gold sm:before:inset-[-17px_17px_17px_-17px]",
         )}
       >
-        <div className="relative h-[min(480px,82vw)] md:h-[min(500px,40vw)]">
+        {/* 3:2 matches the landscape hero photos, so they fill the frame without heavy cropping. */}
+        <div className="relative aspect-[3/2] overflow-hidden rounded-lg shadow-card">
           <Image
             src={image.src}
             alt={image.alt}

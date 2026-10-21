@@ -44,9 +44,9 @@ export function Hero() {
           height={hero.image.height}
           preload
           sizes="(max-width: 850px) 100vw, 60vw"
-          className="block w-full mix-blend-multiply md:-ml-[3%] md:w-[112%] md:max-w-[850px]"
+          className="block w-full rounded-lg mix-blend-multiply md:-ml-[3%] md:w-[112%] md:max-w-[850px]"
         />
-        <div className="absolute right-[4%] bottom-0 flex size-[82px] rotate-[9deg] flex-col items-center justify-center rounded-full border border-gold bg-paper/80 text-center shadow-note text-[7px] leading-[1.5] uppercase tracking-[0.13em] text-gold sm:size-[105px] sm:text-[8px] md:right-[-1%] md:bottom-[8%]">
+        <div className="absolute right-[4%] bottom-0 flex size-[82px] rotate-[9deg] flex-col items-center justify-center rounded-full border border-gold bg-sand/85 text-center shadow-note text-[7px] leading-[1.5] uppercase tracking-[0.13em] text-gold sm:size-[105px] sm:text-[8px] md:right-[-1%] md:bottom-[8%]">
           <b className="font-display text-[20px] tracking-normal sm:text-[25px]">{hero.badge.value}</b>
           {hero.badge.label[0]}
           <br />

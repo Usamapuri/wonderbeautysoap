@@ -13,7 +13,7 @@ export function BulkCta({ label }: { label: string }) {
       asChild
       variant="wonder-outline"
       size="wonder"
-      className="mt-7 border-gilt text-paper hover:bg-gilt hover:text-ink"
+      className="mt-7 border-gilt text-paper [--btn-fill:var(--gilt)] hover:text-ink"
     >
       <a
         href="/contact?type=bulk#enquiry"

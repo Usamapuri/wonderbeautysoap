@@ -11,9 +11,10 @@ import { reveal } from "@/lib/reveal"
 export function BrandIntro() {
   const { intro } = home
   return (
-    <section aria-labelledby="intro-heading" className="grid items-center gap-[clamp(42px,9vw,140px)] bg-paper px-section py-section md:grid-cols-[1.05fr_0.95fr]">
-      <div {...reveal()} className="relative h-[105vw] sm:h-[min(500px,75vw)] md:h-[500px]">
-        <Image src={intro.image.src} alt={intro.image.alt} fill sizes="(max-width: 850px) 100vw, 50vw" className="object-cover" />
+    <section aria-labelledby="intro-heading" className="grid items-center gap-[clamp(42px,9vw,140px)] bg-sand px-section py-section md:grid-cols-[1.05fr_0.95fr]">
+      {/* 2:3 frame = the portrait photo's own ratio, so the pack in hand stays in shot. */}
+      <div {...reveal()} className="relative mx-auto aspect-[2/3] w-full max-w-[380px] overflow-hidden rounded-lg shadow-card">
+        <Image src={intro.image.src} alt={intro.image.alt} fill sizes="(max-width: 560px) 100vw, 380px" className="object-cover" />
       </div>
       <div {...reveal(150)}>
         <Eyebrow>{intro.eyebrow}</Eyebrow>

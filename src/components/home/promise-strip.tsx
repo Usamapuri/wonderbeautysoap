@@ -19,7 +19,7 @@ export function PromiseStrip() {
   return (
     <section
       aria-label="The Wonder promise"
-      className="overflow-hidden border-y border-rule bg-oat py-[18px] text-[9px] uppercase tracking-[0.22em] text-ink sm:text-[10px]"
+      className="overflow-hidden border-y border-rule bg-wheat py-[18px] text-[9px] uppercase tracking-[0.22em] text-ink sm:text-[10px]"
     >
       <div className="flex w-max animate-marquee hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:animate-none motion-reduce:justify-center">
         <Run />
