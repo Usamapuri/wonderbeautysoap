@@ -11,6 +11,7 @@ Two briefs: `implementation-plan.md` (scope, rules, acceptance criteria) and the
 
 - **Brand = Royal Basket (Group)**; Wonder is the soap. Royal Basket Group logo in the header/footer, titles "… — Royal Basket".
 - **Bulk orders only.** Every call to action leads to `/contact?type=bulk` (with `&product=<slug>` where known); the form pre-selects "Bulk order".
+- **Company people by designation only** (Founder, CEO, team roles), never by name. Customer reviews keep the reviewer's name.
 - **Copy = the deck's own text**, or existing site text visible in its screenshots. Don't write new marketing copy; short labels may restate the deck's headings. Long deck paragraphs may be split into short lines ("no paragraphs").
 - **Five tabs:** Home · Our Story · The Collection (dropdown of the 5 bars) · Around the World (`/in-the-city` redirects) · Get in Touch. Each flavour has its own page, `/collection/<slug>`: definition (tagline, sub-line, origin) + history (the founder's origin story) + bulk button.
 - **Look:** the client's Bolt prototype theme, Home after gisou.com, Our Story after rhode's About page, consistent buttons/colours. See [references/design-system.md](references/design-system.md).
