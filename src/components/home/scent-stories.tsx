@@ -28,7 +28,7 @@ export function ScentStories() {
       <ul {...revealGroup} className="mx-auto grid max-w-[1240px] grid-cols-2 gap-2.5 sm:gap-3.5 md:grid-cols-4">
         {products.map((p, i) => (
           <li key={p.slug} className={cn(i === 0 && "col-span-2 md:row-span-2")}>
-            <Link href={barHref(p.slug)} className="tile-pop group block aspect-square">
+            <Link href={barHref(p.slug)} prefetch className="tile-pop group block aspect-square">
               <Image
                 src={p.artwork.src}
                 alt={p.artwork.alt}

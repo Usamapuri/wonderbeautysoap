@@ -63,7 +63,7 @@ Verified on the production build (motion + layout suites): every route returns 2
 
 ## Decisions
 
-**2026-10-25: rebuild to the client's website brief deck** (`Wonder_Website_Brief.pptx`, repo root, not committed):
+**2026-10-25: rebuild to the client's website brief deck** (`Wonder_Website_Brief.pptx`, repo root):
 - **Copy** is the deck's own text, or the existing site text visible in the deck's screenshots (developer: "use all texts strictly"). Long paragraphs are split into short lines, as the deck allows ("you can break it down, no paragraphs"). Section labels like "Our mission" restate the deck's headings.
 - **Structure** = the deck's five tabs: Home · Our Story · The Collection (dropdown of the 5 bars) · Around the World (was In the City; old URL redirects) · Get in Touch.
 - **Brand = Royal Basket** (developer, 2026-10-25): Royal Basket Group logo in the header and footer, page titles "… — Royal Basket", icons from the logo. Wonder stays the soap.

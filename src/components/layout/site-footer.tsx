@@ -40,7 +40,7 @@ export function SiteFooter() {
         <Column title="The bars">
           {products.map((p) => (
             <li key={p.slug}>
-              <Link href={barHref(p.slug)} className={itemClass}>
+              <Link href={barHref(p.slug)} prefetch className={itemClass}>
                 {p.variety}
               </Link>
             </li>

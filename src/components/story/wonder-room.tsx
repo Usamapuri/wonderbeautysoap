@@ -70,7 +70,7 @@ export function WonderRoom() {
                       {p.variety} · {p.origin.place}
                     </p>
                     <p className="mt-4 flex-1 text-[13px] leading-[1.8] text-ink-soft">{p.origin.story}</p>
-                    <Link href={barHref(p.slug)} className="mt-6 inline-flex min-h-10 w-fit items-center gap-2 text-[9px] font-medium uppercase tracking-[0.16em] hover:text-gold">
+                    <Link href={barHref(p.slug)} prefetch className="mt-6 inline-flex min-h-10 w-fit items-center gap-2 text-[9px] font-medium uppercase tracking-[0.16em] hover:text-gold">
                       {collection.labels.discover} <span className="sr-only">the {p.variety} bar</span> <ArrowRight aria-hidden className="size-3.5 text-gold" />
                     </Link>
                   </div>

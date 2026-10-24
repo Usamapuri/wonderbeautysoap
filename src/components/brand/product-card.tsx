@@ -31,6 +31,7 @@ export function ProductCard({ product, index, className }: { product: Product; i
         <p className="mt-1.5 mb-4 text-[9px] leading-[1.6] text-ink-soft sm:text-[10px]">{product.subLine}</p>
         <Link
           href={barHref(product.slug)}
+          prefetch
           aria-label={`Discover the ${product.variety} bar`}
           className="group mt-auto inline-flex min-h-10 w-fit items-center gap-[9px] text-[8px] font-medium uppercase tracking-[0.16em] hover:text-gold"
         >

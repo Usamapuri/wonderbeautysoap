@@ -22,7 +22,7 @@ export function CollectionItem({ product, index }: { product: Product; index: nu
       style={{ "--accent": product.accent } as CSSProperties}
       className="card-pop group flex w-full scroll-mt-[calc(var(--header-height)+16px)] flex-col sm:w-[calc(50%-9px)] lg:w-[calc((100%-36px)/3)]"
     >
-      <Link href={barHref(product.slug)} tabIndex={-1} aria-hidden className="relative block aspect-[6/5] overflow-hidden bg-clay">
+      <Link href={barHref(product.slug)} prefetch tabIndex={-1} aria-hidden className="relative block aspect-[6/5] overflow-hidden bg-clay">
         {/* 6:5 = the render's own ratio, so the whole pack shows. */}
         <Image
           src={product.image}
@@ -58,7 +58,7 @@ export function CollectionItem({ product, index }: { product: Product; index: nu
             <Link href={`/contact?type=bulk&product=${product.slug}`}>{labels.order}</Link>
           </Button>
           <Button asChild variant="wonder-outline" size="wonder">
-            <Link href={barHref(product.slug)}>
+            <Link href={barHref(product.slug)} prefetch>
               {labels.discover} <span className="sr-only">the {product.variety} bar</span>
               <ArrowRight aria-hidden className="size-3.5" />
             </Link>

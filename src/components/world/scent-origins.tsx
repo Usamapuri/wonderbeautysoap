@@ -30,7 +30,7 @@ export function ScentOrigins() {
       <ul className="mx-auto flex max-w-[1240px] flex-wrap justify-center gap-3.5">
         {products.map((p, i) => (
           <li key={p.slug} {...reveal((i % 5) * 80)} className="w-[calc(50%-7px)] sm:w-[calc((100%-28px)/3)] lg:w-[calc((100%-56px)/5)]">
-            <Link href={barHref(p.slug)} className="card-pop group flex h-full flex-col">
+            <Link href={barHref(p.slug)} prefetch className="card-pop group flex h-full flex-col">
               <span className="relative block aspect-square overflow-hidden">
                 <Image
                   src={p.artwork.src}

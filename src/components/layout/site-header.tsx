@@ -83,7 +83,7 @@ export function SiteHeader() {
                       {products.map((p) => (
                         <li key={p.slug}>
                           <NavigationMenuLink asChild>
-                            <Link href={barHref(p.slug)} className="group flex items-center gap-3.5 rounded-md p-2 hover:bg-parchment focus:bg-parchment">
+                            <Link href={barHref(p.slug)} prefetch className="group flex items-center gap-3.5 rounded-md p-2 hover:bg-parchment focus:bg-parchment">
                               <span className="relative aspect-[6/5] w-[58px] shrink-0 overflow-hidden rounded-md bg-clay">
                                 <Image src={p.image} alt="" fill sizes="58px" className="object-cover mix-blend-multiply" />
                               </span>
@@ -141,6 +141,7 @@ export function SiteHeader() {
                           <li key={p.slug}>
                             <Link
                               href={barHref(p.slug)}
+                              prefetch
                               onClick={() => setOpen(false)}
                               className="flex min-h-10 items-center gap-2.5 text-[12px] text-ink-soft"
                             >

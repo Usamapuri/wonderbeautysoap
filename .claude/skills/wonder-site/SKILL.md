@@ -42,7 +42,7 @@ The developer chose **Next.js 16 (App Router, Turbopack, `cacheComponents` + `pa
 
 ```
 implementation-plan.md      the original brief (scope, rules)
-Wonder_Website_Brief.pptx   the client's website brief deck (structure, copy, taglines) — not committed
+Wonder_Website_Brief.pptx   the client's website brief deck (structure, copy, taglines)
 DELIVERY-NOTES.md           open placeholders, samples, interim assets, decisions (keep current)
 brand-assets/source/        client originals: mockups/ (approved renders), dielines/, logos/ (Royal Basket Group)
 brand-assets/starter/       assets carried over from the Replit starter

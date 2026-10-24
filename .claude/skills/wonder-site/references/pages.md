@@ -20,13 +20,15 @@ Heading + on-pack formula line + cosmetic safety report (placeholder until the P
 
 Definition: whole pack, name, tagline + sub-line (slide 21), origin of the idea (slide 17), scent and "Best for" (placeholders), on-pack lines, bulk button (pre-fills bar + "Bulk order") → History: the founder's origin story (slide 13) beside the flavour's concept art → "All 5 flavours" (the other four cards) → bulk-orders band. Unknown slugs → not found. Every flavour link on the site (nav dropdown, cards, collage, Wonder Room, footer, Around the World) opens these pages via `barHref(slug)`.
 
+**Instant navigation:** everything that reads `params` sits under `<Suspense fallback={<BarSkeleton />}>` (the route's App Shell under Partial Prefetching), and every flavour link uses `<Link prefetch>` so the slug resolves before the click. Without this the dev overlay shows the "URL data outside of Suspense" Insight and clicks wait on the server. Use the same pattern for any future dynamic route.
+
 ## Around the World `/around-the-world` — slide 18 (`components/world/`, `content/world.ts`)
 
 Bronze hero "Wonder, wherever you are." → real photographs grouped by place (London; Store visits — location to confirm) → five scent origins (concept art + AI disclaimer) → "Available in" (countries + video reel placeholders) → "Don't see your country yet? Talk to us." + follow links.
 
 ## Get in Touch `/contact` — slide 19 (`components/contact/`, `content/contact.ts`)
 
-"Let's talk." → details (email, socials, good-to-know) + bronze bulk panel ("For orders, speak to us" sets the form to bulk) → the highlighted form card (defaults to "Bulk order"; `?type=` / `?product=` pre-fill) → "Wonder, in your feed." Address/map hidden until supplied. Footer line everywhere: "Made with care, from us to you."
+"Let's talk." → one enquiry card: bronze bulk brief (left: what to include, email) + the form (right: defaults to "Bulk order"; `?type=` / `?product=` pre-fill), one frame with a gold top bar → aligned details strip (reply line, good to know; phone/WhatsApp/address once supplied) → "Wonder, in your feed." (socials). Address/map hidden until supplied. Footer line everywhere: "Made with care, from us to you."
 
 ## Acceptance (every page)
 
