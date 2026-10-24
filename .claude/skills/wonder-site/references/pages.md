@@ -1,76 +1,33 @@
-# Pages (brief §4)
+# Pages (client website brief deck, 2026-10-25)
 
-Routes: `/` · `/our-story` · `/collection` · `/in-the-city` · `/contact`. Each is `src/app/<route>/page.tsx`, composed from section components in `src/components/<page>/`, with copy in `src/content/<page>.ts` and a page `metadata` export with a unique title and description.
+Routes: `/` · `/our-story` · `/collection` · `/collection/[slug]` (5 prerendered flavour pages) · `/around-the-world` (`/in-the-city` 308-redirects here) · `/contact` (tab label "Get in Touch"). Each page composes section components from `src/components/<area>/`, reads copy from `src/content/<page>.ts`, and exports `metadata` (titles render as "… — Royal Basket").
 
-**On every page** (already in `layout.tsx`): topline, sticky header with the active link highlighted, footer with email and socials (new tab), favicon/OG from the file conventions. The email pop-up (features.md) is mounted in the layout once built.
+Copy rule: the deck's own text (or existing site text shown in its screenshots). Missing content → `placeholder()` (rendered by `<Copy>`) + a line in `DELIVERY-NOTES.md`. Every call to action is bulk orders (`ordersCta`).
 
-Starter copy for each page can be recovered from the live starter bundle (`/assets/index-*.js`, search for the page's heading text). Prefer it over writing new copy.
+## Home `/` — deck slides 3–9, Gisou layout (`components/home/`, `content/home.ts`)
 
----
+Hero (Bolt opening "Scent. / *Lather.* / Wonder.", kept as the client asked) → promise marquee (brand promises) → Welcome note 1 (split into short lines, portrait photo) → campaign film banner (poster until an AI video is supplied) → Welcome note 2 (design statement, eco-friendly box packaging split banner, closing line) → all 5 flavours collage ("Every scent tells a story" / "Wonder, wherever you are.") → Mission + Vision panels → the five product cards → where Wonder is sold (real photos → Around the World) → reviews at the end ("Kind words, well lathered.", samples marked) → closing band.
 
-## Home `/` (built)
+## Our Story `/our-story` — deck slides 10–16, rhode layout (`components/story/`, `content/story.ts`)
 
-Replicates the original's Home: Hero → *Promise strip (brief addition)* → Botanical Edit (3 concept photos) → Campaign film → Collection preview → "Recognisable by nature" band (`real-world.tsx`, links to In the City) → Brand intro → "Beauty belongs in the everyday" (`quiet-detail.tsx`) → Retail strip → Closing CTA (+ bulk CTA, brief addition). Copy is in `src/content/home.ts`; components are in `src/components/home/`. Brief §4.1's 5-botanical panel and city teaser were dropped in favour of the original (2026-10-21).
+Hero panel ("Our Story") → Who we are (centred note) → Our values (picture + ruled list of 5) → Why Wonder? (the three-cell `ValuesBand` the client liked) → Wonder Room (carousel of the 5 origin stories) → A note from the founder (centred, signed) → CEO's promise (split panel; draft awaiting approval) → team (hidden while `team.ts` is empty) → closing band.
 
-Acceptance:
-- [ ] Section-for-section match with the original at 1440 and 390px (plus the two additions)
-- [ ] Hero headline reads exactly "A little everyday wonder."; CTAs go to `/collection` and `/our-story`
-- [ ] Each of the 5 cards deep-links to `/collection#<slug>`
-- [ ] Video autoplays muted with a poster, pauses off-screen, and doesn't block first paint; the hero image is preloaded (LCP)
+## The Collection `/collection` — slides 17, 21 (`components/collection/`, `content/collection.ts`)
 
-Open items: video file (`home.film.src`; also broken on the original), retailer confirmation.
+Heading + on-pack formula line + cosmetic safety report (placeholder until the PDF arrives) → the lineup → aligned grid of 5 cards (pack, name, tagline, sub-line, origin, "For orders, speak to us", "Discover"). Order: Rose, Lavender, Aloe Vera, Lemon, Coconut.
 
-## The Collection `/collection` (built: `app/collection/page.tsx`, `components/collection/collection-item.tsx`, `content/collection.ts`)
+## Flavour page `/collection/[slug]` — slide 17 "each product page needs…" (`components/bar/`)
 
-- Intro: five varieties, one triple-action formula (starter `.collection-heading`: eyebrow, h1 `clamp(60px,8vw,112px)`, centred paragraph).
-- One section per bar in order Coconut, Aloe Vera, Lemon, Lavender, Rose, with `id={product.slug}` (`#coconut #aloe-vera #lemon #lavender #rose`). The header is sticky, so `scroll-padding-top` in globals.css keeps anchors clear of it. Each section contains:
-  - render (`product.image`, multiply on `bg-clay`) + botanical accent (`product.botanical`)
-  - title "Wonder Beauty Bar — <Variety>" (`product.name`)
-  - `scentNote` and `skinType` through `<Copy>` (client-confirmed only)
-  - shared promise line: `site.taglines.formula` · `site.taglines.dermatologist`
-  - *Enquire about this bar →* `/contact?product=<slug>`
-- Starter look: `.collection-item` alternating `bg-sand`/`#e5dccb` rows, 2-col grid → 1 col ≤560px.
-- Data: `src/content/products.ts` (`slug, name, botanical, image, note, skinType` + `scentNote`, `editLine`, `accent`). Exactly 5 entries.
+Definition: whole pack, name, tagline + sub-line (slide 21), origin of the idea (slide 17), scent and "Best for" (placeholders), on-pack lines, bulk button (pre-fills bar + "Bulk order") → History: the founder's origin story (slide 13) beside the flavour's concept art → "All 5 flavours" (the other four cards) → bulk-orders band. Unknown slugs → not found. Every flavour link on the site (nav dropdown, cards, collage, Wonder Room, footer, Around the World) opens these pages via `barHref(slug)`.
 
-Acceptance: exactly 5 bars with the correct names, order and anchors · no prices or buy buttons · every enquire link pre-selects the right product · all renders share one background treatment.
+## Around the World `/around-the-world` — slide 18 (`components/world/`, `content/world.ts`)
 
-## Our Story `/our-story` (built: `components/story/*`, `content/story.ts` + `team.ts`)
+Bronze hero "Wonder, wherever you are." → real photographs grouped by place (London; Store visits — location to confirm) → five scent origins (concept art + AI disclaimer) → "Available in" (countries + video reel placeholders) → "Don't see your country yet? Talk to us." + follow links.
 
-Content files: `src/content/story.ts` and `src/content/team.ts`.
-1. **Opening story block.** Facts allowed: founded **2019**, the founder's very sensitive skin, the search for a locally available bar for sensitive/dry skin that felt luxurious but stayed affordable. The full text must be client-approved; until then use a placeholder and add no biographical detail.
-2. **Timeline** (vertical; build a reusable `TimelineItem`): 2019 the first bar · early years (first packaging, first customers) · growth to five varieties · the rebrand · today (gold-and-white packaging). Show year labels only where known. Milestone text comes from the client.
-3. **Then & Now gallery.** Old-pack photo beside the new render for the *same* variety (side-by-side, or a before/after slider). Render only varieties that have a genuine old photo. Old photos go in `brand-assets/source/old-packaging/` → `public/brand-assets/story/old-<slug>.webp`. Never fabricate an "old" pack. Note: the starter's lifestyle photos (`london-coconut`, `rose-at-retail`, `in-store`) show the old design and are candidates, so ask the client.
-4. **Rebrand section.** What changed (identity, gold-and-white packaging, botanical illustrations) and what stayed (Glow · Hydrate · Protect).
-5. **Meet the Team.** Data-driven grid from `team.ts` (`{ name, role, bio, photo }[]`): photo, name, role, one-line bio. Must look clean with 2 to 6 members. **Render the section only when `team.length > 0`. No placeholder people on the live site.**
-6. Closing CTA → `/collection` and `/contact`.
+## Get in Touch `/contact` — slide 19 (`components/contact/`, `content/contact.ts`)
 
-Starter look: `.story-hero` (`bg-sand`, image with multiply), `.founder-copy` (lead in serif `clamp(28px,3vw,42px)`), `.story-values` (3 cells with 1px gaps, alternating paper/#e5dccb).
+"Let's talk." → details (email, socials, good-to-know) + bronze bulk panel ("For orders, speak to us" sets the form to bulk) → the highlighted form card (defaults to "Bulk order"; `?type=` / `?product=` pre-fill) → "Wonder, in your feed." Address/map hidden until supplied. Footer line everywhere: "Made with care, from us to you."
 
-Acceptance: 5 milestones in order · genuine same-variety pairs · adding a team member = adding one data entry · no invented facts, with all open placeholders in DELIVERY-NOTES.md.
+## Acceptance (every page)
 
-## In the City `/in-the-city` (built: `components/city/*`, `content/city.ts`; gallery uses interim concept art)
-
-Content file: `src/content/city.ts` (`{ src, alt, scene, variety, caption }[]`).
-- The original's 2-column staggered `.campaign-card` grid (cards 1.2:1, 0.98:1 on phones), each with a caption of scene + featured variety. When the §6 set arrives, ask the developer whether to keep this layout or switch to the brief's vertical (4:5) cards. The starter's `.campaign-card` has an image, a small uppercase place line, a serif title and an "AI-generated campaign concept" note in `text-rose`.
-- Keep 2–4 of the client's real London photos only if they hold up next to the set. The starter's `.city-real` band (`moss` background, "Wonder, as it is.") keeps them visibly separate from the concepts.
-- **Disclaimer is required and visible** (`site.cityDisclaimer`), near the top, not in a tooltip or the footer.
-- Closing CTA: follow on Instagram / TikTok (`socials` from site.ts).
-- Do NOT use the starter's `campaign/*.webp`. They show AI-drawn packs, which §6 forbids.
-
-Acceptance: all images vertical, WebP, lazy, with alt text naming scene and variety · every pack shown is real composited packaging · disclaimer readable on the page.
-
-## Contact `/contact` (built: `components/contact/*`, `content/contact.ts`, `lib/enquiry.ts`)
-
-Content file: `src/content/contact.ts`. Order:
-1. **Direct details** (above the form, visible without scrolling on mobile): heading, `mailto:` `site.email`, social links, and a line that the team replies to questions and business opportunities. Add phone, WhatsApp or address **only** if the client supplies them.
-2. **Bulk & trade panel**, visually distinct (e.g. `bg-moss text-paper` or a gold-framed `bg-sand` panel). It covers bulk orders, retail/stocking and distribution, plus a list of what to include (business name, location, estimated quantity). Its CTA *Start a bulk enquiry* scrolls to the form and sets enquiry type = bulk.
-3. **Contact form** (features.md): name, email, enquiry type (`General question · Bulk order · Stock the range · Press / other`), product (optional: 5 bars + "Not product-specific"), message, consent checkbox.
-4. **Response-time line** only with client-confirmed wording. Otherwise omit it.
-
-Pre-fill: `?product=<slug>` and `?type=bulk` are read with `useSearchParams` inside a `<Suspense>` boundary (required under cacheComponents). The bulk CTA sets state directly and scrolls.
-
-Acceptance: email visible without scrolling · bulk CTA pre-sets the type · success and error states work · a real test reaches `hello@royalbasketgroup.com`.
-
-## SEO per page
-
-Title pattern: `title.template` is `%s — Wonder Beauty Soap`, and Home uses `site.seo.title` ("Wonder Beauty Soap — five botanical varieties"). Each page sets its own `description`. The OG image comes from `src/app/opengraph-image.jpg` (the lineup). `robots` allows indexing.
+Builds and prerenders; no horizontal scroll at 360/390/768/1440; no console errors; reveals fire on scroll; buttons follow the three-variant rule; labels/taglines use the palette rules; images fit their frames; nothing invented; placeholders and samples listed in DELIVERY-NOTES.

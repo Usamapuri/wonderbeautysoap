@@ -1,115 +1,134 @@
-// Home page copy. Replicates the original Replit site's Home (developer decision 2026-10-21:
-// "original + small additions"); the only additions are the on-pack promise strip and the bulk CTA.
-// Order: hero, promise, botanicalEdit, film, collection, realWorld, intro, quietDetail, retail, closing.
+// Home page copy, strictly from the client's Wonder_Website_Brief.pptx (2026-10-25) — the deck's
+// own text, or the existing site text shown in its screenshots. Section order follows
+// slide 3 (welcome → mission → vision → products → where it's sold), laid out after the Gisou home
+// page the developer chose as the reference, with the reviews at the end (slide 9).
+// Order: hero, promises, welcome, film, design, scents, mission, vision, products, world, reviews, closing.
 
-import { site } from "./site"
+import { ordersCta, site } from "./site"
 
 export const home = {
+  // Slide 4: "Keep the opening as is" — the Bolt prototype's opening.
   hero: {
-    eyebrow: "A beauty soap for every day",
-    // Rendered as "A little / everyday / wonder." — the emphasised word is gold.
-    headline: { before: "A little", emphasis: "everyday", after: "wonder." },
-    headlineText: site.heroHeadline,
-    sub: "Five botanical varieties. One familiar bar. Meet Wonder Beauty Soap, dressed in its gold-and-white signature.",
+    eyebrow: "Artisanal soap, made to travel",
+    // Rendered as three lines; the middle word is italic and indented, as in the prototype.
+    headline: ["Scent.", "Lather.", "Wonder."],
+    headlineText: site.taglines.hero,
+    sub: "Beautifully scented bars inspired by the places we love, made with care for the skin you live in.",
     primaryCta: { label: "Explore the collection", href: "/collection" },
-    secondaryCta: { label: "Discover Wonder", href: "/our-story" },
+    // Bulk orders only (developer decision 2026-10-25).
+    secondaryCta: { label: ordersCta.label, href: ordersCta.href },
     image: {
-      src: "/brand-assets/products/lineup.webp",
-      alt: "The Wonder Beauty Bar range: Coconut, Aloe Vera, Lemon, Lavender and Rose",
-      width: 1800,
-      height: 1020,
+      src: "/brand-assets/products/lemon.webp",
+      alt: "The Wonder Lemon Beauty Bar in its gold-and-white box",
     },
-    badge: { value: "05", label: ["botanical", "varieties"] },
-    index: "THE WONDER RANGE",
   },
 
-  promise: [site.taglines.formulaShort, site.taglines.dermatologist],
+  promises: [...site.taglines.promises, site.taglines.everydayLuxury.replace(".", ""), site.taglines.dermatologist],
 
-  // Concept artwork (bare bars, no packaging) — labelled as such by the footnote.
-  botanicalEdit: {
-    eyebrow: "The Botanical Edit",
-    lead: ["Five small worlds.", "A Wonder of your own."],
-    label: "Wonder, in five imagined worlds",
-    images: [
-      { src: "/brand-assets/flavors/coconut-beach.webp", alt: "Coconut beach campaign concept, with a bar on sunlit sand", variety: "Coconut", mood: "The island daydream" },
-      { src: "/brand-assets/flavors/lemon-italy.webp", alt: "Lemon campaign concept among lemons on the Amalfi coast", variety: "Lemon", mood: "A citrus afternoon" },
-      { src: "/brand-assets/flavors/rose-editorial.webp", alt: "Rose-toned editorial campaign concept with sculpted rose soaps", variety: "Rose", mood: "Softly romantic" },
+  // Slides 5–6, broken into short lines ("no paragraphs") with visuals in between.
+  welcome: {
+    eyebrow: "Welcome",
+    heading: ["A Pakistani artisan", "soap brand."],
+    lead: "Made with meticulous attention to detail, and with both skin comfort and sensory pleasure in mind.",
+    // The client's sentences, split into a bold lead and the rest.
+    points: [
+      { title: "Carefully selected ingredients,", body: "including fragrant flowers and botanicals." },
+      { title: "Packed with care", body: "by our own people, for you." },
+      { title: "Innovation, experimentation and design", body: "in everyday beauty." },
     ],
-    footnote: "Concept artwork, imagined for the Wonder world.",
+    pull: "Every bar is a small multisensory experience: rich lather, a lovely scent and a feel that stays with you.",
+    image: {
+      src: "/brand-assets/lifestyle/london-coconut.webp",
+      alt: "A Wonder Coconut Beauty Soap held beside the River Thames in London",
+    },
   },
 
+  // The visual between the welcome notes (slide 31: "AI video" goes here).
   film: {
     eyebrow: "A little pause in the day",
     heading: { before: "Let the day", emphasis: "soften." },
     body: "A quiet, imagined moment with Wonder. A reminder that an everyday ritual can still feel like your own.",
     caption: "Campaign film · Sound off",
-    frameCaption: "Moving image concept · Wonder Beauty Soap",
-    // The starter's mp4 is not on its live deployment — it comes with the Replit source export (§9).
-    // Drop it at public/brand-assets/videos/wonder-bath-bubbles.mp4 and set `src` to that path.
+    // No video supplied yet (deck slide 21: "Add AI videos"). Drop an mp4 at
+    // public/brand-assets/videos/ and set `src` to its path; the poster shows until then.
     src: null as string | null,
     poster: "/brand-assets/flavors/bath-bubbles-poster.webp",
-    label: "Muted Wonder campaign film showing a beauty bar beside a bath of bubbles",
+    label: "Wonder campaign film: a beauty bar beside a bath of bubbles",
   },
 
-  collection: {
-    eyebrow: "Find your Wonder",
-    heading: ["Five botanicals.", "One beauty bar."],
-    body: "A closer look at the Wonder Beauty Bar range. Each variety has its own botanical illustration and distinctive package.",
-    more: { label: "See all five varieties", href: "/collection" },
+  // Slide 6 + designer note "Eco-friendly box packaging is a selling point: give it space on Home".
+  design: {
+    statement: "Elegance and design go into every pack, so your soap feels like a little luxury and not just a bathroom basic.",
+    eco: {
+      eyebrow: "Eco-friendly box packaging",
+      heading: "A better way to wrap luxury.",
+      lines: [
+        "Instead of traditional wrappers and plastic packaging, Wonder comes in eco-friendly box packaging.",
+        "It helps reduce our carbon footprint and gives you a luxury experience at an affordable price, because every customer matters to us.",
+      ],
+      image: {
+        src: "/brand-assets/products/lineup.webp",
+        alt: "All five Wonder Beauty Bars in their gold-and-white boxes",
+      },
+    },
+    closing: "We love quality and beauty, and we want you to find both in every bar.",
   },
 
-  // Links to In the City — the original's "promise band".
-  realWorld: {
-    eyebrow: "Wonder, in the real world",
-    heading: ["Recognisable", "by nature."],
-    body: "Gold lettering. Cream-and-white packs. Botanical illustrations that make each variety its own. Wonder’s signature look belongs to the everyday—and has a way of standing out.",
-    cta: { label: "See Wonder out and about", href: "/in-the-city" },
+  // Slides 25, 26, 30: all five flavours, "Every scent tells a story", "Wonder, wherever you are."
+  scents: {
+    eyebrow: site.taglines.everyScent,
+    heading: site.taglines.wherever,
+    footnote: "Concept artwork, imagined for the Wonder world.",
+  },
+
+  // Slides 7–8.
+  mission: {
+    eyebrow: "Our mission",
+    text: "To make everyday luxury accessible to all, with a gentle, moisturising, beautifully scented beauty bar made with care for every skin type, at a price everyone can afford.",
+    image: {
+      src: "/brand-assets/lifestyle/rose-at-retail.webp",
+      alt: "A Wonder Rose Beauty Soap held in a shop",
+      width: 900,
+      height: 1200,
+    },
+  },
+  vision: {
+    eyebrow: "Our vision",
+    text: "Our vision is to offer products you can trust. In a world full of big claims and marketing gimmicks, Wonder promises to stay honest: quality ingredients, careful craftsmanship and a product we are proud to stand behind.",
+    signOff: "From us to you.",
+    // Slide 8 notes: optional second vision line.
+    second: "To become the most loved everyday beauty bar in the region, and a name that travels.",
     image: {
       src: "/brand-assets/lifestyle/london-lineup.webp",
       alt: "Wonder Beauty Soap packages photographed beside the London Eye",
+      width: 1200,
+      height: 801,
     },
   },
 
-  intro: {
-    eyebrow: "Made from a personal idea",
-    heading: ["A bar with", "a point of view."],
-    body: [
-      "Wonder began with the owner's experience of very sensitive skin and a wish for a locally available soap imagined with sensitive and dry skin in mind.",
-      "That personal motivation became a broader aspiration: an everyday bar with a luxurious feel, at an affordable price.",
+  products: {
+    eyebrow: "The collection",
+    heading: ["Five botanicals.", "One beauty bar."],
+    body: site.taglines.celebration,
+    more: { label: "See the whole collection", href: "/collection" },
+  },
+
+  // "Visuals of where Wonder is sold … linking to Around the World" (slide 3). Real photographs.
+  // width/height = the WebP's pixel size; the strip sizes columns so every photo fits uncropped.
+  world: {
+    eyebrow: "Around the world",
+    heading: site.taglines.everydayLuxury,
+    cta: { label: "See Wonder around the world", href: "/around-the-world" },
+    photos: [
+      { src: "/brand-assets/lifestyle/in-store.webp", width: 801, height: 1200, alt: "Wonder Beauty Soap in a shopping basket in a store", caption: "A moment in a shop" },
+      { src: "/brand-assets/lifestyle/collection-basket.webp", width: 1200, height: 801, alt: "Wonder Beauty Soap packages in a shopping basket", caption: "Everyday discoveries" },
     ],
-    cta: { label: "Read the story", href: "/our-story" },
-    image: {
-      src: "/brand-assets/lifestyle/london-coconut.webp",
-      alt: "Wonder Coconut Beauty Soap held beside the River Thames in London",
-    },
   },
-
-  quietDetail: {
-    eyebrow: "Little rituals, within reach",
-    heading: ["Beauty belongs", "in the everyday."],
-    body: "Wonder was imagined for the ordinary moments we return to: a fresh towel, warm water, a few minutes to yourself.",
-    cta: { label: "The thought behind Wonder", href: "/our-story" },
-    image: {
-      src: "/brand-assets/flavors/aloe-freshness.webp",
-      alt: "Aloe-inspired beauty bar campaign concept, surrounded by fresh aloe leaves",
-    },
-  },
-
-  // Retail shots from the starter. Captions must not name a retailer until the client confirms it (§10).
-  // width/height = the WebP's pixel size; the strip sizes each column so every photo fits uncropped.
-  // On phones the first two sit side by side and the third spans the row, so keep a landscape shot last.
-  retail: [
-    { src: "/brand-assets/lifestyle/in-store.webp", width: 801, height: 1200, alt: "Wonder Beauty Soap among products in a shopping basket", caption: "A moment in a shop" },
-    { src: "/brand-assets/lifestyle/rose-at-retail.webp", width: 900, height: 1200, alt: "Wonder Rose Beauty Soap held in a retail setting", caption: "Rose, on the go" },
-    { src: "/brand-assets/lifestyle/collection-basket.webp", width: 1200, height: 801, alt: "Wonder Beauty Soap packages in a shopping basket", caption: "Everyday discoveries" },
-  ],
 
   closing: {
-    eyebrow: "Five ways to meet Wonder",
-    heading: ["Which one", "will you choose?"],
-    body: "Coconut, Aloe Vera, Lemon, Lavender or Rose. Take a closer look at the Wonder Beauty Bar collection.",
+    eyebrow: site.taglines.everydayLuxury,
+    heading: ["Lather that feels like", "a little celebration."],
     primaryCta: { label: "Explore the collection", href: "/collection" },
-    // Brief addition: route bulk buyers to Contact with "Bulk order" pre-selected.
-    secondaryCta: { label: "For bulk orders, talk to us", href: "/contact?type=bulk" },
+    secondaryCta: { label: ordersCta.label, href: ordersCta.href },
   },
 } as const

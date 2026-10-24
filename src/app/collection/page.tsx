@@ -1,32 +1,46 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 
+import { Copy } from "@/components/brand/copy"
 import { Eyebrow } from "@/components/brand/eyebrow"
 import { PageCta } from "@/components/brand/page-cta"
-import { Em } from "@/components/brand/page-hero"
+import { Em } from "@/components/brand/em"
 import { CollectionItem } from "@/components/collection/collection-item"
+import { SplitText } from "@/components/brand/split-text"
 import { collection } from "@/content/collection"
 import { products } from "@/content/products"
 
 export const metadata: Metadata = collection.seo
 
-// Brief §4.3 — exactly five bars, in order, no prices and no buy buttons.
+// Brief §4.3 + deck slide 17 — exactly five bars in the deck's order, no prices and no buy buttons.
 export default function CollectionPage() {
-  const { heading, feature, cta } = collection
+  const { heading, feature, safetyReport, cta } = collection
   return (
     <>
       <section aria-labelledby="collection-title" className="rise-group px-[22px] pt-[70px] pb-[30px] text-center sm:px-6 sm:pt-[95px] sm:pb-[45px]">
         <Eyebrow center>{heading.eyebrow}</Eyebrow>
         <h1
           id="collection-title"
-          className="font-display mt-7 mb-6 text-[clamp(55px,15vw,82px)] leading-[0.8] tracking-[-0.055em] sm:text-[clamp(60px,8vw,112px)]"
+          className="font-display mt-7 mb-6 text-[clamp(55px,15vw,82px)] leading-[0.86] tracking-[-0.035em] sm:text-[clamp(60px,8vw,118px)]"
         >
-          {heading.title.before}
+          <SplitText text={heading.title.before} now />
           <br />
-          <Em>{heading.title.emphasis}</Em>
+          <Em>
+            <SplitText text={heading.title.emphasis} now start={2} />
+          </Em>
         </h1>
-        <p className="mx-auto max-w-[440px] text-xs leading-[1.9] text-ink-soft sm:text-[13px]">{heading.body}</p>
         <p className="mt-4 text-[9px] uppercase tracking-[0.18em] text-gold">{heading.formula}</p>
+        <p className="mt-3 text-[9px] uppercase tracking-[0.16em] text-ink-muted">
+          {safetyReport.href ? (
+            <a href={safetyReport.href} className="underline decoration-gold underline-offset-4 hover:text-gold">
+              {safetyReport.label}
+            </a>
+          ) : (
+            <>
+              {safetyReport.label}: <Copy value={safetyReport.pending} />
+            </>
+          )}
+        </p>
       </section>
 
       {/* The lineup fills its frame edge to edge (no inner mat), at its own 1800×1020 ratio. */}
@@ -53,7 +67,7 @@ export default function CollectionPage() {
         ))}
       </section>
 
-      <PageCta eyebrow={cta.eyebrow} heading={cta.heading} primary={cta.action} />
+      <PageCta eyebrow={cta.eyebrow} heading={cta.heading} primary={cta.action} secondary={cta.secondary} />
     </>
   )
 }

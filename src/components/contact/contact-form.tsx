@@ -12,6 +12,7 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { SplitText } from "@/components/brand/split-text"
 import { contact, enquiryTypes, productOptions, type EnquiryType } from "@/content/contact"
 import { site } from "@/content/site"
 import { submitEnquiry, type Enquiry } from "@/lib/enquiry"
@@ -34,7 +35,8 @@ type Values = Omit<Enquiry, "type"> & { type: EnquiryType | "" }
 type Errors = Partial<Record<keyof Values, string>>
 type Status = "idle" | "submitting" | "sent" | "mailto" | "error"
 
-const empty: Values = { name: "", email: "", type: "", product: "", message: "", consent: false }
+// The site targets bulk orders only, so "Bulk order" is pre-selected (developer decision 2026-10-25).
+const empty: Values = { name: "", email: "", type: "bulk", product: "", message: "", consent: false }
 
 /** Marks that the visitor has engaged with the form — the email pop-up stays away after this (§5.1). */
 const markTouched = () => {
@@ -65,16 +67,6 @@ export function ContactForm() {
     const product = productValues.find((p) => p === params.get("product"))
     if (type || product) setValues((v) => ({ ...v, ...(type && { type }), ...(product && { product }) }))
   }
-
-  // The bulk panel CTA re-applies "bulk" even when the URL already says so.
-  useEffect(() => {
-    const onType = (e: Event) => {
-      const type = typeValues.find((t) => t === (e as CustomEvent<string>).detail)
-      if (type) setValues((v) => ({ ...v, type }))
-    }
-    window.addEventListener("wonder:enquiry-type", onType)
-    return () => window.removeEventListener("wonder:enquiry-type", onType)
-  }, [])
 
   useEffect(() => {
     if (status !== "idle" && status !== "submitting") panelRef.current?.focus()
@@ -115,16 +107,16 @@ export function ContactForm() {
   )
 
   return (
-    // The page's key card, so it stands apart from the cream: warmer stone gradient, gold-tinted
-    // edge, a gold accent bar along the top and a deeper shadow.
+    // The right pane of the enquiry card on Get in Touch (the bulk brief is the left pane); the card
+    // itself — frame, gold top bar, shadow — lives in the page.
     <section
       id="enquiry"
       aria-labelledby="enquiry-heading"
-      className="relative scroll-mt-[calc(var(--header-height)+16px)] overflow-hidden rounded-lg border border-gold/30 bg-linear-to-br from-stone via-stone to-wheat px-5 py-7 shadow-pop before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-linear-to-r before:from-gold before:via-gilt before:to-gold sm:p-[clamp(28px,5vw,60px)]"
+      className="scroll-mt-[calc(var(--header-height)+16px)] bg-linear-to-br from-stone via-stone to-wheat px-6 py-8 sm:p-10 md:p-12"
     >
       <Eyebrow>{form.eyebrow}</Eyebrow>
       <h2 id="enquiry-heading" className="font-display mt-[18px] mb-6 text-[39px] leading-[0.95] sm:text-[clamp(36px,4vw,53px)]">
-        {form.heading}
+        <SplitText text={form.heading} now />
       </h2>
 
       {status === "sent" || status === "mailto" || status === "error" ? (

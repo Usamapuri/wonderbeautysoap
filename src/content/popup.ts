@@ -3,7 +3,7 @@
 // set `incentive` to the approved line; null = not shown. Never invent a discount.
 
 export const popup = {
-  eyebrow: "Wonder Beauty Soap",
+  eyebrow: "Royal Basket",
   heading: "Join the Wonder list",
   body: "Brand updates, new launches and offers — straight to your inbox.",
   incentive: null as string | null,

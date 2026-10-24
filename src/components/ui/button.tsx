@@ -18,13 +18,16 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
-        // Wonder brand buttons (starter .button-primary): uppercase, tracked, rounded-lg. On hover a
-        // slanted fill wipes across (btn-sweep, colour from --btn-fill), the button lifts and its
-        // shadow deepens. On dark bands, override --btn-fill / colours (see BulkCta).
+        // Wonder brand buttons (Bolt prototype): uppercase, tracked, rounded-lg. On hover a slanted
+        // fill wipes across (btn-sweep, colour from --btn-fill), the button lifts and its shadow
+        // deepens. `wonder` = solid ink (bronze sweep); `wonder-outline` = ink outline on cream;
+        // `wonder-light` = cream outline for bronze/ink bands.
         wonder:
-          "rounded-lg border-leaf bg-leaf text-paper uppercase tracking-[0.16em] shadow-lift btn-sweep duration-500 ease-[cubic-bezier(.2,.7,.2,1)] [--btn-fill:var(--leaf-deep)] hover:-translate-y-0.5 hover:border-leaf-deep hover:shadow-pop [&_svg]:transition-transform hover:[&_svg]:translate-x-0.5",
+          "rounded-lg border-ink bg-ink text-paper uppercase tracking-[0.16em] shadow-lift btn-sweep duration-500 ease-[cubic-bezier(.2,.7,.2,1)] [--btn-fill:var(--bronze)] hover:-translate-y-0.5 hover:border-bronze hover:shadow-pop [&_svg]:transition-transform hover:[&_svg]:translate-x-0.5",
         "wonder-outline":
-          "rounded-lg border-gold bg-transparent text-ink uppercase tracking-[0.16em] btn-sweep duration-500 ease-[cubic-bezier(.2,.7,.2,1)] [--btn-fill:var(--gold)] hover:-translate-y-0.5 hover:text-paper hover:shadow-pop [&_svg]:transition-transform hover:[&_svg]:translate-x-0.5",
+          "rounded-lg border-ink/70 bg-transparent text-ink uppercase tracking-[0.16em] btn-sweep duration-500 ease-[cubic-bezier(.2,.7,.2,1)] [--btn-fill:var(--ink)] hover:-translate-y-0.5 hover:border-ink hover:text-paper hover:shadow-pop [&_svg]:transition-transform hover:[&_svg]:translate-x-0.5",
+        "wonder-light":
+          "rounded-lg border-paper/70 bg-transparent text-paper uppercase tracking-[0.16em] btn-sweep duration-500 ease-[cubic-bezier(.2,.7,.2,1)] [--btn-fill:var(--paper)] hover:-translate-y-0.5 hover:border-paper hover:text-ink hover:shadow-pop [&_svg]:transition-transform hover:[&_svg]:translate-x-0.5",
       },
       size: {
         default:

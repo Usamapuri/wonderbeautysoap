@@ -124,7 +124,7 @@ export function EmailPopup() {
         // Desktop: centred card. Phones: bottom sheet, ≤ 70 % of the viewport, clear of the safe area.
         className="max-h-[70svh] gap-0 overflow-y-auto rounded-lg border-t-2 border-gold bg-sand p-7 pb-[max(28px,env(safe-area-inset-bottom))] ring-0 sm:max-w-[440px] sm:border sm:border-gold/50 sm:p-10 max-sm:top-auto max-sm:bottom-0 max-sm:left-0 max-sm:max-w-full max-sm:rounded-b-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:data-open:slide-in-from-bottom-10 [&>[data-slot=dialog-close]]:top-3 [&>[data-slot=dialog-close]]:right-3 [&>[data-slot=dialog-close]]:size-10 [&>[data-slot=dialog-close]]:rounded-lg"
       >
-        <span className="text-[9px] uppercase tracking-[0.24em] text-leaf">{popup.eyebrow}</span>
+        <span className="text-[9px] uppercase tracking-[0.24em] text-gold">{popup.eyebrow}</span>
         <span aria-hidden className="mt-4 block h-px w-12 bg-gold" />
         <DialogTitle className="font-display mt-5 text-[40px] leading-[0.95] font-semibold text-ink">{popup.heading}</DialogTitle>
 

@@ -243,7 +243,7 @@ Build, in this order:
 - [ ] Mobile: bottom sheet, no layout shift of the underlying page, close target reachable one-handed
 - [ ] Keyboard-only path: can tab to the field, submit, and close with ESC
 
-### 5.2 Contact form handling
+### 5.2 Contact form handling 
 
 **Options:**
 - **Recommended for launch: Formspree.** No backend to maintain; submissions delivered by email to `hello@royalbasketgroup.com`; built-in spam filtering; free tier covers expected enquiry volume. Create the form endpoint under an account the client can be added to.

@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // "In the City" was renamed "Around the World" (client website brief deck, 2026-10-25).
+  async redirects() {
+    return [{ source: "/in-the-city", destination: "/around-the-world", permanent: true }];
+  },
 };
 
 export default nextConfig;

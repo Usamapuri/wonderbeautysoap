@@ -9,7 +9,7 @@
 | `brand-assets/starter/` | Downloaded from the live Replit starter | `products/` superseded by mockups; `flavors/` = concept art with bare bars (OK); `lifestyle/` = client's real photos (old packaging); `campaign/` = AI-drawn packs → **never publish**. |
 | Client WeTransfer | `~/Downloads/wetransfer_wonder-soap-packaging_2026-10-12_0039/Wonder_packagin_final/` (also has `.ai` vector files, the dieline `.ai`, fonts) | Copy new originals into `brand-assets/source/` and don't reference Downloads from code. |
 
-Fonts: `Against` and `Abhaya Libre SemiBold` are in `src/fonts/`. Arial and Adobe Arabic from the client folder are not used on the web.
+Fonts: DM Sans + DM Serif Display (the client's Bolt prototype theme) are self-hosted in `src/fonts/`. The client's Against / Abhaya Libre / Arial / Adobe Arabic files are not used on the web.
 
 ## Pipeline
 
@@ -25,7 +25,7 @@ Slugs everywhere: `coconut`, `aloe-vera`, `lemon`, `lavender`, `rose`. Dieline/m
 
 Still needed from the client: logo SVG (the header uses the starter's text wordmark until then), the campaign video mp4 (`public/brand-assets/videos/wonder-bath-bubbles.mp4`, then set `home.film.src`), old-packaging photos, team photos.
 
-## §6 AI campaign set: In the City verticals
+## §6 AI campaign set (Around the World / flavour artwork)
 
 **Goal:** 8–10 vertical campaign visuals featuring the **real** Wonder packaging, replacing or augmenting the weak London photos.
 
@@ -37,6 +37,6 @@ Scenes: 1 Shower, with model, foam, warm steam (page hero, also 9:16) · 2 Paris
 3. If an AI editor is used instead, feed the real pack as a locked reference, then compare pixel by pixel at 200%. Reject any output where "WONDER", "Beauty Bar", the variety name or the taglines differ.
 4. QA each image: hands and fingers, pack text at 200%, botanical match, warm grade (no blue cast, natural skin).
 
-**Formats:** masters at 4:5 (1600×2000) plus 9:16 for the shower hero. Web WebP ≤150 KB. Names: `/brand-assets/city/<scene>-<variety>.webp` (e.g. `paris-cafe-lemon.webp`). Keep prompts and layered source files under `brand-assets/source/city/` for reproducibility. Then add the entries to `src/content/city.ts`, replace the interim `home.city.visuals`, and confirm the disclaimer is on `/in-the-city`.
+**Formats:** masters at 4:5 (1600×2000) plus 9:16 for the shower hero. Web WebP ≤150 KB. Names: `/brand-assets/city/<scene>-<variety>.webp` (e.g. `paris-cafe-lemon.webp`). Keep prompts and layered source files under `brand-assets/source/city/` for reproducibility. Then reference them from `src/content/products.ts` (`artwork`) or `src/content/world.ts`, and keep the AI disclaimer next to any concept art (`site.aiDisclaimer`).
 
 **Acceptance:** 8–10 verticals, all 5 varieties, naming followed · pack text exact at 200% · no anatomical artefacts · consistent warm grade across the set.

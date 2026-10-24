@@ -1,30 +1,34 @@
 import { Eyebrow } from "@/components/brand/eyebrow"
 import { Lines } from "@/components/brand/lines"
 import { contact } from "@/content/contact"
+import { site } from "@/content/site"
 
-import { BulkCta } from "./bulk-cta"
-
-// §4.5 #2 — visually distinct bulk & trade panel. Its CTA sets ?type=bulk (the form listens for it)
-// and jumps to the form.
+// The bulk-order brief: the left pane of the enquiry card on Get in Touch (the form is the right
+// pane), so it reads as part of one bulk-order enquiry rather than a separate box.
 export function BulkPanel() {
-  const { bulk } = contact
+  const { bulk, details } = contact
   return (
-    <section aria-labelledby="bulk-heading" className="rounded-lg bg-moss p-7 text-paper shadow-card sm:p-10">
-      <Eyebrow tone="gilt">{bulk.eyebrow}</Eyebrow>
-      <h2 id="bulk-heading" className="font-display mt-5 mb-4 text-[clamp(36px,4vw,50px)]">
-        <Lines lines={bulk.heading} />
+    <aside aria-labelledby="bulk-heading" className="bronze-glow flex flex-col p-8 sm:p-10 md:p-12">
+      <Eyebrow tone="cream">{bulk.eyebrow}</Eyebrow>
+      <h2 id="bulk-heading" className="font-display mt-5 mb-5 text-[clamp(40px,4.4vw,58px)]">
+        <Lines lines={bulk.heading} now />
       </h2>
-      <p className="text-[11px] leading-[1.8] text-paper/80">{bulk.body}</p>
-      <ul className="mt-4 space-y-2 text-xs">
-        {bulk.include.map((item) => (
-          <li key={item} className="flex items-center gap-3">
-            <span aria-hidden className="size-1.5 rotate-45 bg-gilt" />
+      <p className="max-w-[360px] text-[12px] leading-[1.8] text-paper/85">{bulk.body}</p>
+      <ul className="mt-6 grid gap-3 border-t border-paper/20 pt-6 text-[13px]">
+        {bulk.include.map((item, i) => (
+          <li key={item} className="flex items-baseline gap-4">
+            <span className="font-display w-7 shrink-0 text-[18px] leading-none text-paper/60 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
             {item}
           </li>
         ))}
       </ul>
-      {bulk.minimumOrder && <p className="mt-4 text-[11px] text-gilt">{bulk.minimumOrder}</p>}
-      <BulkCta label={bulk.cta} />
-    </section>
+      {bulk.minimumOrder && <p className="mt-5 text-[12px] text-paper/85">{bulk.minimumOrder}</p>}
+      <div className="mt-auto pt-10">
+        <p className="text-[8px] uppercase tracking-[0.2em] text-paper/70">{details.emailLabel}</p>
+        <a href={`mailto:${site.email}`} className="mt-2 inline-flex min-h-10 items-center text-[14px] text-paper underline decoration-paper/50 underline-offset-4 hover:decoration-paper">
+          {site.email}
+        </a>
+      </div>
+    </aside>
   )
 }

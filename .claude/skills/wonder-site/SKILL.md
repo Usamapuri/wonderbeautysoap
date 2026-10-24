@@ -1,28 +1,27 @@
 ---
 name: wonder-site
-description: Build, extend or QA the Wonder Beauty Soap portfolio website (Royal Basket Group) in this repo — Next.js App Router + shadcn/ui + Tailwind v4, implementing implementation-plan.md. Use for any work on its pages (Home, Our Story, The Collection, In the City, Contact), the email pop-up, the contact form, brand assets/imagery, content edits, Vercel deployment or Spaceship DNS go-live.
+description: Build, extend or QA the Royal Basket website for its Wonder beauty bars (Royal Basket Group) in this repo — Next.js App Router + shadcn/ui + Tailwind v4, implementing the client's Wonder_Website_Brief.pptx on top of implementation-plan.md. Use for any work on its pages (Home, Our Story, The Collection and the five flavour pages, Around the World, Get in Touch), the bulk-order form, the email pop-up, brand assets/imagery, content edits, Vercel deployment or Spaceship DNS go-live.
 ---
 
-# Wonder Beauty Soap website
+# Royal Basket × Wonder website
 
-The brief is `implementation-plan.md` at the repo root. It is the source of truth for scope, copy rules, page specs and acceptance criteria. This skill turns it into a Next.js + shadcn implementation guide. When the two disagree, the brief wins, except for the stack (see "Stack decision").
+Two briefs: `implementation-plan.md` (scope, rules, acceptance criteria) and the client's **`Wonder_Website_Brief.pptx`** (repo root; 2026-10-25), which sets the current structure, copy and taglines. Read the deck's text with `python scripts/slide_text.py` from the pptx skill, or see `DELIVERY-NOTES.md` → Decisions.
 
-## Replicate the original (developer decision 2026-10-21)
+## Current direction (developer decisions, 2026-10-25)
 
-The site replicates **https://wonder-beauty-soaps--zainabshahid062.replit.app/**: its sections, order, copy, nav and look. Where the brief and the original disagree, **the original wins**, except for:
-- the client's change requests (Our Story additions, Contact bulk panel and form, email pop-up, In the City honesty disclaimer)
-- brief features the original lacks (Collection enquire links and anchors, the promise strip, the bulk CTA)
-- anything that would publish AI-drawn packaging (§6)
-
-`DELIVERY-NOTES.md` → "Decisions" lists every resolved conflict. The original's compiled CSS/JS (`/assets/index-*.css|js`) is the reference for exact values and copy. Compare side by side with the screenshot recipe in deploy-and-qa.md.
+- **Brand = Royal Basket (Group)**; Wonder is the soap. Royal Basket Group logo in the header/footer, titles "… — Royal Basket".
+- **Bulk orders only.** Every call to action leads to `/contact?type=bulk` (with `&product=<slug>` where known); the form pre-selects "Bulk order".
+- **Copy = the deck's own text**, or existing site text visible in its screenshots. Don't write new marketing copy; short labels may restate the deck's headings. Long deck paragraphs may be split into short lines ("no paragraphs").
+- **Five tabs:** Home · Our Story · The Collection (dropdown of the 5 bars) · Around the World (`/in-the-city` redirects) · Get in Touch. Each flavour has its own page, `/collection/<slug>`: definition (tagline, sub-line, origin) + history (the founder's origin story) + bulk button.
+- **Look:** the client's Bolt prototype theme, Home after gisou.com, Our Story after rhode's About page, consistent buttons/colours. See [references/design-system.md](references/design-system.md).
 
 ## Non-negotiable rules (brief §0)
 
-1. **The original Replit site is the reference: reproduce it, never redesign it.** Its exact tokens, including its late "polish" overrides, are already in `src/app/globals.css`. See [references/design-system.md](references/design-system.md).
+1. **Follow the design system** in [references/design-system.md](references/design-system.md) (Bolt theme, tokens in `src/app/globals.css`). Keep colours, buttons and motion consistent across pages.
 2. **Portfolio only.** No shop, cart, checkout, prices, accounts or payments, and no "buy" buttons anywhere.
-3. **Never invent facts.** Never invent prices, retailers, awards, ingredients, statistics, team members, testimonials, biography details or response times. Missing content becomes `placeholder("…")` from `src/content/placeholder.ts`. It renders visibly marked through `<Copy>`. Log it in `DELIVERY-NOTES.md`.
+3. **Never invent facts.** Never invent prices, retailers, awards, ingredients, statistics, team members, testimonials/reviews, biography details or response times. Sample reviews stay visibly marked (`sample: true` in `src/content/reviews.ts`) until the client supplies real ones. Missing content becomes `placeholder("…")` from `src/content/placeholder.ts`. It renders visibly marked through `<Copy>`. Log it in `DELIVERY-NOTES.md`.
 4. **Claims discipline.** Only the on-pack lines are allowed: "Triple Action Formula — Glow | Hydrate | Protect" and "Dermatologist Recommended". Per-bar benefit wording comes from the client only. The dieline back panels carry extra text (ingredients, "Paraben Free", prices, weights). Do NOT publish any of it unless the client confirms it in writing (§10, §13 #10).
-5. **One source of truth for master data.** Email, socials, domain, taglines and the disclaimer live in `src/content/site.ts`, copied from brief Appendix A. Never hard-code them in components.
+5. **One source of truth for master data.** Brand, email, socials, taglines, the orders CTA (`ordersCta`), flavour links (`barHref`) and the AI disclaimer live in `src/content/site.ts`. Never hard-code them in components.
 6. **Never alter the packaging.** Never let AI draw or alter it. On-site product imagery is the approved mockups, or real photos.
 7. **Email must not break at go-live.** Preserve every MX/TXT record on Spaceship (§7.3).
 8. If something is ambiguous, ask the developer (Abdullah). Don't guess.
@@ -42,24 +41,27 @@ The developer chose **Next.js 16 (App Router, Turbopack, `cacheComponents` + `pa
 ## Project map
 
 ```
-implementation-plan.md      the brief
-DELIVERY-NOTES.md           open placeholders, interim assets, decisions (keep current)
-brand-assets/source/        client originals: mockups/ (approved renders), dielines/ (flat artwork)
-brand-assets/starter/       assets carried over from the Replit starter (live-site download)
-scripts/prepare_assets.py   originals -> public/brand-assets/*.webp, botanicals, icons, OG image
-public/brand-assets/        web-ready WebP: products/ botanicals/ flavors/ lifestyle/ (city/ videos/ later)
-src/fonts/                  Against (body) + Abhaya Libre SemiBold (display), via next/font/local
-src/app/                    routes; globals.css = design tokens; icon/apple-icon/opengraph-image
-src/content/                ALL copy + data: site.ts (master data + integrations), products.ts, home.ts, collection.ts,
-                            story.ts, team.ts, city.ts, contact.ts, popup.ts, placeholder.ts
+implementation-plan.md      the original brief (scope, rules)
+Wonder_Website_Brief.pptx   the client's website brief deck (structure, copy, taglines) — not committed
+DELIVERY-NOTES.md           open placeholders, samples, interim assets, decisions (keep current)
+brand-assets/source/        client originals: mockups/ (approved renders), dielines/, logos/ (Royal Basket Group)
+brand-assets/starter/       assets carried over from the Replit starter
+scripts/prepare_assets.py   originals -> public/brand-assets/*.webp, botanicals, logos, icons, OG image
+public/brand-assets/        products/ botanicals/ flavors/ lifestyle/ logos/ (videos/ when supplied)
+src/fonts/                  DM Sans + DM Serif Display (Bolt theme), via next/font/local with size-adjust
+src/app/                    routes (/, /our-story, /collection, /collection/[slug], /around-the-world, /contact),
+                            template.tsx (page transitions), globals.css (tokens, utilities, motion)
+src/content/                ALL copy + data: site.ts (brand, taglines, nav, ordersCta, barHref, integrations),
+                            products.ts (5 bars: tagline, sub-line, mood, origin + story), home.ts, story.ts,
+                            collection.ts, world.ts, contact.ts, reviews.ts, team.ts, popup.ts, placeholder.ts
 src/lib/enquiry.ts          submitEnquiry(): the ONLY contact-form transport (Formspree, mailto fallback)
 src/lib/subscribe.ts        subscribe(): Mailchimp JSONP sign-up
-src/components/ui/          shadcn primitives (Button has brand variants `wonder`, `wonder-outline`, size `wonder`)
-src/components/brand/       Eyebrow, SectionHeading, TextLink, Lines, BrandMark, SocialLinks/SocialTextLinks,
-                            ProductCard, Copy, PageHero (+ Em), PageCta
-src/components/layout/      SiteHeader (sticky, active link, Sheet mobile menu), SiteFooter
-src/components/email-popup.tsx  §5.1 pop-up, mounted once in layout.tsx
-src/components/<page>/      one file per page section: home/ collection/ story/ city/ contact/
+src/components/ui/          shadcn primitives (Button variants `wonder`, `wonder-outline`, `wonder-light`)
+src/components/brand/       Eyebrow, SectionHeading, SplitText, Lines, BrandMark, PhotoRow, ProductCard, PageCta,
+                            Copy, Em, SocialLinks
+src/components/layout/      SiteHeader (dropdown, compact on scroll, Sheet on phones), SiteFooter
+src/components/<area>/      home/, story/, bar/ (flavour pages), collection/, world/, contact/
+src/components/floating-actions.tsx   phone bulk-orders bar + back-to-top
 ```
 
 ## How to build a page or section
@@ -77,7 +79,7 @@ src/components/<page>/      one file per page section: home/ collection/ story/ 
 | Phase | Work | Reference |
 |---|---|---|
 | 1 Foundation | tokens, fonts, shared components, header/footer, content files | design-system.md (**done**) |
-| 2 Core pages | Home, The Collection, Our Story, In the City, Contact (**all built**; awaiting client copy) | pages.md |
+| 2 Core pages | Home, Our Story, The Collection + 5 flavour pages, Around the World, Get in Touch (**rebuilt to the client deck 2026-10-25**; awaiting client content) | pages.md |
 | 3 Imagery | AI vertical campaign set composited with real packaging → replace interim city visuals | assets-and-imagery.md |
 | 4 Features | pop-up + contact form (**built**; set `NEXT_PUBLIC_FORMSPREE_ID` / `NEXT_PUBLIC_MAILCHIMP_ACTION`) | features.md |
 | 5 Content load | client copy, old-pack photos, team, then client sign-off on the preview URL | pages.md, DELIVERY-NOTES.md |

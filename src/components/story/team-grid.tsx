@@ -15,7 +15,7 @@ export function TeamGrid() {
     <section aria-labelledby="team-heading" className="px-section py-section">
       <div {...reveal()} className="mb-10 text-center sm:mb-14">
         <Eyebrow center>
-          {copy.number} · {copy.eyebrow}
+          {copy.eyebrow}
         </Eyebrow>
         <h2 id="team-heading" className="font-display mt-5 text-[clamp(44px,5vw,68px)]">
           <Lines lines={copy.heading} />

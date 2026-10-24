@@ -5,126 +5,114 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Wonder design tokens — values lifted from the Replit starter's compiled CSS (brief §3).
- * Every colour used in page code must come from here; no one-off hex values in components.
+ * Wonder design tokens. Palette and type follow the client's Bolt prototype (developer request
+ * 2026-10-25): cream page, ink text, gold accents, a bronze glow for statement bands, DM Serif
+ * Display + DM Sans. Every colour used in page code must come from here; no one-off hex values.
  */
 :root {
   /* Brand core */
-  --paper: #f6f0e5; /* ivory: light text on dark bands, button text (no longer a page background) */
-  --ink: #30251e; /* deep bronze-brown text */
-  --gold: #9a7131; /* antique gold: rules, links, hovers */
-  --gold-deep: #7d5a24; /* outline-button hover fill */
-  --gilt: #d6c48d; /* light gold on dark bands */
-  --leaf: #53664b; /* primary button, eyebrows */
-  --leaf-deep: #3c4b36; /* primary-button hover fill */
-  --rose: #a95e68;
-  --rule: #3c302233; /* hairlines */
+  --paper: #f6f2e8; /* cream: page base, and light text on dark bands */
+  --ink: #25231d; /* text, primary buttons, footer */
+  --gold: #8f7130; /* readable antique gold on cream: emphasis, links, rules, eyebrows */
+  --gilt: #d7b45d; /* bright gold: stars, selection, accents on dark bands */
+  --bronze: #8a6e46; /* statement bands (hero glow), primary-button hover */
+  --bronze-glow: #c4a676; /* highlight of the bronze glow */
+  --rose: #a95e68; /* placeholder / sample markers only */
+  --rule: #25231d24; /* hairlines */
 
   /*
-   * Section surfaces. The site is cream, not white: `sand` is the base for every page, header and
-   * footer. Bands that need separation from it use `stone`; raised surfaces (cards, form panel) use
-   * the lighter `parchment`/`vellum`; dark bands are `moss`/`fern`.
+   * Surfaces. `sand` (= paper) is the page base. `stone` is the alternate light band; cards and
+   * panels sit on `parchment` with a `line` border (the Bolt review card); `vellum`/`wheat` are the
+   * card gradient's middle and hover end; `clay` fills image wells.
    */
-  --sand: #e9e2d3; /* PRIMARY page cream (body, header, footer, heroes) */
-  --linen: #e8dfcf;
-  --stone: #ded3bc; /* contrast bands: botanical edit, then & now, notes, closing CTAs */
-  --clay: #ded4c0; /* product image well */
-  --oat: #e8e0ce;
-  --moss: #4e614b; /* campaign film band */
-  --fern: #526c50; /* "real world" band, In the City real-photo band */
-  --parchment: #f0ebdf; /* raised surfaces: cards, form panel, values cells */
-  --wheat: #e5dccb; /* topline, promise strip, card hover end, values middle cell */
-  --vellum: #eee8dc; /* card gradient middle */
-  --taupe: #b49b7f; /* packaging studio background */
-  --glow: #ddcca466; /* hero halo */
-  --shell: #f0eadd;
-  --header-rule: #493a2529; /* header hairline */
+  --sand: #f6f2e8;
+  --stone: #ece4d3;
+  --parchment: #efe8d8;
+  --vellum: #ebe3d1;
+  --wheat: #e4d9c3;
+  --clay: #e6dcc8;
+  --line: #dcd2bf;
+  --glow: #d7b45d40; /* hero halo */
+  --header-rule: #25231d1f;
 
-  /* Text tones on paper */
-  --ink-soft: #6b6256; /* body copy */
-  --ink-muted: #857968; /* captions, labels */
+  /* Text tones on cream */
+  --ink-soft: #5c574d; /* body copy */
+  --ink-muted: #777064; /* captions, labels */
 
-  /* Per-variety botanical accents — product cards only, used sparingly */
+  /* Per-flavour accents (deck: "each flavour can have its own accent colour"), used sparingly */
   --botanical-coconut: #8a5a33;
   --botanical-aloe-vera: #5f8a4a;
-  --botanical-lemon: #d9a915;
+  --botanical-lemon: #c99a0c;
   --botanical-lavender: #8a72b5;
   --botanical-rose: #a8323a;
 
   /* shadcn semantic tokens mapped onto the brand */
-  --background: hsl(41 33% 87%); /* = sand */
-  --foreground: hsl(25 24% 16%);
-  --card: hsl(42 36% 91%); /* = parchment */
-  --card-foreground: hsl(25 24% 16%);
-  --popover: hsl(42 36% 91%);
-  --popover-foreground: hsl(25 24% 16%);
-  --primary: hsl(41 52% 40%);
-  --primary-foreground: hsl(39 43% 93%);
-  --secondary: hsl(104 14% 36%);
-  --secondary-foreground: hsl(39 43% 93%);
-  --muted: hsl(39 33% 85%); /* = wheat */
-  --muted-foreground: hsl(27 12% 40%);
-  --accent: hsl(350 31% 52%);
-  --accent-foreground: hsl(39 43% 93%);
+  --background: hsl(43 44% 94%); /* = paper */
+  --foreground: hsl(45 12% 13%); /* = ink */
+  --card: hsl(42 42% 89%); /* = parchment */
+  --card-foreground: hsl(45 12% 13%);
+  --popover: hsl(42 42% 89%);
+  --popover-foreground: hsl(45 12% 13%);
+  --primary: hsl(45 12% 13%); /* = ink */
+  --primary-foreground: hsl(43 44% 94%);
+  --secondary: hsl(35 33% 41%); /* = bronze */
+  --secondary-foreground: hsl(43 44% 94%);
+  --muted: hsl(40 38% 83%); /* = wheat */
+  --muted-foreground: hsl(40 9% 33%);
+  --accent: hsl(43 60% 60%); /* = gilt */
+  --accent-foreground: hsl(45 12% 13%);
   --destructive: hsl(0 60% 44%);
-  --border: hsl(36 21% 78%);
-  --input: hsl(36 21% 78%);
-  --ring: hsl(41 52% 40%);
-  --chart-1: hsl(41 52% 40%);
-  --chart-2: hsl(104 14% 36%);
+  --border: hsl(39 29% 81%); /* = line */
+  --input: hsl(39 29% 81%);
+  --ring: hsl(41 50% 37%); /* = gold */
+  --chart-1: hsl(41 50% 37%);
+  --chart-2: hsl(35 33% 41%);
   --chart-3: hsl(350 31% 52%);
   --chart-4: hsl(270 20% 48%);
-  --chart-5: hsl(54 48% 52%);
+  --chart-5: hsl(43 60% 60%);
   --radius: 0.5rem; /* rounded-lg = 8px: the one corner for cards, buttons, images, fields, panels */
-  --sidebar: hsl(42 36% 91%);
-  --sidebar-foreground: hsl(25 24% 16%);
-  --sidebar-primary: hsl(41 52% 40%);
-  --sidebar-primary-foreground: hsl(39 43% 93%);
-  --sidebar-accent: hsl(41 36% 86%);
-  --sidebar-accent-foreground: hsl(25 24% 16%);
-  --sidebar-border: hsl(36 21% 78%);
-  --sidebar-ring: hsl(41 52% 40%);
+  --sidebar: hsl(42 42% 89%);
+  --sidebar-foreground: hsl(45 12% 13%);
+  --sidebar-primary: hsl(45 12% 13%);
+  --sidebar-primary-foreground: hsl(43 44% 94%);
+  --sidebar-accent: hsl(40 38% 83%);
+  --sidebar-accent-foreground: hsl(45 12% 13%);
+  --sidebar-border: hsl(39 29% 81%);
+  --sidebar-ring: hsl(41 50% 37%);
 
-  --header-height: 74px;
+  --header-height: 76px;
   --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 @theme inline {
-  --font-sans: var(--font-against), sans-serif;
-  --font-serif: var(--font-abhaya), Georgia, serif;
-  --font-heading: var(--font-abhaya), Georgia, serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-serif: var(--font-dm-serif), Georgia, serif;
+  --font-heading: var(--font-dm-serif), Georgia, serif;
 
   --color-paper: var(--paper);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-ink-muted: var(--ink-muted);
   --color-gold: var(--gold);
-  --color-gold-deep: var(--gold-deep);
   --color-gilt: var(--gilt);
-  --color-leaf: var(--leaf);
-  --color-leaf-deep: var(--leaf-deep);
+  --color-bronze: var(--bronze);
+  --color-bronze-glow: var(--bronze-glow);
   --color-rose: var(--rose);
   --color-rule: var(--rule);
   --color-sand: var(--sand);
-  --color-linen: var(--linen);
   --color-stone: var(--stone);
-  --color-clay: var(--clay);
-  --color-oat: var(--oat);
-  --color-moss: var(--moss);
-  --color-fern: var(--fern);
   --color-parchment: var(--parchment);
-  --color-wheat: var(--wheat);
   --color-vellum: var(--vellum);
-  --color-taupe: var(--taupe);
-  --color-shell: var(--shell);
+  --color-wheat: var(--wheat);
+  --color-clay: var(--clay);
+  --color-line: var(--line);
   --color-header-rule: var(--header-rule);
 
-  /* Starter polish layer: soft warm shadows + entrance motion. */
-  --shadow-lift: 0 8px 20px #36452f1f; /* primary button */
-  --shadow-note: 0 14px 35px #47351d14; /* hero badge */
-  --shadow-raise: 0 18px 36px #362b1d14; /* product card hover */
-  --shadow-card: 0 1px 2px #362b1d0f, 0 6px 16px #362b1d0a; /* cards at rest */
-  --shadow-pop: 0 22px 44px #362b1d24, 0 4px 10px #362b1d12; /* cards + buttons on hover */
+  /* Soft warm shadows (ink-tinted) + entrance motion. */
+  --shadow-lift: 0 10px 24px #25231d26; /* primary button */
+  --shadow-note: 0 14px 35px #25231d14; /* badges */
+  --shadow-card: 0 1px 2px #25231d0f, 0 8px 20px #25231d0d; /* cards at rest */
+  --shadow-pop: 0 24px 48px #25231d26, 0 4px 12px #25231d14; /* cards + buttons on hover */
   --animate-rise-in: rise-in 0.65s both;
   --color-botanical-coconut: var(--botanical-coconut);
   --color-botanical-aloe-vera: var(--botanical-aloe-vera);
@@ -257,7 +245,7 @@
     letter-spacing: 0.012em;
   }
   ::selection {
-    @apply bg-leaf text-paper;
+    @apply bg-gilt text-ink;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
@@ -293,12 +281,22 @@
   }
 }
 
-/* Serif display headings (starter: 600 weight Abhaya Libre, tight tracking, tight leading). */
+/* Serif display headings: DM Serif Display (one weight), tight tracking and leading. */
 @utility font-display {
   font-family: var(--font-serif);
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  line-height: 0.9;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+}
+
+/*
+ * Bronze glow: the Bolt hero's warm radial gradient, for statement bands (hero, film, closing CTA).
+ * Text on it is paper/gilt.
+ */
+@utility bronze-glow {
+  background-color: var(--bronze);
+  background-image: radial-gradient(ellipse 80% 90% at 68% 40%, var(--bronze-glow) 0%, color-mix(in oklab, var(--bronze-glow) 45%, var(--bronze)) 42%, var(--bronze) 100%);
+  color: var(--paper);
 }
 
 /* Section spacing (starter .section: 115px / clamp(24px,8vw,128px), 82px / 22px on phones). */
@@ -313,9 +311,9 @@
  * Surfaces & hover. Lifts use the `translate` property so they compose with the scroll-reveal
  * `transform` animation; hover styles apply on pointer devices only (and to keyboard focus).
  *
- * .card-pop — rounded-lg card: hairline border, warm cream gradient surface (a step lighter than
- *   the sand page). Hover lifts it, deepens the shadow, warms the border and slides the surface
- *   gradient a shade darker.
+ * .card-pop — rounded-lg card: `line` border, warm parchment gradient surface (the Bolt card, a step
+ *   darker than the cream page). Hover lifts it, deepens the shadow, warms the border and slides
+ *   the surface gradient a shade darker.
  * .tile-pop — rounded-lg image tile (caption over the photo): hover lifts it and fades in a soft
  *   gilt sheen. Captions need z-index ≥ 2 to sit above the sheen.
  * .btn-sweep — brand buttons: a slanted fill (--btn-fill) wipes across on hover.
@@ -323,7 +321,7 @@
 @utility card-pop {
   position: relative;
   overflow: hidden;
-  border: 1px solid color-mix(in oklab, var(--ink) 11%, transparent);
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background-color: var(--vellum);
   background-image: linear-gradient(170deg, var(--parchment) 0%, var(--vellum) 50%, var(--wheat) 100%);
@@ -342,7 +340,7 @@
   @media (hover: hover) {
     &:hover {
       translate: 0 -6px;
-      border-color: color-mix(in oklab, var(--gold) 45%, transparent);
+      border-color: color-mix(in oklab, var(--gold) 55%, transparent);
       background-position: 0% 100%;
       box-shadow: var(--shadow-pop);
     }
@@ -417,6 +415,80 @@
   }
   .rise-group > :nth-child(n + 5) {
     animation-delay: 340ms;
+  }
+}
+
+/*
+ * Text motion. SplitText wraps each word of a display heading in a mask (.split-word); the inner span
+ * rises into place. Words wait for their [data-reveal] block to be revealed, or play on load inside
+ * .split-now (first-screen headings). Eyebrow labels settle in from wide tracking. Photos inside a
+ * revealed block ease out of a slight zoom. All of it is skipped for reduced motion.
+ */
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* Room for descenders and italic overhang, given the display headings' tight leading. */
+  padding: 0.06em 0.08em 0.16em 0.02em;
+  margin: -0.06em -0.08em -0.16em -0.02em;
+}
+.split-word > span {
+  display: inline-block;
+}
+
+@keyframes word-rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes tracking-in {
+  from {
+    opacity: 0;
+    letter-spacing: 0.6em;
+  }
+}
+
+@keyframes img-settle {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal]:not([data-revealed]) .split-word > span,
+  .js [data-reveal-group]:not([data-revealed]) .split-word > span {
+    transform: translateY(110%);
+  }
+  .js [data-revealed] .split-word > span {
+    animation: word-rise 0.95s var(--ease-soft) both;
+    /* Long display lines cap the stagger so the last words don't lag. */
+    animation-delay: calc(var(--reveal-delay, 0ms) + 120ms + min(var(--w, 0) * 55ms, 900ms));
+  }
+  .split-now .split-word > span {
+    animation: word-rise 1s var(--ease-soft) both;
+    animation-delay: calc(160ms + min(var(--w, 0) * 75ms, 900ms));
+  }
+  .js [data-revealed] .eyebrow {
+    animation: tracking-in 1.1s var(--ease-soft) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+  .js [data-reveal][data-revealed] img,
+  .js [data-reveal-group][data-revealed] > * img {
+    animation: img-settle 1.6s var(--ease-soft) both;
+    animation-delay: var(--reveal-delay, 0ms);
   }
 }
 

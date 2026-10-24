@@ -1,15 +1,19 @@
 import { cn } from "@/lib/utils"
 
 const tones = {
-  leaf: "text-leaf",
-  gilt: "text-gilt",
+  gold: "text-gold",
+  gilt: "text-gilt", // on ink bands
+  cream: "text-paper/80", // on the bronze glow, where gold would be too faint
   muted: "text-ink-muted",
 } as const
 
-/** Letter-spaced uppercase section label — "FOUR IMAGINED SCENES". */
+/**
+ * Letter-spaced uppercase section label — "FOUR IMAGINED SCENES". A tagline passed as text loses its
+ * full stop here (labels don't take one).
+ */
 export function Eyebrow({
   children,
-  tone = "leaf",
+  tone = "gold",
   center = false,
   className,
 }: {
@@ -19,8 +23,8 @@ export function Eyebrow({
   className?: string
 }) {
   return (
-    <div className={cn("flex items-center gap-3 text-[9px] uppercase tracking-[0.24em]", center && "justify-center", tones[tone], className)}>
-      {children}
+    <div className={cn("eyebrow flex items-center gap-3 text-[9px] font-medium uppercase tracking-[0.24em]", center && "justify-center", tones[tone], className)}>
+      {typeof children === "string" ? children.replace(/\.$/, "") : children}
     </div>
   )
 }

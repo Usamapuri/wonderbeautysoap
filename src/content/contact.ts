@@ -1,13 +1,14 @@
-// Contact page copy (brief §4.5 client change request #2, §5.2).
+// Get in Touch page copy (brief §4.5, §5.2; client website brief deck slide 19).
 // Phone / WhatsApp / address / response time are shown only once the client supplies them —
 // set them here (null = hidden). Never invent contact details or an SLA.
 
 import { products } from "./products"
 
+// Bulk order first and pre-selected: the site targets bulk orders only.
 export const enquiryTypes = [
-  { value: "general", label: "General question" },
   { value: "bulk", label: "Bulk order" },
   { value: "stockist", label: "Stock the range" },
+  { value: "general", label: "General question" },
   { value: "press", label: "Press / other" },
 ] as const
 
@@ -20,8 +21,8 @@ export const productOptions = [
 
 export const contact = {
   seo: {
-    title: "Contact",
-    description: "Contact Wonder Beauty Soap: general questions, bulk orders, stockist and trade enquiries.",
+    title: "Get in Touch",
+    description: "Get in touch with Royal Basket for bulk orders of Wonder beauty bars.",
   },
   heading: {
     eyebrow: "A note, a question, a hello",
@@ -30,14 +31,13 @@ export const contact = {
   },
   details: {
     emailLabel: "Email",
-    socialLabel: "Social",
     replyLine: "We reply to questions and business opportunities by email.",
     phone: null as string | null,
     whatsapp: null as string | null,
     address: null as string | null,
     goodToKnow: {
       label: "Good to know",
-      text: "Wonder Beauty Soap is not able to offer medical advice. If you have a skin concern, please speak with a qualified healthcare professional.",
+      text: "Royal Basket is not able to offer medical advice. If you have a skin concern, please speak with a qualified healthcare professional.",
     },
   },
   bulk: {
@@ -47,7 +47,6 @@ export const contact = {
     include: ["Your business name", "Where you are based", "Estimated quantity"],
     // Minimum order quantity, if any — client to confirm (§10). null = not shown.
     minimumOrder: null as string | null,
-    cta: "Start a bulk enquiry",
   },
   form: {
     eyebrow: "Your words, your way",

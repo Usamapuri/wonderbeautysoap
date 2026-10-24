@@ -7,7 +7,7 @@ import { Eyebrow } from "@/components/brand/eyebrow"
 import { home } from "@/content/home"
 import { reveal } from "@/lib/reveal"
 
-// §4.1 #4 — muted, looping campaign film. Plays only while on screen and never for reduced motion.
+// Muted, looping campaign film. Plays only while on screen and never for reduced motion.
 function Film({ src }: { src: string }) {
   const ref = useRef<HTMLVideoElement>(null)
 
@@ -32,56 +32,46 @@ function Film({ src }: { src: string }) {
       muted
       loop
       playsInline
-      controls
       preload="none"
       poster={home.film.poster}
       aria-label={home.film.label}
-      className="block aspect-square w-full bg-clay object-cover sm:aspect-[4/3]"
+      className="absolute inset-0 size-full object-cover"
     >
       <source src={src} type="video/mp4" />
     </video>
   )
 }
 
+// The visual between the two welcome notes (deck slides 6 + 31), as a full-width banner with the
+// copy over the picture (Gisou home reference). Shows the poster until a video is supplied.
 export function CampaignFilm() {
   const { film } = home
   return (
-    <section
-      aria-labelledby="film-heading"
-      className="grid items-center gap-[30px] bg-moss px-[22px] py-[67px] text-paper sm:gap-[38px] sm:px-[clamp(22px,8vw,128px)] sm:py-[clamp(65px,9vw,132px)] md:grid-cols-[0.7fr_1.3fr] md:gap-[clamp(40px,8vw,120px)]"
-    >
-      <div {...reveal()}>
-        <Eyebrow tone="gilt">{film.eyebrow}</Eyebrow>
-        <h2 id="film-heading" className="font-display my-7 text-[62px] leading-[0.82] tracking-[-0.045em] sm:text-[clamp(55px,7.4vw,100px)]">
-          {film.heading.before}
-          <br />
-          <em className="text-gilt not-italic">{film.heading.emphasis}</em>
-        </h2>
-        <p className="max-w-[520px] text-xs leading-[1.9] text-paper/80 md:max-w-[330px]">{film.body}</p>
-        <span className="mt-7 block text-[8px] uppercase tracking-[0.22em] text-gilt">{film.caption}</span>
-      </div>
-
-      <figure {...reveal(150)} className="m-0">
-        {/* Even gilt frame around the picture: the image fills it, with the same inset on every side. */}
-        <div className="group rounded-[calc(var(--radius-lg)+0.625rem)] border border-gilt/60 p-2.5">
-          <div className="overflow-hidden rounded-lg">
-            {film.src ? (
-              <Film src={film.src} />
-            ) : (
-              <div className="relative aspect-square w-full bg-clay sm:aspect-[4/3]">
-                <Image
-                  src={film.poster}
-                  alt={film.label}
-                  fill
-                  sizes="(max-width: 850px) 100vw, 60vw"
-                  className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.03]"
-                />
-              </div>
-            )}
-          </div>
+    <section aria-labelledby="film-heading" className="px-3 sm:px-5">
+      <div {...reveal()} className="group relative isolate min-h-[560px] overflow-hidden rounded-lg text-paper sm:min-h-[620px] md:min-h-[min(760px,88svh)]">
+        {film.src ? (
+          <Film src={film.src} />
+        ) : (
+          <Image
+            src={film.poster}
+            alt={film.label}
+            fill
+            sizes="100vw"
+            className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.03]"
+          />
+        )}
+        <div aria-hidden className="absolute inset-0 bg-linear-to-t from-ink/80 via-ink/25 to-transparent md:bg-linear-to-r md:from-ink/75 md:via-ink/30" />
+        <div className="relative flex min-h-[inherit] flex-col justify-end p-7 sm:p-12 md:max-w-[620px] md:justify-center md:p-16">
+          <Eyebrow tone="gilt">{film.eyebrow}</Eyebrow>
+          <h2 id="film-heading" className="font-display my-6 text-[clamp(56px,14vw,84px)] leading-[0.88] md:text-[clamp(64px,7vw,108px)]">
+            {film.heading.before}
+            <br />
+            <em className="text-gilt">{film.heading.emphasis}</em>
+          </h2>
+          <p className="max-w-[400px] text-[13px] leading-[1.8] text-paper/85">{film.body}</p>
+          {film.src && <span className="mt-7 block text-[8px] uppercase tracking-[0.22em] text-gilt">{film.caption}</span>}
         </div>
-        <figcaption className="pt-3 text-[8px] uppercase tracking-[0.15em] text-paper/70">{film.frameCaption}</figcaption>
-      </figure>
+      </div>
     </section>
   )
 }

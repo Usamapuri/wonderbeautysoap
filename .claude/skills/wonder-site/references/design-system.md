@@ -1,94 +1,67 @@
-# Design system (brief §3), extracted from the Replit starter
+# Design system (Royal Basket × Wonder, 2026-10-25)
 
-Every value here was read from the starter's compiled CSS (`wonder-beauty-soaps--zainabshahid062.replit.app/assets/index-*.css`) and is implemented in `src/app/globals.css`. **Match, don't substitute.** If a new colour seems needed, add it as a token in `globals.css` (`:root` + `@theme inline`) with a comment. Never put a raw hex value in a component.
+Source of truth for every visual decision. Tokens live in `src/app/globals.css`; use them, never raw hex in components. The theme is the client's **Bolt prototype** (the developer pasted its CSS); layouts follow the developer's references: **Home after gisou.com**, **Our Story after rhode's About page**. Brand = **Royal Basket (Group)**; Wonder is the soap.
 
-## Palette (Tailwind class → value)
+## Palette
 
-| Token | Hex | Use |
+| Token | Value | Use |
 |---|---|---|
-| `paper` | #f6f0e5 | ivory: light text on dark bands, button text. **Not a background** (it reads as white) |
-| `ink` | #30251e | text, footer (deep bronze-brown) |
-| `ink-soft` | #6b6256 | body copy on cream |
-| `ink-muted` | #857968 | captions, small labels |
-| `gold` | #9a7131 | antique gold: rules, text-link underline, hover, emphasised headline word |
-| `gilt` | #d6c48d | light gold on dark (moss) bands |
-| `leaf` | #53664b | primary button, eyebrows, text selection |
-| `rose` | #a95e68 | rare accent; placeholder marker |
-| `rule` | #3c302233 | hairlines (header/footer borders) |
-| `sand` | #e9e2d3 | **PRIMARY cream**: page base (body), header, mobile menu, footer, every hero, pop-up. The site is cream, never white (developer, 2026-10-22) |
-| `linen` | #e8dfcf | (spare; too close to sand to separate sections) |
-| `stone` | #ded3bc | contrast bands on the cream: botanical edit, then & now, In the City note, Contact social, closing CTAs |
-| `clay` | #ded4c0 | product image well |
-| `oat` | #e8e0ce | (spare) |
-| `moss` | #4e614b | campaign film band (paper text) |
-| `fern` | #526c50 | "Recognisable by nature" band, In the City real-photo band |
-| `parchment` / `vellum` / `wheat` | #f0ebdf / #eee8dc / #e5dccb | raised surfaces a step lighter than the cream: `.card-pop` gradient (parchment → vellum, hover → wheat), contact-form panel, values cells; `wheat` also for the topline bar and promise strip |
-| `shell` | #f0eadd | (spare; the footer is `sand`) |
-| `taupe` | #b49b7f | packaging studio background |
-| `botanical-{coconut,aloe-vera,lemon,lavender,rose}` | pack colours | **product cards only, sparingly** (e.g. the dot before "VARIETY 01") |
+| `paper` / `sand` | #f6f2e8 | page base (cream, never white) and light text on dark bands |
+| `ink` | #25231d | text, primary buttons, top bar, footer, ink panels |
+| `ink-soft` / `ink-muted` | #5c574d / #777064 | body copy / captions, labels |
+| `gold` | #8f7130 | readable gold on cream: taglines, eyebrows, emphasis, links, rules |
+| `gilt` | #d7b45d | bright gold: stars, selection, labels and accents on **ink** bands |
+| `bronze` / `bronze-glow` | #8a6e46 / #c4a676 | the `bronze-glow` statement bands (hero, closing CTAs, bulk panel) |
+| `stone` | #ece4d3 | alternate light band |
+| `parchment` / `vellum` / `wheat` | #efe8d8 / #ebe3d1 / #e4d9c3 | cards and panels (the Bolt review card), card gradient, card hover end |
+| `clay` | #e6dcc8 | image wells |
+| `line` | #dcd2bf | card borders, ruled lists |
+| `rose` | #a95e68 | placeholder / sample markers only |
+| `botanical-*` | per flavour | the small accent dot only (deck: "each flavour can have its own accent colour") |
 
-shadcn semantic tokens (`background`, `primary`, `border`, `ring` …) are mapped to the starter's HSL values, so shadcn components inherit the brand automatically. `background` = sand, `card`/`popover` = parchment, `muted` = wheat. `--radius` is 0.5rem and **`rounded-lg` (8px) is the one corner** for cards, buttons, image frames, fields, panels and the pop-up (developer request 2026-10-22; the starter was square). Nested corners stay concentric (outer = 8px + padding, e.g. the film frame). Full-bleed bands and sections stay square.
+shadcn tokens map onto these (`background` = paper, `card`/`popover` = parchment, `primary` = ink, `ring` = gold, `border` = line).
 
-**Section rhythm:** cream (`sand`) is the default for every section; alternate with `stone` where two cream sections would otherwise meet, or with the dark `moss`/`fern` bands. Cards and panels sit on the cream a step lighter (`parchment`), never on near-white.
+**Section rhythm:** cream by default; `stone` where two cream sections would meet; `ink` and `bronze-glow` for statement moments. Labels are `gold` on cream, `gilt` on ink, `cream` on bronze (gold is too faint there).
 
-## Typography
+## Type
 
-- Body: **Against** (`font-sans`), 14px base, `letter-spacing: .012em`. Paragraphs are usually `text-xs leading-[1.8–1.9] text-ink-soft`.
-- Display: **Abhaya Libre SemiBold** (`font-serif`, or the `font-display` utility = serif, 600, `tracking-[-0.04em]`, `leading-[0.9]`).
-- Both fonts are the client's files in `src/fonts/`, loaded with `next/font/local` in `layout.tsx`. Do not swap them for Google Fonts.
-- Uppercase labels: 8–10px, `tracking-[0.12em–0.24em]`. The `<Eyebrow>` component renders them; no leading dash/rule (removed 2026-10-22).
+- **DM Serif Display** (`font-display` = serif, 400, `tracking-[-0.025em]`, `leading-[0.95]`) for display; italic for emphasis ("*Lather.*").
+- **DM Sans** for everything else. Both self-hosted in `src/fonts/` via `next/font/local`, with `size-adjust` (132% sans, 92% serif) so the existing `text-[9px]…text-[13px]` scale reads at a normal size. Don't "fix" small-looking class values without checking the rendered size.
+- Eyebrows: `<Eyebrow>` (9px, medium, uppercase, 0.24em). Tones: `gold` (default), `gilt`, `cream`, `muted`. No leading dash. A trailing full stop is dropped automatically.
+- Taglines (e.g. "Meet me in Paris.") are always `font-display italic text-gold`.
 
-| Element | Classes (from starter) |
+## Corners, surfaces, hover
+
+- **`rounded-lg` (8px) is the one corner** for cards, buttons, image frames, fields, panels. Nested corners stay concentric. Full-bleed bands stay square.
+- `.card-pop`: parchment gradient card with a `line` border; hover lifts 6px, deepens the shadow, warms the border, slides the gradient a shade darker; the image zooms 1.04.
+- `.tile-pop`: rounded photo tile with the caption on the image; hover lifts and fades in a gilt sheen (captions need `z-10`).
+- `.bronze-glow`: the Bolt radial gradient, with paper text.
+
+## Buttons (consistency rules, developer 2026-10-25)
+
+| Variant | Use |
 |---|---|
-| Hero h1 | `font-display text-[clamp(60px,8.4vw,128px)] leading-[0.79] tracking-[-0.045em]`; 850px: `clamp(70px,13vw,118px)`; 560px: `clamp(66px,17vw,94px)`; emphasised word `text-gold not-italic` |
-| Page h1 (inner pages) | `font-display text-[clamp(68px,9vw,132px)] leading-[0.8] tracking-[-0.055em]` |
-| Section h2 | `font-display text-[clamp(43px,5.2vw,76px)] leading-[0.93]` (via `<SectionHeading>`) |
-| Band/editorial h2 | `font-display text-[clamp(44px,5vw,70px)]`–`clamp(47px,5.3vw,78px)` |
-| CTA h2 | `font-display text-[clamp(48px,7vw,92px)] tracking-[-0.045em]` |
-| Card title | `font-display text-[25px] sm:text-[28px] leading-[0.95] tracking-normal` |
-| Eyebrow | `text-[9px] uppercase tracking-[0.24em] text-leaf` (no rule) |
-| Nav link | `text-[10px] uppercase tracking-[0.16em]`, hover/active gold |
-| Caption on photo | `text-[9px] uppercase tracking-[0.15em] text-paper` + text shadow, over a bottom scrim `after:bg-linear-to-t after:from-ink/55` |
+| `wonder` | **Primary**: solid ink, bronze fill sweeps in on hover. Bulk orders is the site's one goal, so it's usually this. |
+| `wonder-outline` | Secondary on light backgrounds: ink outline, ink fill sweeps in. |
+| `wonder-light` | Secondary on bronze/ink/photo backgrounds: cream outline, cream fill sweeps in. |
 
-## Layout & spacing
+All use `size="wonder"`, `asChild` + `next/link`. Never use an underlined text link as a call to action next to buttons. Inside cards, the small "Discover →" link is the card affordance.
 
-- Breakpoints are overridden to the starter's: **`sm` = 560px, `md` = 850px**. `lg`/`xl` are Tailwind defaults. Mobile-first: unprefixed = phone.
-- Section padding: `px-section` (clamp 22–128px), `py-section` (clamp 82–115px).
-- Header: sticky, `h-(--header-height)` (74px, 66px ≤850px), `bg-paper/95 backdrop-blur-md border-b border-rule`. A 34px `oat` topline sits above it.
-- Card grids are **aligned** (no staggered offsets; developer request 2026-10-22): equal columns, cards in a row share a height (`h-full` + `flex-col`, CTA `mt-auto`). A short last row is centred: grids of 5 use `flex flex-wrap justify-center` with fixed widths (1/2/3 per row), and a lone 5th card on a 2-col phone grid sits centred at one column's width.
-- **Images fit their frames**: give each frame its image's own aspect ratio (product renders `aspect-[6/5]`, square concept art `aspect-square`, portrait lifestyle photos `aspect-[2/3]`, page-hero photos `aspect-[3/2]`) so nothing important is cropped and no gaps/mats show. For a row of mixed photos, size columns by aspect ratio (`grid-cols-(--cols)` with `<w/h>fr` per photo, see `home/retail-strip.tsx`) so they share one height uncropped.
-- Framed images: an offset gold hairline frame behind or around the photo (`after:border after:border-gold`, offset 12–17px).
-- Decorative gold hairline circles in the `sand` range section (`border-gold/25 rounded-full`, off-canvas top-left).
-- Usable at 360px wide, with no horizontal scroll and tap targets ≥ 40px (`min-h-10` / `size-10`).
+## Layout
 
-## Shared components (build once, reuse)
+- Breakpoints: **`sm` = 560px, `md` = 850px** (Tailwind `lg` = 1024px for 3-up grids). Mobile-first.
+- `px-section` / `py-section` for section padding. rhode-style pages use inset rounded panels with 12/20px gutters (`px-3 pt-3 sm:px-5 sm:pt-5`).
+- Card grids are aligned: equal widths, cards in a row share a height, a short last row is centred (`flex flex-wrap justify-center`).
+- **Images fit their frames:** each frame takes its image's own aspect ratio (packs `6/5`, concept art square, portraits `2/3`, the lineup `1800/1020`). Rows of mixed photos use `<PhotoRow>` (columns sized by aspect ratio, shared height, nothing cropped).
+- Header: ink top bar (taglines), then the sticky cream header (Royal Basket Group logo, five tabs, The Collection dropdown of the 5 bars, solid "Bulk orders" button ≥1024px). It compacts with a soft shadow once scrolled.
+- Footer: ink, aligned four-column grid, giant faint "Royal Basket" wordmark (rhode style).
+- Phones: a floating "For orders, speak to us" bar + back-to-top appears after the first screen and steps aside at the footer (`floating-actions.tsx`); not on Get in Touch.
 
-| Component | File | Notes |
-|---|---|---|
-| Header/nav | `layout/site-header.tsx` | client; active link via `usePathname`; shadcn `Sheet side="top"` for mobile; nav order from `site.ts` |
-| Footer | `layout/site-footer.tsx` | wordmark, `mailto:` email, social icons (new tab), nav, small print |
-| Button | `ui/button.tsx` | `variant="wonder"` (leaf solid; deeper-green slanted fill sweeps in on hover) / `"wonder-outline"` (gold outline; gold fill sweeps in, text turns paper), `size="wonder"`, rounded-lg, 2px lift + `shadow-pop` on hover; use `asChild` + `next/link`. On dark bands override `[--btn-fill:var(--gilt)]` + text colours (see `contact/bulk-cta.tsx`) |
-| Text link | `brand/text-link.tsx` | uppercase, gold underline, optional arrow; `light` on dark bands |
-| Eyebrow | `brand/eyebrow.tsx` | `tone` leaf / gilt / muted, `center` |
-| Section heading | `brand/section-heading.tsx` | eyebrow + h2 lines + intro |
-| Product card | `brand/product-card.tsx` | render in `bg-clay` well with multiply, "VARIETY 0n", name, note, *View →* `/collection#slug` |
-| Copy | `brand/copy.tsx` | prints content; placeholders render as a dashed rose box |
-| Social links | `brand/social-links.tsx` | `simple-icons` paths (lucide has no brand icons) |
-| Still to build | — | timeline item, gallery grid, then-and-now pair, team card, email pop-up, contact form (see pages.md / features.md) |
+## Motion (all off for reduced motion; nothing hidden without JS)
 
-## Polish layer (the original's late overrides, ported)
-
-`shadow-lift` on `wonder` buttons · `shadow-note` on the hero badge · cards use `.card-pop` (rounded-lg, hairline border, warm gradient surface; on hover lift 6px, `shadow-pop`, gold-tinted border, gradient slides a shade warmer, image zooms 1.04) · photo tiles with captions on the image use `.tile-pop` (lift + soft gilt sheen; captions need `z-10`) · framed images get `rounded-lg` + `shadow-card` · nav links draw a 1px gold underline from the left on hover and keep it on the current page (text stays ink) · hero copy and image `rise-in` (14px, staggered 60/130/200/270ms, image 0.85s at 200ms; delays set inline) · footer on `bg-sand` · header hairline `border-header-rule`. Reduced motion is honoured globally.
-
-## Entrance motion
-
-- **First screen** (Home hero, page heroes, Collection heading, Contact layout): add the CSS class `rise-group` to the parent. Its children rise in on load, staggered 60/130/200/270/340 ms. Hero images use `animate-[rise-in_0.85s_0.2s_both]`. No JS is involved, so LCP isn't held back by hydration.
-- **Everything below the fold** fades up 36px when scrolled into view: spread `{...reveal(delayMs?)}` from `@/lib/reveal` onto a block, or `{...revealGroup}` onto a container to stagger its children 90 ms apart. Side-by-side pairs use `reveal()` + `reveal(120–150)`. Long lists (collection rows, gallery cards, timeline items) reveal per item, not as one group.
-- `<RevealObserver />` (mounted once in `layout.tsx`) runs a single IntersectionObserver and adds `data-revealed`. A MutationObserver catches content added later. Next 16 keeps visited routes mounted but hidden, and their elements reveal when shown again.
-- Content is only hidden when `html.js` is set (inline head script) **and** motion is allowed, and the script drops `js` if the observer hasn't started within 3 s. So no-JS, reduced-motion and failed-JS visitors always see everything.
-- **Page transitions:** `src/app/template.tsx` wraps every page in React's `<ViewTransition enter="page-enter" exit="page-exit">`. The template remounts on each route change, so the old page fades out (160 ms) and the new one fades up (560 ms); CSS lives under "Page transitions" in `globals.css`. Search-param/hash changes don't animate. Browsers without view transitions just swap pages; reduced motion disables it.
-- The animations use `transform`/`opacity`, so hover effects stay on `translate`/`scale`. Don't put `reveal()` on an element whose `mix-blend-multiply` image blends with a background *outside* it: the animation's stacking context would isolate the blend. Put it on a wrapper that contains the background.
-
-## Mood & imagery
-
-"A little everyday wonder." Premium but warm: botanical, calm, unhurried. No loud colours, no discount energy, no clip-art, corners stay a restrained rounded-lg (no pills or big "app" radii). Product imagery is always on the taupe studio look. One botanical per variety, everywhere that variety appears. Campaign imagery uses a warm grade with no blue casts, and verticals on In the City. Motion is calm: marquee, scroll reveals, page fade transitions, card lift + slow image zoom on hover, 2px button lift with a fill sweep. Reduced motion is respected globally in `globals.css`.
+- **First screen:** `rise-group` on the parent (children rise in on load). Hero images `animate-[rise-in_…]`.
+- **Scroll reveals:** `{...reveal(delay?)}` / `{...revealGroup}` from `@/lib/reveal`; `<RevealObserver />` marks blocks `data-revealed`.
+- **Text:** display headings use `<SplitText text … />` (or `<Lines lines … />`, which splits too): each word rises out of a mask. Inside a reveal block they play when it scrolls in; pass `now` for first-screen headings. Screen readers get the plain text. Eyebrows inside revealed blocks settle in from wide tracking; photos ease out of a slight zoom.
+- **Page transitions:** `src/app/template.tsx` + React `<ViewTransition>` (old page fades out, new fades up).
+- **Ambient:** the promise marquee; the hero pack floats slowly.
+- Animations use `transform`/`opacity`; hover uses the `translate`/`scale` properties, so they compose.

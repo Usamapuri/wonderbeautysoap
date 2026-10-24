@@ -18,8 +18,8 @@ export function SocialIcon({ name, className }: { name: Social["name"]; classNam
   )
 }
 
-/** Social icon links from Appendix A. Always open in a new tab (§4 global elements). */
-export function SocialLinks({ className }: { className?: string }) {
+/** Social icon links from Appendix A. Always open in a new tab (§4 global elements). `light` on ink bands. */
+export function SocialLinks({ light = false, className }: { light?: boolean; className?: string }) {
   return (
     <ul className={cn("flex items-center gap-1", className)}>
       {socials.map((s) => (
@@ -29,7 +29,7 @@ export function SocialLinks({ className }: { className?: string }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${s.name} — ${s.handle} (opens in a new tab)`}
-            className="grid size-10 place-items-center text-ink transition-colors hover:text-gold"
+            className={cn("grid size-10 place-items-center rounded-md transition-colors", light ? "text-paper/80 hover:text-gilt" : "text-ink hover:text-gold")}
           >
             <SocialIcon name={s.name} />
           </a>
