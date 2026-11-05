@@ -2,12 +2,14 @@
 
 Usage (from the repo root):  python3 scripts/prepare_assets.py
 Requires Pillow with WebP support (pip install pillow).
+Video preparation also needs FFmpeg; pass --ffmpeg /path/to/ffmpeg if it is not on PATH.
 
 Inputs
   brand-assets/source/mockups/   approved packaging renders (client-supplied, never altered)
   brand-assets/source/dielines/  flat packaging artwork; the botanicals are cropped from it
   brand-assets/source/logos/     Royal Basket Group logo (from the client's website brief deck)
   brand-assets/starter/          assets carried over from the Replit starter
+  brand-assets/<upload folder>/ client-supplied November images and films (originals preserved)
 
 Outputs
   public/brand-assets/...        WebP sized for their slot (brief §3: hero <= ~200 KB, cards <= ~80 KB)
@@ -15,8 +17,11 @@ Outputs
   src/app/icon.png, src/app/apple-icon.png, src/app/opengraph-image.jpg
 """
 
+import argparse
 from io import BytesIO
 from pathlib import Path
+import shutil
+import subprocess
 
 from PIL import Image
 
@@ -35,6 +40,25 @@ PRODUCTS = {
     "lemon": ("wonder-lemon-mockup.png", "Wonder_Lemon.png"),
     "lavender": ("wonder-lavender-mockup.png", "Wonder_Lavender.png"),
     "rose": ("wonder-rose-mockup.png", "Wonder_Rose.png"),
+}
+
+# Each uploaded pair is the pack, then the matching bare-bar artwork.
+CLIENT_PRODUCTS = {"aloe-vera": (1, 2), "coconut": (3, 4), "lavender": (5, 6), "lemon": (7, 8), "rose": (9, 10)}
+CLIENT_PRODUCT_DIR = SRC / "product images 960px by 800px"
+
+CLIENT_IMAGES = [
+    ("801px by 1200px pintrest/1.png", "campaign/pure-care-hero.webp", 801),
+    ("1200px by 801px pics/1.png", "campaign/rose-ritual.webp", 1200),
+    ("1200px by 801px pics/2.png", "campaign/handwashing.webp", 1800),
+    ("1024 by 1024px pintrest/7.png", "campaign/bathroom-ritual.webp", 1024),
+]
+
+# Output name -> (original, web width, poster timestamp). The clips have no spoken content.
+CLIENT_VIDEOS = {
+    "wonder-collection": ("1800px by 1020px.mp4", 1800, 0.2),
+    "lavender-ritual": ("801 by 1200px videos/1.mp4", 800, 0.2),
+    "aloe-ritual": ("801 by 1200px videos/2.mp4", 800, 1.4),
+    "lavender-lather": ("801 by 1200px videos/3.mp4", 800, 1.6),
 }
 
 
@@ -74,13 +98,25 @@ def products() -> None:
     for slug, (mockup, _) in PRODUCTS.items():
         im = Image.open(SRC / "source/mockups" / mockup).convert("RGB")
         save_webp(fit_width(im, 960), OUT / f"products/{slug}.webp", max_kb=80)
+        supplied = Image.open(CLIENT_PRODUCT_DIR / f"{CLIENT_PRODUCTS[slug][0]}.png").convert("RGB")
+        # A new URL avoids serving the previous pack shot from Next's image cache.
+        save_webp(supplied, OUT / f"products/{slug}-pack.webp", max_kb=80)
 
-    # Social share card: lineup centred on a 1200x630 canvas.
-    og = lineup.copy()
-    scale = max(1200 / og.width, 630 / og.height)
-    og = og.resize((round(og.width * scale), round(og.height * scale)), Image.LANCZOS)
-    left, top = (og.width - 1200) // 2, (og.height - 630) // 2 + 40
-    og.crop((left, top, left + 1200, top + 630)).save(APP / "opengraph-image.jpg", quality=86)
+    # Keep the lineup's existing 1800x1020 frame, using the supplied pack shots intact.
+    lineup = Image.new("RGB", (1800, 1020), "white")
+    placements = [("rose", 0, 10), ("lavender", 600, 10), ("aloe-vera", 1200, 10), ("lemon", 300, 510), ("coconut", 900, 510)]
+    for slug, x, y in placements:
+        pack = Image.open(CLIENT_PRODUCT_DIR / f"{CLIENT_PRODUCTS[slug][0]}.png").convert("RGB")
+        pack.thumbnail((600, 500), Image.LANCZOS)
+        lineup.paste(pack, (x, y))
+    save_webp(lineup, OUT / "products/lineup-packs.webp", max_kb=200)
+
+    # Social share card: show all five new pack shots without cropping any packaging.
+    og = Image.new("RGB", (1200, 630), PAPER)
+    group = lineup.copy()
+    group.thumbnail(og.size, Image.LANCZOS)
+    og.paste(group, ((og.width - group.width) // 2, (og.height - group.height) // 2))
+    og.save(APP / "opengraph-image.jpg", quality=86)
     print("  src/app/opengraph-image.jpg")
 
 
@@ -193,11 +229,60 @@ def starter() -> None:
         save_webp(fit_box(im, 1200), OUT / rel, max_kb=150)
 
 
+def client_images() -> None:
+    """Resize supplied images without retouching the artwork or packaging."""
+    print("Client images")
+    for slug, (_, number) in CLIENT_PRODUCTS.items():
+        im = Image.open(CLIENT_PRODUCT_DIR / f"{number}.png").convert("RGB")
+        save_webp(im, OUT / f"flavors/{slug}-bar.webp", max_kb=150)
+    for original, output, width in CLIENT_IMAGES:
+        im = Image.open(SRC / original).convert("RGB")
+        save_webp(fit_width(im, width), OUT / output, max_kb=150)
+
+
+def client_videos(ffmpeg: str | None) -> None:
+    """Create silent, inline-playable MP4s and matching still-image fallbacks."""
+    print("Client videos")
+    for name, (original, width, timestamp) in CLIENT_VIDEOS.items():
+        source = SRC / original
+        output = OUT / f"videos/{name}.mp4"
+        poster = OUT / f"videos/{name}-poster.webp"
+        if output.is_file() and poster.is_file() and min(output.stat().st_mtime, poster.stat().st_mtime) >= source.stat().st_mtime:
+            print(f"  {name}: up to date")
+            continue
+        if not ffmpeg:
+            raise RuntimeError("FFmpeg is required to prepare new videos. Pass --ffmpeg /path/to/ffmpeg.")
+        output.parent.mkdir(parents=True, exist_ok=True)
+        # Stage the encode so a failed run cannot replace a working public video.
+        pending = output.with_name(f"{name}.pending.mp4")
+        try:
+            subprocess.run([
+                ffmpeg, "-hide_banner", "-loglevel", "error", "-y", "-i", str(source),
+                "-map", "0:v:0", "-vf", f"scale={width}:-2", "-c:v", "libx264",
+                "-preset", "slow", "-crf", "23", "-pix_fmt", "yuv420p", "-an",
+                "-movflags", "+faststart", str(pending),
+            ], check=True)
+            frame = subprocess.run([
+                ffmpeg, "-hide_banner", "-loglevel", "error", "-ss", str(timestamp),
+                "-i", str(pending), "-frames:v", "1", "-f", "image2pipe", "-c:v", "png", "pipe:1",
+            ], check=True, stdout=subprocess.PIPE).stdout
+            save_webp(Image.open(BytesIO(frame)).convert("RGB"), poster, max_kb=150)
+            pending.replace(output)
+        finally:
+            pending.unlink(missing_ok=True)
+        print(f"  {output.relative_to(ROOT)}  {output.stat().st_size // 1024} KB")
+
+
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--ffmpeg", default=shutil.which("ffmpeg"), help="FFmpeg executable for video preparation")
+    args = parser.parse_args()
     products()
     botanicals()
     starter()
     rbg_logo()
+    client_images()
+    client_videos(args.ffmpeg)
     favicon = APP / "favicon.ico"
     if favicon.exists():
         favicon.unlink()

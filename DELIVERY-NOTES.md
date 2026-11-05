@@ -2,6 +2,17 @@
 
 Open placeholders, samples, interim assets and decisions, per brief §0 rule 3. Keep this current: the site cannot launch while anything under "Open placeholders" or "Samples" is reachable (`grep -rn "placeholder(\|sample: true" src/content`).
 
+## Media update (2026-11-05)
+
+- Applied the newly supplied pack shots for all five varieties and their matching bare-bar artwork. These replace the corresponding images on Home, The Collection, all five flavour pages, the Wonder Room and the scent-origin cards. Lemon artwork now includes the bar.
+- Home's hero now uses the requested `801px by 1200px pintrest/1.png`, optimized as `campaign/pure-care-hero.webp` inside the existing hero frame. Home's packaging panel, The Collection's lineup and the social-share image now use all five supplied boxed-product shots from `product images 960px by 800px`; the original pack artwork is preserved in the composition.
+- Home uses three supplied clips in its existing media frames: the Lavender skincare ritual in Welcome, the five-bar film in the campaign banner, and Lavender with lather beside Our Mission. Our Story uses the Aloe Vera clip in its existing values panel.
+- Updated Home's vision image to the supplied Rose ritual, Our Story's hero to the supplied handwashing image, and the CEO panel to the supplied bathroom image. Existing layouts, frame dimensions, typography, colours, navigation and section order are retained.
+- Videos are silent and loop automatically while visible, without play/pause controls (developer request). Matching posters show when playback is unavailable or reduced motion is enabled. Original uploads stay in `brand-assets/`; web assets are generated under `public/brand-assets/` by `scripts/prepare_assets.py` (FFmpeg can be supplied with `--ffmpeg`).
+- Around the World's London and store photographs remain the real location photographs. The new campaign visuals do not establish locations, retailers or availability; the related client placeholders below still apply.
+- Validation: production build and lint pass. All ten pages return 200 with no horizontal overflow at 360/390/768/1440 px and no browser runtime errors. Home, Our Story and The Collection retain their original section positions and dimensions at 390/1440 px. All four clips pass playback, offscreen pause and reduced-motion checks; a blocked-video check confirms the matching poster remains visible. All new images and posters decode successfully.
+- Follow-up verified: the selected hero and new packaging lineup load at all four widths, all five Collection cards use the new pack shots, and all four videos restart automatically at the end without native or custom playback controls.
+
 ## Status (2026-10-25)
 
 | Area | State |
@@ -42,8 +53,6 @@ Verified on the production build (motion + layout suites): every route returns 2
 
 - **CEO's promise** (Our Story): the deck marks it "Draft wording. Ali to approve." Shown on the preview as written.
 - **A note from the founder** (Our Story): taken from deck slide 15, which is a hidden slide. Confirm it is final.
-- **Lemon picture**: the deck asks for the soap to show in all 5 flavour pictures (slide 30). Coconut, Aloe Vera, Lavender and Rose show a bar; the Lemon (Amalfi) concept shows no bar. Needs a new Lemon picture (concept art with a plain bar, or a real photo).
-- **New images / AI video**: the deck asks for a new hero picture, new images and AI videos (slides 21, 23, 26, 31). None were supplied, so the hero uses the Lemon pack render and the campaign band uses the bath poster. Drop a video in `public/brand-assets/videos/` and set `home.film.src`.
 - **Address and map** (Get in Touch, slide 19): not supplied, so hidden (`contact.details.address`).
 - **Team** (Our Story, slide 2): `src/content/team.ts` is empty, so the section is hidden.
 - **Real photographs** (Home, Around the World) show the **previous packaging**. Confirm the client is happy to show them, and whether any retailer may be identified. One basket photo shows third-party brands.
@@ -58,7 +67,7 @@ Verified on the production build (motion + layout suites): every route returns 2
 
 ## Interim assets
 
-- **Flavour artwork** (collage, Wonder Room, flavour pages, Around the World origins): the starter's concept art (bare bars, no packaging), always labelled as AI concepts. Never use the starter's `campaign/*.webp` (AI-drawn packs, brief §6).
+- **Flavour artwork** (collage, Wonder Room, flavour pages, Around the World origins): the client's November bare-bar artwork, retaining the existing concept labels. Never use the starter's `campaign/*.webp` (AI-drawn packs, brief §6).
 - **Logo**: the Royal Basket Group logo from the deck (slide 22), keyed to transparency by `scripts/prepare_assets.py` (source: `brand-assets/source/logos/royal-basket-group.png`). Swap in a vector file when the client sends one. Favicon/app icon are generated from it.
 
 ## Decisions

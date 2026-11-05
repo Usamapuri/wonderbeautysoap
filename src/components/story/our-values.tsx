@@ -1,5 +1,4 @@
-import Image from "next/image"
-
+import { CampaignVideo } from "@/components/brand/campaign-video"
 import { Eyebrow } from "@/components/brand/eyebrow"
 import { SplitText } from "@/components/brand/split-text"
 import { story } from "@/content/story"
@@ -10,9 +9,9 @@ export function OurValues() {
   const { values } = story
   return (
     <section aria-labelledby="values-heading" className="grid gap-3 px-3 pt-3 sm:px-5 sm:pt-5 md:grid-cols-2">
-      {/* Square frame = the square concept artwork. */}
+      {/* The supplied clip stays inside the original square panel. */}
       <div {...reveal()} className="tile-pop relative aspect-square bg-clay">
-        <Image src={values.image.src} alt={values.image.alt} fill sizes="(max-width: 850px) 100vw, 50vw" className="object-cover" />
+        <CampaignVideo src={values.video} poster={values.image.src} label={values.image.alt} sizes="(max-width: 850px) 100vw, 50vw" position="50% 65%" />
       </div>
       <div {...reveal(120)} className="flex flex-col justify-between gap-10 rounded-lg bg-parchment p-8 sm:p-12 md:p-16">
         <div>

@@ -16,7 +16,7 @@ export const collection = {
     formula: site.taglines.formula,
   },
   feature: {
-    src: "/brand-assets/products/lineup.webp",
+    src: "/brand-assets/products/lineup-packs.webp",
     alt: "All five Wonder Beauty Bars: Rose, Lavender, Aloe Vera, Lemon and Coconut",
     caption: "All 5 flavours",
   },

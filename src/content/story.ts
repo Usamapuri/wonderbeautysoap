@@ -20,8 +20,8 @@ export const story = {
     title: { before: "Our", emphasis: "Story" },
     cta: { label: "Who we are", href: "#who-we-are" },
     image: {
-      src: "/brand-assets/products/lineup.webp",
-      alt: "The five Wonder Beauty Bars in their gold-and-white boxes",
+      src: "/brand-assets/campaign/handwashing.webp",
+      alt: "Hands lathering a Wonder Beauty Bar",
     },
   },
 
@@ -37,9 +37,10 @@ export const story = {
     eyebrow: "Royal Basket Group",
     heading: "Our values.",
     list: ["Simplicity", "Affordability", "Authenticity", "Quality", "Transparency"],
+    video: "/brand-assets/videos/aloe-ritual.mp4",
     image: {
-      src: "/brand-assets/flavors/aloe-freshness.webp",
-      alt: "Aloe Vera concept artwork: a clear bar among fresh aloe leaves",
+      src: "/brand-assets/videos/aloe-ritual-poster.webp",
+      alt: "Wonder Aloe Vera Beauty Bar with fresh aloe and gentle lather",
     },
   },
 
@@ -100,8 +101,8 @@ export const story = {
     signature: "CEO",
     company: site.company,
     image: {
-      src: "/brand-assets/flavors/bath-bubbles-poster.webp",
-      alt: "Concept artwork: a Wonder bar resting beside a warm bath",
+      src: "/brand-assets/campaign/bathroom-ritual.webp",
+      alt: "Wonder Beauty Bar in a shell-shaped dish beside a warm bath",
     },
   },
 

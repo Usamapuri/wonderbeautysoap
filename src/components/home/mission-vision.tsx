@@ -1,19 +1,24 @@
 import Image from "next/image"
 
+import { CampaignVideo } from "@/components/brand/campaign-video"
 import { Eyebrow } from "@/components/brand/eyebrow"
 import { SplitText } from "@/components/brand/split-text"
 import { home } from "@/content/home"
 import { reveal } from "@/lib/reveal"
 import { cn } from "@/lib/utils"
 
-type Visual = { src: string; alt: string; width: number; height: number }
+type Visual = { src: string; alt: string; width: number; height: number; video?: string }
 
 // Image panel at the photo's own aspect ratio. On wide screens it also stretches to the row height
 // (the row is at least as tall as the picture), so a much longer text panel would crop it slightly.
 function Picture({ image, className }: { image: Visual; className?: string }) {
   return (
     <div {...reveal()} style={{ aspectRatio: `${image.width} / ${image.height}` }} className={cn("tile-pop relative w-full bg-clay", className)}>
-      <Image src={image.src} alt={image.alt} fill sizes="(max-width: 850px) 100vw, 50vw" className="object-cover" />
+      {image.video ? (
+        <CampaignVideo src={image.video} poster={image.src} label={image.alt} sizes="(max-width: 850px) 100vw, 50vw" />
+      ) : (
+        <Image src={image.src} alt={image.alt} fill sizes="(max-width: 850px) 100vw, 50vw" className="object-cover" />
+      )}
     </div>
   )
 }

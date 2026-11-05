@@ -1,5 +1,4 @@
-import Image from "next/image"
-
+import { CampaignVideo } from "@/components/brand/campaign-video"
 import { Eyebrow } from "@/components/brand/eyebrow"
 import { Lines } from "@/components/brand/lines"
 import { home } from "@/content/home"
@@ -13,9 +12,9 @@ export function Welcome() {
       aria-labelledby="welcome-heading"
       className="grid items-center gap-12 px-section py-section md:grid-cols-[0.85fr_1.15fr] md:gap-[clamp(40px,7vw,110px)]"
     >
-      {/* 2:3 frame = the portrait photo's own ratio. */}
+      {/* Keep the original portrait frame for the supplied campaign clip. */}
       <div {...reveal()} className="relative mx-auto aspect-[2/3] w-full max-w-[400px] overflow-hidden rounded-lg shadow-card">
-        <Image src={welcome.image.src} alt={welcome.image.alt} fill sizes="(max-width: 560px) 100vw, 400px" className="object-cover" />
+        <CampaignVideo src={welcome.video} poster={welcome.image.src} label={welcome.image.alt} sizes="(max-width: 560px) 100vw, 400px" />
       </div>
 
       <div {...reveal(150)}>

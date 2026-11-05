@@ -26,7 +26,7 @@ export type Product = {
   mood: string
   /** Where the idea for the scent came from, in the founder's words. */
   origin: { place: string; story: string }
-  /** Concept artwork for the variety — AI concept, bare bar, no packaging. */
+  /** Client-supplied concept artwork for the variety, showing the matching bare bar. */
   artwork: { src: string; alt: string }
   /** Scent description for The Collection — client-confirmed only. */
   scentNote: string | Placeholder
@@ -42,7 +42,7 @@ const product = (p: Input): Product => ({
   ...p,
   name: `Wonder Beauty Bar — ${p.variety}`,
   botanical: `/brand-assets/botanicals/${p.slug}.webp`,
-  image: `/brand-assets/products/${p.slug}.webp`,
+  image: `/brand-assets/products/${p.slug}-pack.webp`,
   scentNote: placeholder(`${p.variety} scent description`),
   bestFor: placeholder(`${p.variety} "Best for" line`),
 })
@@ -58,7 +58,7 @@ export const products: Product[] = [
       place: "Paris, France",
       story: "Paris, the city of love, is where I met my wife. How could I not make a Rose? Soft, romantic and timeless.",
     },
-    artwork: { src: "/brand-assets/flavors/rose-editorial.webp", alt: "Rose concept artwork: sculpted rose soaps in a rose-toned set" },
+    artwork: { src: "/brand-assets/flavors/rose-bar.webp", alt: "Rose concept artwork: a pink Wonder bar with rose petals and lather" },
     accent: "var(--botanical-rose)",
   }),
   product({
@@ -72,7 +72,7 @@ export const products: Product[] = [
       story:
         "I spent years living in the UK, where I discovered rows of purple lavender stretching to the horizon. Mayfield Lavender in Surrey is one of the best-known lavender fields in the country. That calm, quiet feeling became our Lavender bar.",
     },
-    artwork: { src: "/brand-assets/flavors/lavender-royal.webp", alt: "Lavender concept artwork: lavender bars before a field at dusk" },
+    artwork: { src: "/brand-assets/flavors/lavender-bar.webp", alt: "Lavender concept artwork: a purple Wonder bar with lavender sprigs and lather" },
     accent: "var(--botanical-lavender)",
   }),
   product({
@@ -86,7 +86,7 @@ export const products: Product[] = [
       story:
         "As a skincare enthusiast, aloe vera had to be part of the collection. Korean skincare introduced me to aloe vera as a staple for soothing, fresh and hydrated-feeling skin.",
     },
-    artwork: { src: "/brand-assets/flavors/aloe-freshness.webp", alt: "Aloe Vera concept artwork: a bar among fresh aloe leaves" },
+    artwork: { src: "/brand-assets/flavors/aloe-vera-bar.webp", alt: "Aloe Vera concept artwork: a green Wonder bar with fresh aloe leaves" },
     accent: "var(--botanical-aloe-vera)",
   }),
   product({
@@ -100,8 +100,7 @@ export const products: Product[] = [
       story:
         "Wonder was born in Amalfi, on a sunny afternoon, while I was eating a lemon sorbet. The fresh, bright citrus stopped me in my tracks. I thought: I want my soap to smell like this.",
     },
-    // No bar in this artwork yet: the deck asks for soap in all five pictures (see DELIVERY-NOTES).
-    artwork: { src: "/brand-assets/flavors/lemon-italy.webp", alt: "Lemon concept artwork: lemons above the Amalfi coast" },
+    artwork: { src: "/brand-assets/flavors/lemon-bar.webp", alt: "Lemon concept artwork: a yellow Wonder bar with lemon slices and lather" },
     accent: "var(--botanical-lemon)",
   }),
   product({
@@ -115,7 +114,7 @@ export const products: Product[] = [
       story:
         "Bali was our honeymoon. Warm sand, ocean air and coconut everywhere. I can't imagine travelling without coconut, so it came home with me, in a bar.",
     },
-    artwork: { src: "/brand-assets/flavors/coconut-beach.webp", alt: "Coconut concept artwork: a bar on sunlit beach sand" },
+    artwork: { src: "/brand-assets/flavors/coconut-bar.webp", alt: "Coconut concept artwork: a white Wonder bar with coconut halves and creamy lather" },
     accent: "var(--botanical-coconut)",
   }),
 ]

@@ -1,56 +1,19 @@
-"use client"
-
-import { useEffect, useRef } from "react"
 import Image from "next/image"
 
+import { CampaignVideo } from "@/components/brand/campaign-video"
 import { Eyebrow } from "@/components/brand/eyebrow"
 import { home } from "@/content/home"
 import { reveal } from "@/lib/reveal"
 
-// Muted, looping campaign film. Plays only while on screen and never for reduced motion.
-function Film({ src }: { src: string }) {
-  const ref = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    const video = ref.current
-    if (!video) return
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !reduced.matches) video.play().catch(() => {})
-        else video.pause()
-      },
-      { threshold: 0.25 },
-    )
-    observer.observe(video)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <video
-      ref={ref}
-      muted
-      loop
-      playsInline
-      preload="none"
-      poster={home.film.poster}
-      aria-label={home.film.label}
-      className="absolute inset-0 size-full object-cover"
-    >
-      <source src={src} type="video/mp4" />
-    </video>
-  )
-}
-
 // The visual between the two welcome notes (deck slides 6 + 31), as a full-width banner with the
-// copy over the picture (Gisou home reference). Shows the poster until a video is supplied.
+// copy over the picture (Gisou home reference). Its original frame and overlay stay unchanged.
 export function CampaignFilm() {
   const { film } = home
   return (
     <section aria-labelledby="film-heading" className="px-3 sm:px-5">
       <div {...reveal()} className="group relative isolate min-h-[560px] overflow-hidden rounded-lg text-paper sm:min-h-[620px] md:min-h-[min(760px,88svh)]">
         {film.src ? (
-          <Film src={film.src} />
+          <CampaignVideo src={film.src} poster={film.poster} label={film.label} sizes="100vw" />
         ) : (
           <Image
             src={film.poster}

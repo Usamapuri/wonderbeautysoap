@@ -9,7 +9,7 @@ import { home } from "@/content/home"
 import { site } from "@/content/site"
 
 // The Bolt prototype's opening, kept as the client asked (deck slide 4): bronze glow, a faint
-// circle, "Scent. / Lather. / Wonder." with the middle word italic and indented. The pack image
+// circle, "Scent. / Lather. / Wonder." with the middle word italic and indented. The campaign image
 // is the LCP element, so it is preloaded.
 export function Hero() {
   const { hero } = home
@@ -49,7 +49,7 @@ export function Hero() {
       </div>
 
       <div className="relative animate-[rise-in_0.85s_0.2s_both]">
-        {/* A slow float gives the pack a little life; stopped for reduced motion. */}
+        {/* Keep the original slow float; stopped for reduced motion. */}
         <div className="relative mx-auto aspect-[6/5] w-full max-w-[600px] animate-[float_7s_ease-in-out_1.2s_infinite] overflow-hidden rounded-lg shadow-pop motion-reduce:animate-none">
           <Image src={hero.image.src} alt={hero.image.alt} fill preload sizes="(max-width: 850px) 100vw, 45vw" className="object-cover" />
         </div>

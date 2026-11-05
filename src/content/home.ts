@@ -18,8 +18,8 @@ export const home = {
     // Bulk orders only (developer decision 2026-10-25).
     secondaryCta: { label: ordersCta.label, href: ordersCta.href },
     image: {
-      src: "/brand-assets/products/lemon.webp",
-      alt: "The Wonder Lemon Beauty Bar in its gold-and-white box",
+      src: "/brand-assets/campaign/pure-care-hero.webp",
+      alt: "A Wonder Beauty Bar surrounded by rose petals and creamy lather",
     },
   },
 
@@ -37,9 +37,10 @@ export const home = {
       { title: "Innovation, experimentation and design", body: "in everyday beauty." },
     ],
     pull: "Every bar is a small multisensory experience: rich lather, a lovely scent and a feel that stays with you.",
+    video: "/brand-assets/videos/lavender-ritual.mp4",
     image: {
-      src: "/brand-assets/lifestyle/london-coconut.webp",
-      alt: "A Wonder Coconut Beauty Soap held beside the River Thames in London",
+      src: "/brand-assets/videos/lavender-ritual-poster.webp",
+      alt: "Wonder Lavender Beauty Bar in a skincare ritual",
     },
   },
 
@@ -49,11 +50,9 @@ export const home = {
     heading: { before: "Let the day", emphasis: "soften." },
     body: "A quiet, imagined moment with Wonder. A reminder that an everyday ritual can still feel like your own.",
     caption: "Campaign film · Sound off",
-    // No video supplied yet (deck slide 21: "Add AI videos"). Drop an mp4 at
-    // public/brand-assets/videos/ and set `src` to its path; the poster shows until then.
-    src: null as string | null,
-    poster: "/brand-assets/flavors/bath-bubbles-poster.webp",
-    label: "Wonder campaign film: a beauty bar beside a bath of bubbles",
+    src: "/brand-assets/videos/wonder-collection.mp4",
+    poster: "/brand-assets/videos/wonder-collection-poster.webp",
+    label: "Wonder campaign film: all five beauty bars surrounded by lather",
   },
 
   // Slide 6 + designer note "Eco-friendly box packaging is a selling point: give it space on Home".
@@ -67,8 +66,8 @@ export const home = {
         "It helps reduce our carbon footprint and gives you a luxury experience at an affordable price, because every customer matters to us.",
       ],
       image: {
-        src: "/brand-assets/products/lineup.webp",
-        alt: "All five Wonder Beauty Bars in their gold-and-white boxes",
+        src: "/brand-assets/products/lineup-packs.webp",
+        alt: "All five Wonder Beauty Bars in their illustrated boxes",
       },
     },
     closing: "We love quality and beauty, and we want you to find both in every bar.",
@@ -86,8 +85,9 @@ export const home = {
     eyebrow: "Our mission",
     text: "To make everyday luxury accessible to all, with a gentle, moisturising, beautifully scented beauty bar made with care for every skin type, at a price everyone can afford.",
     image: {
-      src: "/brand-assets/lifestyle/rose-at-retail.webp",
-      alt: "A Wonder Rose Beauty Soap held in a shop",
+      src: "/brand-assets/videos/lavender-lather-poster.webp",
+      video: "/brand-assets/videos/lavender-lather.mp4",
+      alt: "Wonder Lavender Beauty Bar with lavender sprigs and soft lather",
       width: 900,
       height: 1200,
     },
@@ -99,8 +99,8 @@ export const home = {
     // Slide 8 notes: optional second vision line.
     second: "To become the most loved everyday beauty bar in the region, and a name that travels.",
     image: {
-      src: "/brand-assets/lifestyle/london-lineup.webp",
-      alt: "Wonder Beauty Soap packages photographed beside the London Eye",
+      src: "/brand-assets/campaign/rose-ritual.webp",
+      alt: "Wonder Rose Beauty Bar beside folded towels and rose petals",
       width: 1200,
       height: 801,
     },
