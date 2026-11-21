@@ -9,7 +9,7 @@ import { world } from "@/content/world"
 export const metadata: Metadata = world.seo
 
 // Around the World (deck slide 18; formerly "In the City"), redesigned on the owner's request
-// (2026-11-21): hero picture with the title, the four regions as one grid with the countries line,
+// (2026-11-21, phase 3): the gold page hero with the title, the four regions as one card on a drawn route,
 // then the closing band. The former real photos (London, "Spotted at") are no
 // longer shown here: generated pictures never stand in for real store or location photos.
 export default function AroundTheWorldPage() {
@@ -19,7 +19,7 @@ export default function AroundTheWorldPage() {
       <WorldHero />
       <WorldRegions />
       <PageCta eyebrow={cta.eyebrow} heading={cta.heading} primary={cta.action} tone="stone">
-        <p className="mt-9 mb-2 text-[8px] uppercase tracking-[0.18em] text-ink-muted">{cta.follow}</p>
+        <p className="type-label mt-9 mb-2 uppercase tracking-[0.18em] text-ink-muted">{cta.follow}</p>
         <SocialTextLinks only={cta.channels} />
       </PageCta>
     </>

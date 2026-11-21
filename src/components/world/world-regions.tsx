@@ -1,38 +1,65 @@
-import Image from "next/image"
+import type { CSSProperties } from "react"
+import { Plane } from "lucide-react"
 
+import { site } from "@/content/site"
 import { world } from "@/content/world"
-import { reveal, revealGroup } from "@/lib/reveal"
+import { reveal } from "@/lib/reveal"
 
-// The four regions in the client's order (audit slide 50), as one even grid of 4:5 frames: two per row
-// on phones, four on wide screens. Each picture is an AI-made still-life with a regional mood, so the
-// label names the region only, never a place. Then the countries as one line (audit slide 52). No AI
-// caption on the page (owner, 2026-11-21); DELIVERY-NOTES records what each picture is.
+// Where Wonder is available, as ONE card (owner, phase 3: "per image location in around the world should be
+// removed rather make something creative and make it one card display", then "make this card better be
+// creative and dont use the golden color for it use the other website colors"). A boarding pass in the site's
+// ink and cream, with the bars' pastels as the stops' markers: a header row ("Available in", the brand as the
+// carrier), the four regions as stops on a dashed flight line (codes large like airport codes, full names
+// beneath), a perforated tear line and a stub carrying the footer tagline beside a decorative stripe. No gold.
+// The line draws on and the plane flies from the first stop to the last once the card scrolls into view; with
+// reduced motion it is all simply drawn. Across the ticket from 640px wide; on phones the ticket stands
+// upright, stops top to bottom and the stub at the foot. The regions are a real list; the line, plane,
+// perforation and stripe are decorative.
 export function WorldRegions() {
-  const { regions, availability } = world
+  const { regions, availability, pass } = world
   return (
     <section aria-labelledby="regions-heading" className="wrap-wide px-section py-section">
-      <h2 id="regions-heading" className="sr-only">
-        {availability.heading}
-      </h2>
-      <ul {...revealGroup} className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-        {regions.map((r) => (
-          <li key={r.code}>
-            <figure className="m-0">
-              <div className="relative overflow-hidden rounded-lg bg-clay" style={{ aspectRatio: `${r.image.width} / ${r.image.height}` }}>
-                <Image src={r.image.src} alt={r.image.alt} fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
-              </div>
-              <figcaption className="mt-3 flex items-baseline gap-2.5">
-                <span className="text-[9px] font-medium tracking-[0.22em] text-gold">{r.code}</span>
-                <span className="font-display text-[clamp(20px,1.8vw,26px)] leading-none">{r.name}</span>
-              </figcaption>
-            </figure>
-          </li>
-        ))}
-      </ul>
-      <p {...reveal()} className="font-display mt-12 text-center text-[clamp(24px,2.6vw,36px)] leading-tight sm:mt-16">
-        <span className="mr-3 align-middle font-sans text-[9px] font-medium tracking-[0.22em] text-gold uppercase">{availability.heading}</span>
-        {availability.countries.join(" · ")}
-      </p>
+      <div {...reveal()} className="pass">
+        <div className="pass-main">
+          <div className="pass-head">
+            <h2 id="regions-heading" className="type-label font-medium uppercase tracking-[0.24em] text-paper/75">
+              {availability.heading}
+            </h2>
+            <p className="text-right">
+              <span className="type-label block uppercase tracking-[0.24em] text-paper/60">{pass.carrierLabel}</span>
+              <span className="font-display mt-1 block text-[20px] leading-none text-paper">{site.brand}</span>
+            </p>
+          </div>
+
+          <div className="pass-route">
+            <span aria-hidden className="pass-line" />
+            <span aria-hidden className="pass-plane">
+              <Plane className="size-5" strokeWidth={1.5} />
+            </span>
+            <ul className="pass-stops">
+              {regions.map((r) => (
+                <li key={r.code} className="pass-stop" style={{ "--stop": `var(--bar-${r.pastel})` } as CSSProperties}>
+                  <span aria-hidden className="pass-code font-display">
+                    {r.code}
+                  </span>
+                  <span aria-hidden className="pass-marker" />
+                  <span className="pass-name">
+                    <span className="sr-only">{r.code}: </span>
+                    {r.name}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div aria-hidden className="pass-perf" />
+
+        <div className="pass-stub">
+          <p className="pass-tagline font-display">{site.taglines.footer}</p>
+          <span aria-hidden className="pass-stripe" />
+        </div>
+      </div>
     </section>
   )
 }
