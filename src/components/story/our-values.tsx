@@ -10,7 +10,7 @@ export function OurValues() {
   const { values } = story
   return (
     <section aria-labelledby="values-heading" className="wrap-wide px-3 pt-3 sm:px-5 sm:pt-5">
-      <div {...reveal()} className="panel bg-parchment grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:items-end md:gap-16">
+      <div {...reveal()} className="panel bg-parchment grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:items-center md:gap-[clamp(32px,4vw,56px)]">
         <div>
           <Eyebrow>{values.eyebrow}</Eyebrow>
           <h2 id="values-heading" className="font-display type-section mt-5">
@@ -18,10 +18,9 @@ export function OurValues() {
           </h2>
         </div>
         <ul {...revealGroup} className="border-t border-line">
-          {values.list.map((v, i) => (
-            <li key={v} className="flex items-baseline justify-between gap-6 border-b border-line py-4">
-              <span className="font-display type-card">{v}.</span>
-              <span className="text-[9px] tracking-[0.2em] text-ink-muted">{String(i + 1).padStart(2, "0")}</span>
+          {values.list.map((v) => (
+            <li key={v} className="border-b border-line py-4">
+              <span className="font-display type-card">{v}</span>
             </li>
           ))}
         </ul>
