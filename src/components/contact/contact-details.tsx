@@ -11,7 +11,7 @@ export function ContactDetails() {
   const linkClass = "inline-flex min-h-10 items-center gap-[11px] text-xs text-ink hover:text-gold"
   return (
     <div className="mt-10 flex flex-wrap gap-x-10 gap-y-3 border-t border-line pt-5 sm:mt-14">
-      {responseTime && <p className="w-full text-[12px] leading-[1.8] text-ink-soft">{responseTime}</p>}
+      {responseTime && <p className="type-copy w-full text-ink-soft">{responseTime}</p>}
       {details.phone && (
         <a href={`tel:${details.phone.replace(/\s/g, "")}`} className={linkClass}>
           <Phone aria-hidden className="size-[17px]" /> {details.phone}

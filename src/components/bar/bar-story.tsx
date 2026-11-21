@@ -28,14 +28,14 @@ export function BarStory({ product }: { product: Product }) {
       </figure>
       <div {...reveal(120)} className="panel flex flex-col justify-center bg-parchment">
         <Eyebrow>{bar.storyEyebrow}</Eyebrow>
-        <p className="mt-3 text-[11px] leading-[1.7] text-ink-muted">{story.wonderRoom.heading}</p>
+        <p className="type-small mt-3 text-ink-muted">{story.wonderRoom.heading}</p>
         <h2 id="bar-story-heading" className="font-display type-section mt-7">
           {/* Flavour and place on two lines, no dot between them (owner 2026-11-21). */}
           <Lines lines={[product.variety, product.origin.place]} />
         </h2>
         <blockquote className="font-display mt-6 max-w-[36ch] text-[clamp(21px,2.1vw,28px)] leading-[1.35]">“{product.origin.story}”</blockquote>
         <p className="font-display mt-8 text-[26px] leading-none text-gold italic">{bar.signature}</p>
-        <p className="mt-2 text-[9px] uppercase tracking-[0.24em] text-ink-muted">{site.company}</p>
+        <p className="type-label mt-2 uppercase tracking-[0.24em] text-ink-muted">{site.company}</p>
       </div>
     </section>
   )

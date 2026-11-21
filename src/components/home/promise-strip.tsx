@@ -21,7 +21,7 @@ function Run({ hidden = false }: { hidden?: boolean }) {
 
 export function PromiseStrip() {
   return (
-    <section aria-label="The Wonder promise" className="overflow-hidden bg-ink py-[18px] text-[9px] font-medium uppercase tracking-[0.24em] text-paper sm:text-[10px]">
+    <section aria-label="The Wonder promise" className="overflow-hidden bg-ink py-[18px] type-label font-medium uppercase tracking-[0.24em] text-paper sm:type-meta">
       <div className="flex w-max animate-[marquee_60s_linear_infinite] hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:animate-none motion-reduce:justify-center">
         <Run />
         <div className="flex motion-reduce:hidden">

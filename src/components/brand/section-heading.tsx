@@ -19,7 +19,7 @@ export function SectionHeading({
   className?: string
 }) {
   return (
-    <div {...reveal()} className={cn("mx-auto mb-9 max-w-[760px] text-center sm:mb-14", className)}>
+    <div {...reveal()} className={cn("mb-heading mx-auto max-w-[760px] text-center", className)}>
       <Eyebrow center>{eyebrow}</Eyebrow>
       <h2 id={id} className="font-display type-section mt-5 mb-3.5">
         <Lines lines={heading} />

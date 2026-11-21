@@ -30,7 +30,7 @@ export function CeoPromise() {
         <p className="font-display mt-9 text-[clamp(21px,2.1vw,28px)] leading-[1.3] text-gilt italic">{ceo.promise}</p>
         <p className="mt-8 text-[13px] leading-[1.8] text-paper/80">{ceo.thanks}</p>
         <p className="font-display mt-8 text-[30px] leading-none text-gilt italic">{ceo.signature}</p>
-        <p className="mt-2 text-[9px] uppercase tracking-[0.24em] text-paper/60">{ceo.company}</p>
+        <p className="type-label mt-2 uppercase tracking-[0.24em] text-paper/60">{ceo.company}</p>
       </div>
     </section>
   )

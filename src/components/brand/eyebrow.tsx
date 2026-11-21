@@ -25,7 +25,7 @@ export function Eyebrow({
   className?: string
 }) {
   return (
-    <div className={cn("eyebrow flex items-center gap-3 text-[9px] font-medium uppercase tracking-[0.24em]", center && "justify-center", tones[tone], className)}>
+    <div className={cn("eyebrow type-label flex items-center gap-3 font-medium uppercase tracking-[0.24em]", center && "justify-center", tones[tone], className)}>
       {typeof children === "string" ? children.replace(/\.$/, "") : children}
     </div>
   )

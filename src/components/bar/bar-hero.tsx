@@ -19,7 +19,7 @@ export function BarHero({ product }: { product: Product }) {
     <section
       aria-labelledby="bar-title"
       style={{ "--accent": product.accent } as CSSProperties}
-      className="grid items-start gap-10 px-section pt-10 pb-16 md:grid-cols-[1.1fr_0.9fr] md:gap-[clamp(40px,6vw,96px)] md:pt-14 md:pb-24"
+      className="grid items-start gap-10 px-section pt-10 pb-section md:grid-cols-[1.1fr_0.9fr] md:gap-[clamp(40px,6vw,96px)] md:pt-14"
     >
       <div className="animate-[rise-in_0.85s_0.15s_both] md:sticky md:top-[calc(var(--header-height)+24px)]">
         <BarViews views={product.views} variety={product.variety} listLabel={productPage.views.list} />
@@ -27,7 +27,7 @@ export function BarHero({ product }: { product: Product }) {
 
       <div>
         <div className="rise-group">
-          <nav aria-label="Breadcrumb" className="text-[9px] font-medium uppercase tracking-[0.2em] text-ink-muted">
+          <nav aria-label="Breadcrumb" className="type-label font-medium uppercase tracking-[0.2em] text-ink-muted">
             <Link href="/collection" className="hover:text-gold">
               {bar.breadcrumb}
             </Link>
@@ -43,26 +43,26 @@ export function BarHero({ product }: { product: Product }) {
           </h1>
           <div>
             <p className="font-display mt-5 text-[clamp(26px,2.6vw,38px)] leading-tight text-gold italic">{product.tagline}</p>
-            <p className="mt-2 text-[13px] leading-[1.7] text-ink-soft">{product.subLine}</p>
+            <p className="mt-2 text-[14px] leading-[1.7] text-ink-soft">{product.subLine}</p>
           </div>
-          <dl className="mt-8 grid gap-5 border-t border-line pt-6 text-[12px] leading-[1.6] sm:grid-cols-2">
+          <dl className="type-copy mt-8 grid gap-5 border-t border-line pt-6 sm:grid-cols-2">
             <div>
-              <dt className="text-[8px] uppercase tracking-[0.18em] text-ink-muted">{labels.inspired}</dt>
+              <dt className="type-label uppercase tracking-[0.18em] text-ink-muted">{labels.inspired}</dt>
               <dd className="mt-1 text-ink">{product.origin.place}</dd>
             </div>
             <div>
-              <dt className="text-[8px] uppercase tracking-[0.18em] text-ink-muted">{productPage.details.netWeight}</dt>
+              <dt className="type-label uppercase tracking-[0.18em] text-ink-muted">{productPage.details.netWeight}</dt>
               <dd className="mt-1 text-ink">{product.netWeight}</dd>
             </div>
             {/* "Best for" shows only once the client supplies it (no visible placeholder). */}
             {product.bestFor && (
               <div className="sm:col-span-2">
-                <dt className="text-[8px] uppercase tracking-[0.18em] text-ink-muted">{labels.bestFor}</dt>
+                <dt className="type-label uppercase tracking-[0.18em] text-ink-muted">{labels.bestFor}</dt>
                 <dd className="mt-1 text-ink-soft">{product.bestFor}</dd>
               </div>
             )}
           </dl>
-          <p className="mt-6 text-[9px] uppercase tracking-[0.14em] text-gold">{collection.promise}</p>
+          <p className="type-label mt-6 uppercase tracking-[0.14em] text-gold">{collection.promise}</p>
           <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
             <Button asChild variant="wonder" size="wonder">
               <Link href={`/contact?type=bulk&product=${product.slug}`}>

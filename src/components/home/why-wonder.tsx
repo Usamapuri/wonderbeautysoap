@@ -9,7 +9,7 @@ export function WhyWonder() {
   const { whyWonder } = home
   return (
     <section aria-labelledby="why-heading" className="pt-section">
-      <h2 {...reveal()} id="why-heading" className="font-display type-section mb-10 px-section text-center sm:mb-14">
+      <h2 {...reveal()} id="why-heading" className="font-display type-section mb-heading px-section text-center">
         <SplitText text={whyWonder.eyebrow} />
       </h2>
       <ValuesBand cells={whyWonder.cells} />

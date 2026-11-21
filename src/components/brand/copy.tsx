@@ -7,7 +7,7 @@ import { isPlaceholder } from "@/content/placeholder"
 export function Copy({ value }: { value: string }) {
   if (!isPlaceholder(value)) return value
   return (
-    <mark className="bg-transparent px-1 font-sans text-[9px] tracking-[0.08em] text-rose outline outline-1 outline-dashed outline-rose">
+    <mark className="bg-transparent px-1 font-sans type-label tracking-[0.08em] text-rose outline outline-1 outline-dashed outline-rose">
       {value}
     </mark>
   )

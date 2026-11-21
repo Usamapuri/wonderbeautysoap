@@ -51,7 +51,7 @@ async function Bar({ params }: { params: Params }) {
       <BarStory product={product} />
 
       <section aria-labelledby="others-heading" className="px-section py-section">
-        <h2 {...reveal()} id="others-heading" className="font-display mb-9 text-center text-[clamp(40px,5vw,68px)] sm:mb-12">
+        <h2 {...reveal()} id="others-heading" className="font-display type-section mb-heading text-center">
           <SplitText text={bar.othersHeading} />
         </h2>
         <div {...revealGroup} className="mx-auto grid max-w-[1000px] grid-cols-2 gap-2.5 sm:gap-3.5 md:grid-cols-4">

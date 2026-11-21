@@ -21,7 +21,7 @@ export default function ContactPage() {
   const { heading, social } = contact
   return (
     <>
-      <section aria-labelledby="contact-title" className="rise-group px-[22px] pt-[56px] pb-6 text-center sm:px-6 sm:pt-[100px] sm:pb-[55px]">
+      <section aria-labelledby="contact-title" className="rise-group px-section pt-section text-center">
         <Eyebrow center>{heading.eyebrow}</Eyebrow>
         <h1
           id="contact-title"
@@ -35,7 +35,7 @@ export default function ContactPage() {
         <p className="mx-auto max-w-[390px] text-xs leading-[1.9] text-ink-soft sm:text-[13px]">{heading.body}</p>
       </section>
 
-      <div className="rise-group mx-auto max-w-[1180px] px-4 pt-5 pb-[75px] sm:px-6 sm:pt-[30px] sm:pb-[110px]">
+      <div className="rise-group mx-auto max-w-[1180px] px-3 pt-heading pb-section sm:px-5">
         <div className="relative grid overflow-hidden rounded-lg border border-gold/30 shadow-pop before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-1 before:bg-linear-to-r before:from-gold before:via-gilt before:to-gold md:grid-cols-[0.82fr_1.18fr]">
           <BulkPanel />
           <Suspense fallback={<div className="min-h-[640px] bg-stone" />}>
@@ -45,7 +45,7 @@ export default function ContactPage() {
         <ContactDetails />
       </div>
 
-      <section {...revealGroup} aria-labelledby="social-heading" className="bg-stone px-5 pt-[55px] pb-[68px] text-center sm:pt-[70px] sm:pb-[85px]">
+      <section {...revealGroup} aria-labelledby="social-heading" className="bg-stone px-section py-section text-center">
         <Eyebrow center>{social.eyebrow}</Eyebrow>
         <h2 id="social-heading" className="font-display mt-5 mb-6 text-[clamp(44px,5vw,68px)]">
           {social.heading}

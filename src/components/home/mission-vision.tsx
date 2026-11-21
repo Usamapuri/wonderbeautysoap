@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 export function MissionVision() {
   const { mission, vision } = home
   return (
-    <section aria-label="Our mission and vision" className="wrap-wide grid gap-3 px-3 py-3 sm:gap-5 sm:px-5 sm:py-5">
+    <section aria-label="Our mission and vision" className="wrap-wide grid gap-3 px-3 pt-3 sm:gap-5 sm:px-5 sm:pt-5">
       <div {...reveal()} className="panel flex flex-col items-center justify-center gap-7 bg-parchment text-center">
         <h2 className="font-display type-section text-gold">
           <SplitText text={mission.eyebrow} />
@@ -30,7 +30,7 @@ export function MissionVision() {
           <div>
             <p className="font-display text-[clamp(22px,2vw,30px)] leading-[1.2]">{vision.text}</p>
             <p className="font-display mt-5 text-[clamp(22px,2vw,30px)] text-gilt italic">{vision.signOff}</p>
-            <p className="mt-7 max-w-[46ch] border-t border-paper/15 pt-5 text-[12px] leading-[1.75] text-paper/75">{vision.second}</p>
+            <p className="mt-7 max-w-[46ch] border-t border-paper/15 pt-5 type-copy text-paper/75">{vision.second}</p>
           </div>
         </div>
         {/* The picture at its own ratio; beside the text on wide screens it takes the row's height. */}

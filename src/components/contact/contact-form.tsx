@@ -47,7 +47,7 @@ const markTouched = () => {
 
 // Fields are light parchment wells so they read clearly on the card's warmer stone surface.
 const inputClass = "h-auto rounded-lg border-ink/20 bg-parchment px-3 py-[13px] text-xs md:text-xs"
-const labelClass = "text-[9px] font-normal uppercase tracking-[0.12em]"
+const labelClass = "type-label font-normal uppercase tracking-[0.12em]"
 
 // §5.2 — validated enquiry form. ?product=<slug> and ?type=bulk pre-fill it (must render under <Suspense>).
 export function ContactForm() {
@@ -112,15 +112,15 @@ export function ContactForm() {
     <section
       id="enquiry"
       aria-labelledby="enquiry-heading"
-      className="scroll-mt-[calc(var(--header-height)+16px)] bg-linear-to-br from-stone via-stone to-wheat px-6 py-8 sm:p-10 md:p-12"
+      className="scroll-mt-[calc(var(--header-height)+16px)] bg-linear-to-br from-stone via-stone to-wheat p-panel"
     >
       <Eyebrow>{form.eyebrow}</Eyebrow>
-      <h2 id="enquiry-heading" className="font-display mt-[18px] mb-6 text-[39px] leading-[0.95] sm:text-[clamp(36px,4vw,53px)]">
+      <h2 id="enquiry-heading" className="font-display type-card mt-[18px] mb-6">
         <SplitText text={form.heading} now />
       </h2>
 
       {status === "sent" || status === "mailto" || status === "error" ? (
-        <div role="status" className="rounded-lg border border-gold/50 bg-parchment p-6 sm:p-8">
+        <div role="status" className="p-card rounded-lg border border-gold/50 bg-parchment">
           <h3 ref={panelRef} tabIndex={-1} className="font-display text-[32px] tracking-normal outline-none">
             {status === "sent" ? form.success.heading : status === "mailto" ? form.mailtoSuccess.heading : form.error.heading}
           </h3>
@@ -170,7 +170,7 @@ export function ContactForm() {
               aria-invalid={!!errors.name || undefined}
               className={inputClass}
             />
-            <FieldError className="text-[10px]">{errors.name}</FieldError>
+            <FieldError className="type-small">{errors.name}</FieldError>
           </Field>
 
           <Field data-invalid={!!errors.email || undefined}>
@@ -186,7 +186,7 @@ export function ContactForm() {
               aria-invalid={!!errors.email || undefined}
               className={inputClass}
             />
-            <FieldError className="text-[10px]">{errors.email}</FieldError>
+            <FieldError className="type-small">{errors.email}</FieldError>
           </Field>
 
           <Field data-invalid={!!errors.type || undefined}>
@@ -205,7 +205,7 @@ export function ContactForm() {
                 ))}
               </SelectContent>
             </Select>
-            <FieldError className="text-[10px]">{errors.type}</FieldError>
+            <FieldError className="type-small">{errors.type}</FieldError>
           </Field>
 
           <Field>
@@ -239,7 +239,7 @@ export function ContactForm() {
               aria-invalid={!!errors.message || undefined}
               className={cn(inputClass, "min-h-[130px] resize-y")}
             />
-            <FieldError className="text-[10px]">{errors.message}</FieldError>
+            <FieldError className="type-small">{errors.message}</FieldError>
           </Field>
 
           <Field orientation="horizontal" data-invalid={!!errors.consent || undefined} className="sm:col-span-2">
@@ -254,7 +254,7 @@ export function ContactForm() {
               {form.fields.consent}
             </FieldLabel>
           </Field>
-          {errors.consent && <FieldError className="-mt-2 text-[10px] sm:col-span-2">{errors.consent}</FieldError>}
+          {errors.consent && <FieldError className="type-small -mt-2 sm:col-span-2">{errors.consent}</FieldError>}
 
           {/* Honeypot: hidden from people, filled by bots. */}
           <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">

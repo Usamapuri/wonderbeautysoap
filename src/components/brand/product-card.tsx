@@ -25,15 +25,15 @@ export function ProductCard({ product, className }: { product: Product; classNam
       </div>
       <div className="flex flex-1 flex-col px-3 pt-3.5 pb-4 sm:px-4 sm:pt-[18px] sm:pb-5">
         {/* The origin as plain text, "City, Country", with no dot beside it (owner 2026-11-21). */}
-        <p className="text-[8px] tracking-[0.2em] text-ink-muted">{product.origin.place.toUpperCase()}</p>
-        <h3 className="font-display mt-2.5 text-[25px] leading-[0.95] sm:text-[28px]">{product.variety}</h3>
-        <p className="font-display mt-1.5 text-[15px] leading-tight text-gold italic">{product.tagline}</p>
-        <p className="mt-1.5 mb-4 text-[9px] leading-[1.6] text-ink-soft sm:text-[10px]">{product.subLine}</p>
+        <p className="type-label tracking-[0.2em] text-ink-muted">{product.origin.place.toUpperCase()}</p>
+        <h3 className="font-display type-card-sm mt-2.5">{product.variety}</h3>
+        <p className="font-display mt-1.5 text-[17px] leading-tight text-gold italic">{product.tagline}</p>
+        <p className="type-small mt-1.5 mb-4 text-ink-soft">{product.subLine}</p>
         <Link
           href={barHref(product.slug)}
           prefetch
           aria-label={`Discover the ${product.variety} bar`}
-          className="group mt-auto inline-flex min-h-10 w-fit items-center gap-[9px] text-[8px] font-medium uppercase tracking-[0.16em] hover:text-gold"
+          className="group mt-auto inline-flex min-h-10 w-fit items-center gap-[9px] type-label font-medium uppercase tracking-[0.16em] hover:text-gold"
         >
           Discover
           <ArrowRight aria-hidden className="size-4 text-gold transition-transform group-hover:translate-x-1" />

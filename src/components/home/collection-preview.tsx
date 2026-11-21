@@ -18,7 +18,7 @@ export function CollectionPreview() {
       className="relative overflow-hidden px-section py-section before:pointer-events-none before:absolute before:top-[-205px] before:left-[-190px] before:size-[390px] before:rounded-full before:border before:border-gold/25 after:pointer-events-none after:absolute after:top-[-280px] after:left-[-265px] after:size-[540px] after:rounded-full after:border after:border-gold/25"
     >
       <SectionHeading id="collection-heading" eyebrow={section.eyebrow} heading={section.heading} body={section.body} />
-      <div {...revealGroup} className="relative z-10 mx-auto grid max-w-[1210px] grid-cols-2 gap-2.5 sm:gap-3.5 md:grid-cols-5">
+      <div {...revealGroup} className="relative z-10 mx-auto grid max-w-[1210px] grid-cols-2 gap-grid md:grid-cols-5">
         {products.map((p, i) => (
           <ProductCard
             key={p.slug}

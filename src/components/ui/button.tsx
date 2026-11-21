@@ -41,7 +41,7 @@ const buttonVariants = cva(
         "icon-sm":
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
-        wonder: "h-auto min-h-11 gap-3 px-[21px] py-[15px] text-[9px] font-normal",
+        wonder: "h-auto min-h-11 gap-3 px-[18px] py-[15px] type-label font-normal",
       },
     },
     defaultVariants: {

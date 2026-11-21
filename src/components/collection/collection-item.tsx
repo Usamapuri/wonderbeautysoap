@@ -40,11 +40,11 @@ export function CollectionItem({ product, index }: { product: Product; index: nu
         <h2 id={`${product.slug}-name`} className="font-display type-card">
           {product.variety}
         </h2>
-        <p className="font-display mt-2 text-[20px] leading-tight text-gold italic">{product.tagline}</p>
-        <p className="mt-1 text-[10px] leading-[1.7] text-ink-soft">{product.subLine}</p>
+        <p className="font-display mt-2 text-[22px] leading-tight text-gold italic">{product.tagline}</p>
+        <p className="type-small mt-1 text-ink-soft">{product.subLine}</p>
 
-        <p className="mt-5 border-t border-line pt-4 text-[10px] leading-[1.6]">
-          <span className="block text-[8px] uppercase tracking-[0.16em] text-ink-muted">{labels.inspired}</span>
+        <p className="type-small mt-5 border-t border-line pt-4">
+          <span className="type-label block uppercase tracking-[0.16em] text-ink-muted">{labels.inspired}</span>
           {product.origin.place}
         </p>
 

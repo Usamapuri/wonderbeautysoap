@@ -11,7 +11,7 @@ export function CampaignFilm() {
       <div {...reveal()} className="relative isolate min-h-[560px] overflow-hidden rounded-lg text-paper sm:min-h-[620px] md:min-h-[clamp(560px,88svh,760px)]">
         <CampaignVideo src={film.src} poster={film.poster} label={film.label} sizes="(max-width: 1800px) 100vw, 1760px" />
         <div aria-hidden className="absolute inset-0 bg-linear-to-t from-ink/80 via-ink/25 to-transparent md:bg-linear-to-r md:from-ink/75 md:via-ink/30" />
-        <div className="relative flex min-h-[inherit] flex-col justify-end p-7 sm:p-12 md:max-w-[640px] md:justify-center md:p-16">
+        <div className="p-panel relative flex min-h-[inherit] flex-col justify-end md:max-w-[640px] md:justify-center">
           <h2 id="film-heading" className="font-display mb-6 text-[clamp(52px,13vw,80px)] leading-[0.9] md:text-[clamp(60px,6.4vw,100px)]">
             {film.heading.before}
             <br />

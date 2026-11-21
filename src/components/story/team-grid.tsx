@@ -14,7 +14,7 @@ export function TeamGrid() {
   const { team: copy } = story
   return (
     <section aria-labelledby="team-heading" className="px-section py-section">
-      <div {...reveal()} className="mb-10 text-center sm:mb-14">
+      <div {...reveal()} className="mb-heading text-center">
         <Eyebrow center>
           {copy.eyebrow}
         </Eyebrow>
@@ -37,8 +37,8 @@ export function TeamGrid() {
             </div>
             <div className="px-4 pt-4 pb-5">
               <h3 className="font-display text-[26px] leading-none tracking-normal">{m.role}</h3>
-              <p className="mt-1.5 text-[8px] uppercase tracking-[0.18em] text-gold">{site.company}</p>
-              <p className="mt-2 text-[11px] leading-[1.8] text-ink-soft">{m.bio}</p>
+              <p className="type-label mt-1.5 uppercase tracking-[0.18em] text-gold">{site.company}</p>
+              <p className="type-small mt-2 text-ink-soft">{m.bio}</p>
             </div>
           </li>
         ))}
