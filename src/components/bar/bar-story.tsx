@@ -1,35 +1,40 @@
 import Image from "next/image"
 
 import { Eyebrow } from "@/components/brand/eyebrow"
-import { SplitText } from "@/components/brand/split-text"
+import { Lines } from "@/components/brand/lines"
 import { collection } from "@/content/collection"
 import type { Product } from "@/content/products"
 import { site } from "@/content/site"
 import { story } from "@/content/story"
 import { reveal } from "@/lib/reveal"
 
-// A flavour's history (deck slide 13, Wonder Room): where the idea came from, in the founder's
-// words, beside the flavour's concept artwork (labelled as an AI concept).
+// A flavour's history (deck slide 13, Wonder Room): where the idea came from, in the founder's words,
+// beside the flavour's botanical illustration from its own pack. The client's audit (slide 45) removed
+// the AI concept artwork that used to sit here, and the owner asked for no campaign image on flavour
+// pages (2026-11-21).
 export function BarStory({ product }: { product: Product }) {
-  const { bar, labels } = collection
+  const { bar } = collection
   return (
-    <section aria-labelledby="bar-story-heading" className="grid gap-3 px-3 sm:px-5 md:grid-cols-2">
-      {/* Square frame = the square concept artwork. */}
-      <figure {...reveal()} className="tile-pop relative m-0 aspect-square bg-clay">
-        <Image src={product.artwork.src} alt={product.artwork.alt} fill sizes="(max-width: 850px) 100vw, 50vw" className="object-cover" />
-        <figcaption className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1.5 bg-linear-to-b from-transparent to-ink/65 px-6 pt-10 pb-5 text-paper">
-          <span className="text-[7px] uppercase tracking-[0.2em]">{labels.artwork} · AI concept</span>
-          <strong className="font-display text-[28px] leading-none font-normal">{product.mood}</strong>
-        </figcaption>
+    <section aria-labelledby="bar-story-heading" className="wrap-wide grid gap-3 px-3 sm:gap-5 sm:px-5 md:grid-cols-2">
+      {/* Square well; the illustration (about square, on white) sits whole inside it. */}
+      <figure {...reveal()} className="relative m-0 aspect-square overflow-hidden rounded-lg bg-clay">
+        <Image
+          src={product.botanical}
+          alt={`${product.variety} illustration from the Wonder ${product.variety} pack`}
+          fill
+          sizes="(max-width: 850px) 100vw, 50vw"
+          className="object-contain p-[14%] mix-blend-multiply"
+        />
       </figure>
-      <div {...reveal(120)} className="flex flex-col justify-center rounded-lg bg-parchment p-8 sm:p-12 md:p-16">
+      <div {...reveal(120)} className="panel flex flex-col justify-center bg-parchment">
         <Eyebrow>{bar.storyEyebrow}</Eyebrow>
         <p className="mt-3 text-[11px] leading-[1.7] text-ink-muted">{story.wonderRoom.heading}</p>
-        <h2 id="bar-story-heading" className="font-display mt-8 text-[clamp(38px,4.4vw,64px)] leading-[0.95]">
-          <SplitText text={`${product.variety} · ${product.origin.place}`} />
+        <h2 id="bar-story-heading" className="font-display type-section mt-7">
+          {/* Flavour and place on two lines, no dot between them (owner 2026-11-21). */}
+          <Lines lines={[product.variety, product.origin.place]} />
         </h2>
-        <blockquote className="font-display mt-7 text-[clamp(21px,2.1vw,28px)] leading-[1.35]">“{product.origin.story}”</blockquote>
-        <p className="font-display mt-9 text-[26px] leading-none text-gold italic">{bar.signature}</p>
+        <blockquote className="font-display mt-6 max-w-[36ch] text-[clamp(21px,2.1vw,28px)] leading-[1.35]">“{product.origin.story}”</blockquote>
+        <p className="font-display mt-8 text-[26px] leading-none text-gold italic">{bar.signature}</p>
         <p className="mt-2 text-[9px] uppercase tracking-[0.24em] text-ink-muted">{site.company}</p>
       </div>
     </section>

@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { collection } from "@/content/collection"
 import type { Product } from "@/content/products"
-import { barHref, site } from "@/content/site"
+import { barHref } from "@/content/site"
 import { reveal } from "@/lib/reveal"
 
 // One bar on /collection: pack, name, the deck's tagline + sub-line (slide 21) and origin (slide 17),
@@ -22,27 +22,22 @@ export function CollectionItem({ product, index }: { product: Product; index: nu
       style={{ "--accent": product.accent } as CSSProperties}
       className="card-pop group flex w-full scroll-mt-[calc(var(--header-height)+16px)] flex-col sm:w-[calc(50%-9px)] lg:w-[calc((100%-36px)/3)]"
     >
-      <Link href={barHref(product.slug)} prefetch tabIndex={-1} aria-hidden className="relative block aspect-[6/5] overflow-hidden bg-clay">
-        {/* 6:5 = the render's own ratio, so the whole pack shows. */}
+      <Link href={barHref(product.slug)} prefetch tabIndex={-1} aria-hidden className="relative block aspect-square overflow-hidden bg-clay">
+        {/* The flavour's square campaign image (AI-made scene, real pack art), at its own ratio. The grid
+            below carries the caption; the link is a duplicate of "Discover", so the image is decorative. */}
         <Image
-          src={product.image}
+          src={product.campaign.collection.src}
           alt=""
           fill
           sizes="(max-width: 560px) 100vw, (max-width: 1024px) 50vw, 400px"
-          className="object-cover mix-blend-multiply transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04]"
+          className="object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04]"
         />
       </Link>
 
       <div className="flex flex-1 flex-col px-5 py-6 sm:px-6">
-        <div className="flex items-start justify-between gap-2">
-          <span className="flex items-center gap-2 pt-1 text-[8px] tracking-[0.18em] text-ink-muted">
-            <span aria-hidden className="size-2 rounded-full bg-(--accent)" />
-            VARIETY {String(index + 1).padStart(2, "0")}
-          </span>
-          <Image src={product.botanical} alt="" width={72} height={72} className="size-12 object-contain mix-blend-multiply sm:size-[64px]" />
-        </div>
-        <h2 id={`${product.slug}-name`} className="font-display mt-1 text-[clamp(32px,3vw,42px)] leading-[0.95]">
-          <span className="mb-1.5 block font-sans text-[8px] font-normal tracking-[0.18em] text-ink-muted uppercase">{site.productLine}</span>
+        {/* Owner requests 2026-11-21: no pack illustration, no "Wonder Beauty Bar" line and no "Variety 0N"
+            label above the name; the card opens with the flavour's name. */}
+        <h2 id={`${product.slug}-name`} className="font-display type-card">
           {product.variety}
         </h2>
         <p className="font-display mt-2 text-[20px] leading-tight text-gold italic">{product.tagline}</p>

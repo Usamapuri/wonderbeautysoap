@@ -7,25 +7,25 @@ import type { Product } from "@/content/products"
 import { barHref } from "@/content/site"
 import { cn } from "@/lib/utils"
 
-/** Flavour card: opens the flavour's own page; flavour accent on the dot. */
-export function ProductCard({ product, index, className }: { product: Product; index: number; className?: string }) {
+/** Flavour card: opens the flavour's own page; origin as plain "City, Country". Pictured with the flavour's
+ *  square campaign image (AI-made scene, real pack art); no on-page caption (owner). */
+export function ProductCard({ product, className }: { product: Product; className?: string }) {
+  const image = product.campaign.collection
   return (
     <article style={{ "--accent": product.accent } as CSSProperties} className={cn("card-pop group/card flex h-full min-w-0 flex-col", className)}>
-      {/* 6:5 well = the render's own ratio, so the whole pack shows. */}
-      <div className="relative aspect-[6/5] overflow-hidden bg-clay">
+      {/* Square frame = the image's own ratio, so nothing is cropped. */}
+      <div className="relative aspect-square overflow-hidden bg-clay">
         <Image
-          src={product.image}
-          alt={`${product.name} package`}
+          src={image.src}
+          alt={image.alt}
           fill
           sizes="(max-width: 850px) 50vw, 240px"
-          className="object-cover mix-blend-multiply transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover/card:scale-[1.05]"
+          className="object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover/card:scale-[1.05]"
         />
       </div>
       <div className="flex flex-1 flex-col px-3 pt-3.5 pb-4 sm:px-4 sm:pt-[18px] sm:pb-5">
-        <div className="flex items-center gap-2 text-[8px] tracking-[0.2em] text-ink-muted">
-          <span aria-hidden className="size-1.5 rounded-full bg-(--accent)" />
-          {String(index + 1).padStart(2, "0")} · {product.origin.place.toUpperCase()}
-        </div>
+        {/* The origin as plain text, "City, Country", with no dot beside it (owner 2026-11-21). */}
+        <p className="text-[8px] tracking-[0.2em] text-ink-muted">{product.origin.place.toUpperCase()}</p>
         <h3 className="font-display mt-2.5 text-[25px] leading-[0.95] sm:text-[28px]">{product.variety}</h3>
         <p className="font-display mt-1.5 text-[15px] leading-tight text-gold italic">{product.tagline}</p>
         <p className="mt-1.5 mb-4 text-[9px] leading-[1.6] text-ink-soft sm:text-[10px]">{product.subLine}</p>

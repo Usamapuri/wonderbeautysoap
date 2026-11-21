@@ -15,8 +15,9 @@ import { reveal, revealGroup } from "@/lib/reveal"
 
 type Params = PageProps<"/collection/[slug]">["params"]
 
-// One page per flavour (deck slide 17: "Each product page needs …"): definition, history, the
-// other four flavours and the bulk-orders band. All five are prerendered.
+// One page per flavour (deck slide 17: "Each product page needs …"): definition with the pack views,
+// history beside the flavour's campaign portrait, the other four flavours and the bulk-orders band.
+// All five are prerendered.
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }))
 }
@@ -42,21 +43,20 @@ async function Bar({ params }: { params: Params }) {
   const product = productBySlug((await params).slug)
   if (!product) notFound()
   const { bar } = collection
-  const index = products.indexOf(product)
   const others = products.filter((p) => p.slug !== product.slug)
 
   return (
     <>
-      <BarHero product={product} index={index} />
+      <BarHero product={product} />
       <BarStory product={product} />
 
       <section aria-labelledby="others-heading" className="px-section py-section">
         <h2 {...reveal()} id="others-heading" className="font-display mb-9 text-center text-[clamp(40px,5vw,68px)] sm:mb-12">
-          <SplitText text={bar.others} />
+          <SplitText text={bar.othersHeading} />
         </h2>
         <div {...revealGroup} className="mx-auto grid max-w-[1000px] grid-cols-2 gap-2.5 sm:gap-3.5 md:grid-cols-4">
           {others.map((p) => (
-            <ProductCard key={p.slug} product={p} index={products.indexOf(p)} />
+            <ProductCard key={p.slug} product={p} />
           ))}
         </div>
       </section>

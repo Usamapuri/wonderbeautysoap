@@ -23,7 +23,6 @@ export function CollectionPreview() {
           <ProductCard
             key={p.slug}
             product={p}
-            index={i}
             className={cn(i === products.length - 1 && "col-span-2 w-[calc(50%-5px)] justify-self-center sm:w-[calc(50%-7px)] md:col-span-1 md:w-auto md:justify-self-stretch")}
           />
         ))}
