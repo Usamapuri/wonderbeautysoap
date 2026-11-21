@@ -21,10 +21,10 @@ export function SectionHeading({
   return (
     <div {...reveal()} className={cn("mx-auto mb-9 max-w-[760px] text-center sm:mb-14", className)}>
       <Eyebrow center>{eyebrow}</Eyebrow>
-      <h2 id={id} className="font-display mt-5 mb-3.5 text-[clamp(43px,5.2vw,76px)] leading-[0.93]">
+      <h2 id={id} className="font-display type-section mt-5 mb-3.5">
         <Lines lines={heading} />
       </h2>
-      {body && <p className="mx-auto max-w-[480px] text-xs leading-[1.8] text-ink-soft">{body}</p>}
+      {body && <p className="mx-auto max-w-[46ch] text-xs leading-[1.8] text-ink-soft">{body}</p>}
     </div>
   )
 }

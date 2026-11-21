@@ -12,7 +12,8 @@ import { cn } from "@/lib/utils"
 /**
  * Appears once the visitor has scrolled past the first screen and steps aside at the footer:
  * on phones, a bulk-orders bar (the site's one goal) with a back-to-top button; on larger screens,
- * just back-to-top (the header already carries "Bulk orders"). Not on Get in Touch, which is the form.
+ * just back-to-top. Not on Get in Touch, which is the form. On very short screens (landscape phones,
+ * browser zoomed in, audit slide 54) the bar is left out so it doesn't cover the page.
  */
 export function FloatingActions() {
   const pathname = usePathname()
@@ -50,7 +51,7 @@ export function FloatingActions() {
       )}
     >
       {!onContact && (
-        <Button asChild variant="wonder" size="wonder" className="flex-1 shadow-pop sm:hidden">
+        <Button asChild variant="wonder" size="wonder" className="flex-1 shadow-pop sm:hidden [@media(max-height:480px)]:hidden">
           <Link href={ordersCta.href}>{ordersCta.label}</Link>
         </Button>
       )}

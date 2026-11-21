@@ -12,10 +12,10 @@ export const popup = {
   submit: "Subscribe",
   submitting: "Subscribing…",
   decline: "No thanks",
-  success: "You're on the list — welcome to the Wonder world.",
+  success: "You’re on the list — welcome to the Wonder world.",
   close: "Close",
   errors: {
     invalid: "Please enter a valid email address.",
-    failed: "We couldn't add you just now. Please try again in a moment.",
+    failed: "We couldn’t add you just now. Please try again in a moment.",
   },
 } as const

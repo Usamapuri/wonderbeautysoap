@@ -36,12 +36,12 @@ export function PageCta({
     <section
       {...revealGroup}
       aria-label={typeof heading === "string" ? heading : undefined}
-      className={cn("px-[22px] pt-[74px] pb-[82px] text-center sm:pt-[100px] sm:pb-[110px]", dark ? "bronze-glow" : "bg-stone", className)}
+      className={cn("px-[22px] py-section text-center", dark ? "bronze-glow" : "bg-stone", className)}
     >
       <Eyebrow center tone={dark ? "cream" : "gold"}>
         {eyebrow}
       </Eyebrow>
-      <h2 className="font-display mx-auto mt-[23px] mb-[30px] max-w-[900px] text-[clamp(42px,11vw,64px)] sm:text-[clamp(48px,6.4vw,84px)]">
+      <h2 className="font-display type-section mx-auto mt-[23px] mb-[30px] max-w-[900px] text-balance">
         {typeof heading === "string" ? <SplitText text={heading} /> : heading}
       </h2>
       {(primary || secondary) && (

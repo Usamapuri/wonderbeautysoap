@@ -263,6 +263,14 @@
   }
 }
 
+/* Very short screens (landscape phones, browser zoomed to 200 % and beyond): the header stops being
+   sticky (site-header.tsx), so anchors no longer need room for it (audit slide 54). */
+@media (max-height: 480px) {
+  html {
+    scroll-padding-top: 12px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -299,12 +307,60 @@
   color: var(--paper);
 }
 
+/*
+ * Widest content box. Zoomed out (audit slide 54) or on very large monitors the viewport can be
+ * 2000–4000 CSS px wide; panels and photo rows stop growing at 1760px and centre, so pictures don't
+ * balloon and copy stays beside its picture. Colour bands stay full-bleed; put this on their inner
+ * box, or on sections without a background.
+ */
+@utility wrap-wide {
+  width: 100%;
+  max-width: 1760px;
+  margin-inline: auto;
+}
+
 /* Section spacing (starter .section: 115px / clamp(24px,8vw,128px), 82px / 22px on phones). */
 @utility px-section {
   padding-inline: clamp(22px, 8vw, 128px);
 }
 @utility py-section {
   padding-block: clamp(82px, 11vw, 115px);
+}
+/* The same rhythm, one side only (pb-section was used before it existed, so those sections had no gap). */
+@utility pt-section {
+  padding-top: clamp(82px, 11vw, 115px);
+}
+@utility pb-section {
+  padding-bottom: clamp(82px, 11vw, 115px);
+}
+
+/*
+ * One heading scale (owner request 2026-11-21: one heading scale across pages). Display face only.
+ * type-title   — page titles (h1) outside the Home opening
+ * type-section — section headings (h2), closing bands included
+ * type-card    — card and panel headings (h3), and display leads inside panels
+ */
+@utility type-title {
+  font-size: clamp(56px, 8.4vw, 128px);
+  line-height: 0.9;
+}
+@utility type-section {
+  font-size: clamp(40px, 4.8vw, 68px);
+  line-height: 0.95;
+}
+@utility type-card {
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.08;
+}
+
+/*
+ * One panel style: rounded, with the same padding on every side at each size; pair it with bg-parchment
+ * (light) or bg-ink text-paper (dark). Image frames use rounded-lg + overflow-hidden at the image's own ratio, from a
+ * small set: 16:9 (heroes, banners), 4:5 (campaign portraits, regions), 1:1 (cards), 6:5 (pack views).
+ */
+@utility panel {
+  border-radius: var(--radius-lg);
+  padding: clamp(28px, 4.4vw, 64px);
 }
 
 /*
@@ -501,5 +557,259 @@
   .js [data-reveal-group][data-revealed] > * {
     animation: reveal-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
     animation-delay: var(--reveal-delay, 0ms);
+  }
+}
+
+/*
+ * The layered Home opening (src/components/home/hero-art.tsx, hero.tsx; audit slides 1–2).
+ * Canvas: the art's own ratio, covering its frame like object-fit: cover (container query units on
+ * .hero-art), so the plate and the product layer inside it stay registered at every size;
+ * --art-fx/--art-fy pick the part that survives the crop. The portrait pair applies up to a 6:5
+ * viewport: the same query as PORTRAIT_QUERY and the <source> elements in hero-art.tsx.
+ * Motion: the plate's own loop (a slow push-in around the point where the product meets its surface);
+ * without a loop, both layers ease in slowly around that point instead. Off for reduced motion.
+ */
+@layer components {
+  .hero-art {
+    container-type: size;
+  }
+  .hero-canvas {
+    --art-w: var(--d-w);
+    --art-h: var(--d-h);
+    --art-fx: var(--d-fx);
+    --art-fy: var(--d-fy);
+    --art-ax: var(--d-ax);
+    --art-ay: var(--d-ay);
+    --art-cw: max(100cqw, 100cqh * var(--art-w) / var(--art-h));
+    position: absolute;
+    width: var(--art-cw);
+    aspect-ratio: var(--art-w) / var(--art-h);
+    left: calc((100cqw - var(--art-cw)) * var(--art-fx));
+    top: calc((100cqh - var(--art-cw) * var(--art-h) / var(--art-w)) * var(--art-fy));
+  }
+  .hero-layer {
+    position: absolute;
+    inset: 0;
+    transform-origin: var(--art-ax) var(--art-ay);
+  }
+
+  /* Copy, with the earlier hero's type and spacing (client 2026-11-21: "text in white", "same spacing and
+     font"), capped only where the picture needs it. All positions come from the canvas geometry, computed
+     against the section (an inline-size container), so they hold wherever the canvas is cropped. The text is
+     #fff: the earlier cream at 80-85% opacity measures below 4.5:1 on the gold wall.
+     Desktop pair: one top-aligned column in the calm left (x 4-38%, y 8-72% of the art). It stops 40px short
+     of `clear` (her hands); the eyebrow, heading and sub-line end 16px above `floor` (the top of the boxes on
+     the ledge); the button follows, beside the boxes and left of them, or above the floor where it would
+     reach them. */
+  .hero-copy {
+    --hero-h: max(520px, min(900px, calc(100svh - 108px)));
+    --hero-pad-top: clamp(40px, 8svh, 80px);
+    --hero-eyebrow: 16px; /* one line of the 9px label */
+    --hero-g1: 32px; /* eyebrow → heading, as the earlier hero (mt-8) */
+    --hero-g2: 32px; /* heading → sub-line (mt-8) */
+    --hero-sub-h: 47px; /* two lines of 13px / 1.8 */
+    --hero-btn: 82px; /* 36px gap (mt-9) + the 46px button */
+    min-height: var(--hero-h);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 36px;
+    padding-top: var(--hero-pad-top);
+    padding-bottom: 40px;
+  }
+  .hero-copy-desk {
+    --hero-pad: clamp(24px, 6cqw, 96px);
+    --hero-cw: max(100cqw, var(--hero-h) * var(--d-w) / var(--d-h));
+    --hero-ch: calc(var(--hero-cw) * var(--d-h) / var(--d-w));
+    /* the canvas's left edge, measured from the copy column's left edge */
+    --hero-x0: calc((100cqw - var(--hero-cw)) * var(--d-fx) - max(0px, (100cqw - 1760px) / 2) - var(--hero-pad));
+    --hero-floor: calc((var(--hero-h) - var(--hero-ch)) * var(--d-fy) + var(--hero-ch) * var(--d-floor));
+    --copy-max: calc(var(--hero-x0) + var(--hero-cw) * var(--d-clear) - 40px);
+    /* The button (about 251px wide) may sit beside the boxes only if it ends 8px left of 29% of the art;
+       otherwise (squarish windows, where the art is cropped at the sides, very wide ones and landscape
+       phones) it must end above the floor too, so its height is reserved: 0px or --hero-btn. */
+    --hero-btn-room: clamp(0px, (260px - var(--hero-x0) - var(--hero-cw) * 0.29) * 100, var(--hero-btn));
+    /* height left for the three heading lines above the floor */
+    --hero-room: calc(var(--hero-floor) - 16px - var(--hero-pad-top) - var(--hero-eyebrow) - var(--hero-g1) - var(--hero-g2) - var(--hero-sub-h) - var(--hero-btn-room));
+  }
+  .hero-copy-desk > * {
+    max-width: var(--copy-max);
+  }
+  /* The earlier hero's heading: clamp(96px, 10.5vw, 170px) from md. The widest line, "Wonder.", is 3.38em
+     wide in DM Serif Display at its 92% size-adjust, and the three lines are 2.58em tall. */
+  .hero-title {
+    margin-top: var(--hero-g1);
+    font-size: clamp(32px, min(10.5cqw, var(--copy-max) / 3.7, var(--hero-room) / 2.58), 170px);
+  }
+  .hero-sub {
+    margin-top: var(--hero-g2);
+    max-width: min(430px, var(--copy-max));
+  }
+  /* Landscape phones (short and narrow): the column is narrow, so the label can take two lines and the
+     sub-line three; the gaps above the heading and the sub-line tighten to 16px. */
+  @media (min-aspect-ratio: 6/5) and (max-height: 480px) {
+    .hero-copy {
+      --hero-eyebrow: 30px;
+      --hero-g1: 16px;
+      --hero-g2: 16px;
+      --hero-sub-h: 71px;
+    }
+  }
+
+  @media (max-aspect-ratio: 6/5) {
+    .hero-canvas {
+      --art-w: var(--m-w);
+      --art-h: var(--m-h);
+      --art-fx: var(--m-fx);
+      --art-fy: var(--m-fy);
+      --art-ax: var(--m-ax);
+      --art-ay: var(--m-ay);
+    }
+    /* Portrait pair (the art worker's measurements, 2026-11-21): all copy stays in the top 36% of the frame (2px
+       short of it); below that, white text would meet the glow around her hair. The frame is at least as
+       tall as the art at full width, so the whole picture shows and its top is the frame's top (on upright
+       tablets the hero is taller than the window). Phones: the heading takes the room left in that band
+       (gaps 12px), and the button sits at the foot below her hands. From 640px wide: the earlier spacing,
+       and the button follows the sub-line inside the band. */
+    .hero-copy {
+      --hero-h: max(520px, min(900px, calc(100svh - 108px)), calc(100cqw * var(--m-h) / var(--m-w)));
+      --hero-pad-top: 20px;
+      --hero-eyebrow: 30px; /* two lines */
+      --hero-g1: 12px;
+      --hero-g2: 12px;
+      --hero-sub-h: 71px; /* three lines */
+      --hero-btn: 0px;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 8px;
+    }
+    .hero-copy-desk {
+      --hero-room: calc(var(--hero-h) * 0.36 - 2px - var(--hero-pad-top) - var(--hero-eyebrow) - var(--hero-g1) - var(--hero-g2) - var(--hero-sub-h) - var(--hero-btn));
+    }
+    .hero-copy-desk > * {
+      max-width: none;
+    }
+    .hero-sub {
+      max-width: 430px;
+    }
+    /* The earlier phone heading was clamp(76px, 21vw, 118px). */
+    .hero-title {
+      font-size: clamp(30px, min(21cqw, var(--hero-room) / 2.58), 118px);
+    }
+  }
+  /* Wider phones: the label fits on one line and the sub-line on two. */
+  @media (max-aspect-ratio: 6/5) and (min-width: 410px) {
+    .hero-copy {
+      --hero-eyebrow: 16px;
+      --hero-sub-h: 47px;
+    }
+  }
+  @media (max-aspect-ratio: 6/5) and (min-width: 640px) {
+    .hero-copy {
+      --hero-pad-top: 32px;
+      --hero-eyebrow: 16px;
+      --hero-g1: 32px;
+      --hero-g2: 32px;
+      --hero-sub-h: 47px;
+      --hero-btn: 82px;
+      justify-content: flex-start;
+      gap: 36px;
+    }
+    /* the earlier md heading, clamp(96px, 10.5vw, 170px), within the band */
+    .hero-title {
+      font-size: clamp(40px, min(clamp(96px, 10.5cqw, 170px), var(--hero-room) / 2.58), 170px);
+    }
+  }
+}
+
+/*
+ * Around the World hero (src/components/world/world-hero.tsx). A size container covering the frame lets the copy
+ * work out where the picture's calm area lands after object-fit: cover. 16:9 picture: calm top-left, x 0-42%
+ * and y 0-40% of the picture, object-position 50% 50%. 4:5 picture (phones and upright tablets, the same
+ * query as the <source>): calm top 28%, full width, object-position 50% 30%. The two-line title ("Wonder," /
+ * "wherever you are.", the second line 6.73em wide; 1.8em of lines, 2em with the glyphs' overhang) takes the
+ * earlier title size where it fits and steps down where the calm area is smaller; the label and its 24px gap
+ * take 37.5px.
+ */
+@layer components {
+  .world-frame {
+    min-height: 520px;
+  }
+  .world-calm {
+    container-type: size;
+  }
+  @media (min-width: 35rem) {
+    .world-frame {
+      min-height: 600px;
+    }
+  }
+  @media (min-width: 53.125rem) {
+    .world-frame {
+      min-height: clamp(520px, calc(100svh - 120px), 740px);
+    }
+  }
+  .world-img {
+    object-position: var(--pos);
+  }
+  .world-copy {
+    --pad: 28px;
+    --pw: max(100cqw, 100cqh * 16 / 9);
+    --ph: calc(var(--pw) * 9 / 16);
+    --calm-w: calc(var(--pw) * 0.42 - (var(--pw) - 100cqw) / 2);
+    --calm-h: calc(var(--ph) * 0.4 - (var(--ph) - 100cqh) / 2);
+    --title-w: calc(var(--calm-w) - var(--pad) - 8px);
+    max-width: var(--calm-w);
+  }
+  @media (min-width: 35rem) {
+    .world-copy {
+      --pad: 48px;
+    }
+  }
+  @media (min-width: 53.125rem) {
+    .world-copy {
+      --pad: 64px;
+    }
+  }
+  .world-title {
+    font-size: clamp(30px, min(clamp(56px, 8.4vw, 128px), var(--title-w) / 6.73, (var(--calm-h) - 8px - var(--pad) - 37.5px) / 2), 128px);
+    line-height: 0.9;
+  }
+  .world-title em {
+    white-space: nowrap;
+  }
+  @media (max-width: 639px), (max-width: 1023px) and (orientation: portrait) {
+    .world-img {
+      object-position: var(--pos-m);
+    }
+    .world-copy {
+      --pw: max(100cqw, 100cqh * 4 / 5);
+      --ph: calc(var(--pw) * 5 / 4);
+      --calm-h: calc(var(--ph) * 0.28 - (var(--ph) - 100cqh) * 0.3);
+      --title-w: calc(100cqw - 2 * var(--pad));
+      max-width: none;
+    }
+  }
+  /* Upright tablets: a taller frame, so the whole 4:5 picture shows. */
+  @media (min-width: 640px) and (max-width: 1023px) and (orientation: portrait) {
+    .world-frame {
+      min-height: max(600px, min(110vw, calc(100svh - 120px)));
+    }
+  }
+}
+
+@keyframes hero-depth {
+  to {
+    transform: scale(var(--art-depth, 1));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-art:not(.hero-art-loop) .hero-plate {
+    --art-depth: 1.045;
+    animation: hero-depth 22s var(--ease-soft) infinite alternate;
+  }
+  .hero-art:not(.hero-art-loop) .hero-product {
+    --art-depth: 1.018;
+    animation: hero-depth 22s var(--ease-soft) infinite alternate;
   }
 }

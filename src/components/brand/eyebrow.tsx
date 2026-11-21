@@ -4,7 +4,9 @@ const tones = {
   gold: "text-gold",
   gilt: "text-gilt", // on ink bands
   cream: "text-paper/80", // on the bronze glow, where gold would be too faint
+  white: "text-white", // on the gold Home opening picture, where cream at 80% falls below 4.5:1
   muted: "text-ink-muted",
+  ink: "text-ink", // on photography or artwork, where the gold labels fall below 4.5:1
 } as const
 
 /**
