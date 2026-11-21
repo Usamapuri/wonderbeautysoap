@@ -3,8 +3,6 @@
 import { useEffect } from "react"
 
 const PENDING = "[data-reveal]:not([data-revealed]), [data-reveal-group]:not([data-revealed])"
-const STAGGER_MS = 90
-const MAX_STAGGER = 6
 
 /**
  * One IntersectionObserver for the whole site: marks [data-reveal] / [data-reveal-group] elements
@@ -19,12 +17,9 @@ export function RevealObserver() {
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue
+          // Only the observed element changes (the group's children are staggered by CSS), so content that
+          // is revealed before it hydrates only differs in this attribute, which it tolerates.
           const el = entry.target as HTMLElement
-          if (el.hasAttribute("data-reveal-group")) {
-            Array.from(el.children).forEach((child, i) => {
-              ;(child as HTMLElement).style.setProperty("--reveal-delay", `${Math.min(i, MAX_STAGGER) * STAGGER_MS}ms`)
-            })
-          }
           el.setAttribute("data-revealed", "")
           io.unobserve(el)
         }
