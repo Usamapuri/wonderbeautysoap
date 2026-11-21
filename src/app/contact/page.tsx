@@ -14,8 +14,9 @@ import { revealGroup } from "@/lib/reveal"
 export const metadata: Metadata = contact.seo
 
 // Get in Touch (deck slide 19). The site targets bulk orders, so the page's centre is one enquiry
-// card: the bulk brief (left) and the form (right) share a frame, height and shadow. Contact details
-// sit in an aligned strip below it; socials in the closing band.
+// card: the bulk brief (left) and the form (right) share a frame, height and shadow. The reply-line
+// and "Good to know" strip below it was removed (audit slide 47); phone / address appear there only
+// once supplied. Socials in the closing band.
 export default function ContactPage() {
   const { heading, social } = contact
   return (
@@ -24,7 +25,7 @@ export default function ContactPage() {
         <Eyebrow center>{heading.eyebrow}</Eyebrow>
         <h1
           id="contact-title"
-          className="font-display mt-6 mb-4 text-[clamp(60px,18vw,95px)] leading-[0.8] tracking-[-0.055em] sm:mt-7 sm:mb-[22px] md:text-[clamp(68px,9vw,132px)]"
+          className="font-display type-title mt-6 mb-4 tracking-[-0.04em] sm:mt-7 sm:mb-[22px]"
         >
           <SplitText text={heading.title.before.trim()} now />{" "}
           <Em>
@@ -41,9 +42,7 @@ export default function ContactPage() {
             <ContactForm />
           </Suspense>
         </div>
-        <div className="mt-10 sm:mt-14">
-          <ContactDetails />
-        </div>
+        <ContactDetails />
       </div>
 
       <section {...revealGroup} aria-labelledby="social-heading" className="bg-stone px-5 pt-[55px] pb-[68px] text-center sm:pt-[70px] sm:pb-[85px]">

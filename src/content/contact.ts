@@ -26,19 +26,15 @@ export const contact = {
   },
   heading: {
     eyebrow: "A note, a question, a hello",
-    title: { before: "Let's ", emphasis: "talk." },
-    body: "We'd be glad to hear from you. Choose the way that feels easiest.",
+    title: { before: "Let’s ", emphasis: "talk." },
+    body: "We’d be glad to hear from you. Choose the way that feels easiest.",
   },
+  // The email reply line and the "Good to know" medical note were removed (audit slide 47).
   details: {
     emailLabel: "Email",
-    replyLine: "We reply to questions and business opportunities by email.",
     phone: null as string | null,
     whatsapp: null as string | null,
     address: null as string | null,
-    goodToKnow: {
-      label: "Good to know",
-      text: "Royal Basket is not able to offer medical advice. If you have a skin concern, please speak with a qualified healthcare professional.",
-    },
   },
   bulk: {
     eyebrow: "Bulk & trade",
@@ -71,12 +67,12 @@ export const contact = {
     },
     submit: "Send enquiry",
     submitting: "Sending…",
-    success: { heading: "Thank you", body: "Thank you — we'll reply by email." },
+    success: { heading: "Thank you", body: "Thank you — we’ll reply by email." },
     mailtoSuccess: {
       heading: "Almost there",
-      body: "Your email app should have opened with your enquiry ready to send. If it didn't, email us directly at",
+      body: "Your email app should have opened with your enquiry ready to send. If it didn’t, email us directly at",
     },
-    error: { heading: "Something went wrong", body: "Your enquiry couldn't be sent.", retry: "Try again", fallback: "Or email us directly at" },
+    error: { heading: "Something went wrong", body: "Your enquiry couldn’t be sent.", retry: "Try again", fallback: "Or email us directly at" },
     another: "Send another enquiry",
   },
   // Response-time line — client-confirmed wording only (§4.5 #4). null = omitted.
