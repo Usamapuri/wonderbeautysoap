@@ -16,10 +16,11 @@ import { cn } from "@/lib/utils"
 
 const STAGE = "relative aspect-[6/5] overflow-hidden rounded-lg bg-clay shadow-pop"
 const STAGE_SIZES = "(max-width: 850px) calc(100vw - 48px), 52vw"
-// Thumbnails: one row of up to six slots (front, left, right, back, inside, video), each at most 84px wide
-// and narrower when the column is (phones, the two-column layout on small laptops), so a sixth Video tab
-// never wraps and thumbnails are the same size on every flavour. BarSkeleton mirrors this row.
-const THUMB_ROW = "grid grid-cols-[repeat(6,minmax(0,84px))] gap-1.5 sm:gap-3"
+// Thumbnails: up to six slots (front, left, right, back, inside, video), each at most 84px wide and the
+// same size on every flavour. One row from the small breakpoint up (narrower in the two-column layout on
+// small laptops); on phones three per row, so the larger labels (phase 3 type step) fit under each
+// thumbnail. BarSkeleton mirrors this grid.
+const THUMB_ROW = "grid grid-cols-[repeat(3,minmax(0,84px))] gap-1.5 sm:grid-cols-[repeat(6,minmax(0,84px))] sm:gap-3"
 
 export function BarViews({ views, variety, listLabel }: { views: ProductView[]; variety: string; listLabel: string }) {
   return (
@@ -35,7 +36,7 @@ export function BarViews({ views, variety, listLabel }: { views: ProductView[]; 
           <Tabs.Trigger
             key={view.id}
             value={view.id}
-            className="group/thumb flex w-full min-w-0 flex-col items-center gap-1.5 rounded-lg p-1 text-[8px] font-medium tracking-[0.18em] text-ink-muted uppercase transition-colors hover:text-ink data-[state=active]:text-ink"
+            className="group/thumb flex w-full min-w-0 flex-col items-center gap-1.5 rounded-lg p-1 type-label font-medium tracking-[0.18em] text-ink-muted uppercase transition-colors hover:text-ink data-[state=active]:text-ink"
           >
             <span
               aria-hidden
@@ -79,7 +80,7 @@ function Stage({ view }: { view: ProductView }) {
               className="object-contain drop-shadow-[0_18px_22px_rgb(37_35_29/22%)]"
             />
           </div>
-          <figcaption className="absolute inset-x-0 bottom-3 text-center text-[8px] tracking-[0.18em] text-ink-muted uppercase sm:bottom-4">{view.note}</figcaption>
+          <figcaption className="absolute inset-x-0 bottom-3 text-center type-label tracking-[0.18em] text-ink-muted uppercase sm:bottom-4">{view.note}</figcaption>
         </figure>
       )
     case "video":

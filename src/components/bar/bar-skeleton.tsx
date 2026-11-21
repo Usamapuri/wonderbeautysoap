@@ -7,8 +7,8 @@ export function BarSkeleton() {
       <span className="sr-only">Loading the flavour…</span>
       <div aria-hidden className="flex flex-col gap-3 sm:gap-4">
         <div className="aspect-[6/5] animate-pulse rounded-lg bg-clay" />
-        {/* Same thumbnail row as BarViews (six slots of at most 84px); five views shown. */}
-        <div className="grid grid-cols-[repeat(6,minmax(0,84px))] gap-1.5 sm:gap-3">
+        {/* Same thumbnail grid as BarViews (three per row on phones, six slots of at most 84px above); five views shown. */}
+        <div className="grid grid-cols-[repeat(3,minmax(0,84px))] gap-1.5 sm:grid-cols-[repeat(6,minmax(0,84px))] sm:gap-3">
           {[0, 1, 2, 3, 4].map((i) => (
             <span key={i} className="m-1 aspect-[6/5] rounded-lg bg-stone" />
           ))}
