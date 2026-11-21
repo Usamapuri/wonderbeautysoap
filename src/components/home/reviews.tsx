@@ -36,8 +36,10 @@ export function Reviews() {
             <blockquote className="font-display mt-6 flex-1 text-[clamp(21px,1.9vw,26px)] leading-[1.28]">“{r.quote}”</blockquote>
             <footer className="mt-8 border-t border-line pt-5">
               <p className="text-[10px] font-medium uppercase tracking-[0.2em]">{r.name}</p>
-              <p className="mt-1.5 text-[9px] uppercase tracking-[0.2em] text-ink-muted">
-                {r.city} · {productBySlug(r.bar)?.variety}
+              {/* City and bar side by side with spacing, no dot (owner 2026-11-21). */}
+              <p className="mt-1.5 flex flex-wrap gap-x-4 text-[9px] uppercase tracking-[0.2em] text-ink-muted">
+                <span>{r.city}</span>
+                <span>{productBySlug(r.bar)?.variety}</span>
               </p>
             </footer>
           </li>

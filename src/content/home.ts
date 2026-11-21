@@ -1,35 +1,109 @@
 // Home page copy, strictly from the client's Wonder_Website_Brief.pptx (2026-10-25) — the deck's
-// own text, or the existing site text shown in its screenshots. Section order follows
-// slide 3 (welcome → mission → vision → products → where it's sold), laid out after the Gisou home
-// page the developer chose as the reference, with the reviews at the end (slide 9).
-// Order: hero, promises, welcome, film, design, scents, mission, vision, products, world, reviews, closing.
+// own text, or the existing site text shown in its screenshots — as amended by the client's
+// Website Audit deck (2026-11-20, "audit slide N" below), which supersedes the brief wherever it
+// specifies a change. Section order follows brief slide 3 (welcome → mission → vision → products →
+// where it's sold), laid out after the Gisou home page.
+// Order: hero (moving campaign picture), promises, welcome, film, design, mission, vision, products,
+// world, reviews (hidden until real reviews exist), closing. The scent-artwork collage was removed
+// (audit slide 16).
+
+import type { HeroArtContent } from "@/components/home/hero-art"
+import type { ValueCell } from "@/components/story/values-band"
 
 import { ordersCta, site } from "./site"
 
+const art = "/brand-assets/home-hero-art"
+const motion = "/brand-assets/home-hero-motion"
+
 export const home = {
-  // Slide 4: "Keep the opening as is" — the Bolt prototype's opening.
+  // The Bolt prototype's opening (brief slide 4) over a full-screen moving picture (audit slides 1–2,
+  // after rhode.com's video first screen).
   hero: {
-    eyebrow: "Artisanal soap, made to travel",
+    // Audit slide 4.
+    eyebrow: "Rich, creamy lather in scents you’ll love",
     // Rendered as three lines; the middle word is italic and indented, as in the prototype.
     headline: ["Scent.", "Lather.", "Wonder."],
     headlineText: site.taglines.hero,
-    sub: "Beautifully scented bars inspired by the places we love, made with care for the skin you live in.",
+    // Audit slide 5.
+    sub: "Beautifully scented soaps with a rich, creamy lather. Premium quality in five flavours.",
+    // The "For orders, speak to us" button beside it was removed (audit slide 7).
     primaryCta: { label: "Explore the collection", href: "/collection" },
-    // Bulk orders only (developer decision 2026-10-25).
-    secondaryCta: { label: ordersCta.label, href: ordersCta.href },
-    image: {
-      src: "/brand-assets/campaign/pure-care-hero.webp",
-      alt: "A Wonder Beauty Bar surrounded by rose petals and creamy lather",
-    },
+    // The layered lifestyle campaign picture (owner 2026-11-21), 16:9 for wide screens and 9:16 for phones
+    // and upright tablets. Background: an AI-generated scene (Sol) of a woman in a robe lathering a pink
+    // bar in a warm washroom; the bar she holds is part of that scene. Foreground: the client's real Rose and
+    // Lavender box mockups on the ledge, with drawn-in shadows. Loop: a gentle 10 s push-in (up to 1.8%)
+    // made from the background alone, anchored where the boxes meet the ledge; no light change over her face.
+    // Geometry from the art manifest, in % of each canvas:
+    //   desktop: face x 59–89 / y 0–40; hands x 54–81 / y 51–91; boxes x 29.9–42.8 / y 69.6–81.9 (shadow
+    //            from x 26.8). `clear` = the hands' left edge (the copy column stops 40px short of it);
+    //            `floor` = top of the boxes (the heading ends above it); `under` = the boxes' shadow edge
+    //            (the sub-line stays left of it, passing beside the boxes).
+    //   portrait: face x 51–83 / y 37–66; hands x 38–81 / y 71–90; boxes x 1.4–17.7 / y 70.5–82.1.
+    //            `clear` = the face's left edge and `floor` = its top (the heading ends above the face or
+    //            stays left of it; the sub-line stays left of it); the button sits at the foot of the
+    //            frame, below the hands.
+    art: {
+      desktop: {
+        background: `${art}/home-hero-background.webp`,
+        foreground: `${art}/home-hero-foreground.webp`,
+        width: 2400,
+        height: 1350,
+        focus: { x: 60, y: 50 },
+        anchor: { x: 36, y: 82 },
+        clear: 54,
+        floor: 69.6,
+        under: 26.8,
+        loop: `${motion}/home-hero-plate-16x9.mp4`,
+      },
+      mobile: {
+        background: `${art}/home-hero-mobile-background.webp`,
+        foreground: `${art}/home-hero-mobile-foreground.webp`,
+        width: 1260,
+        height: 2240,
+        focus: { x: 10, y: 100 },
+        anchor: { x: 9.5, y: 82 },
+        clear: 51,
+        floor: 37,
+        loop: `${motion}/home-hero-plate-9x16.mp4`,
+      },
+      alt: "Campaign image: a woman in a cream robe lathering a pink Wonder bar in a warm washroom, with Wonder Rose and Lavender boxes on the stone ledge beside her",
+    } satisfies HeroArtContent as HeroArtContent,
   },
 
-  promises: [...site.taglines.promises, site.taglines.everydayLuxury.replace(".", ""), site.taglines.dermatologist],
+  // Audit slide 8: the strip now carries the on-pack promise words only.
+  promises: site.taglines.formulaWords,
+
+  // Brief slide 11 "Why Wonder? (three columns or icons)", in the three-cell band the client liked.
+  // Moved here from Our Story (owner request 2026-11-21: "add the why wonder in home page"); the copy
+  // is unchanged.
+  whyWonder: {
+    eyebrow: "Why Wonder?",
+    cells: [
+      {
+        label: "01 / Why Wonder",
+        heading: ["One bar", "does it all."],
+        body: "Intentionally crafted for everyday care, with thoughtful ingredients and scents to help you glow, hydrate and protect.",
+      },
+      {
+        label: "02 / Why Wonder",
+        heading: ["Affordability."],
+        body: "From the beginning, we wanted to make premium everyday care more affordable, without compromising on quality.",
+      },
+      {
+        label: "03 / Why Wonder",
+        heading: ["Nourishing."],
+        body: "Gentle everyday cleansing that helps maintain your skin’s natural moisture, leaving it feeling soft and cared for.",
+      },
+    ] satisfies ValueCell[],
+  },
+
 
   // Slides 5–6, broken into short lines ("no paragraphs") with visuals in between.
   welcome: {
     eyebrow: "Welcome",
-    heading: ["A Pakistani artisan", "soap brand."],
-    lead: "Made with meticulous attention to detail, and with both skin comfort and sensory pleasure in mind.",
+    // Audit slide 9 (the client's three lines; spelling corrected).
+    heading: ["A premium quality", "soap brand."],
+    lead: ["Made with a promise to hydrate, moisturise and protect your skin.", "Designed with love and attention."],
     // The client's sentences, split into a bold lead and the rest.
     points: [
       { title: "Carefully selected ingredients,", body: "including fragrant flowers and botanicals." },
@@ -37,27 +111,34 @@ export const home = {
       { title: "Innovation, experimentation and design", body: "in everyday beauty." },
     ],
     pull: "Every bar is a small multisensory experience: rich lather, a lovely scent and a feel that stays with you.",
-    video: "/brand-assets/videos/lavender-ritual.mp4",
+    // Audit slide 10 ("new video and longer"): a ~9 s ritual edit of the supplied clips (Lavender
+    // face ritual, Aloe Vera hands lather, Lavender bar lather), 2:3 like the frame, at 1080x1620.
+    video: "/brand-assets/audit-media/video/home-welcome-ritual-2x3.mp4",
     image: {
-      src: "/brand-assets/videos/lavender-ritual-poster.webp",
-      alt: "Wonder Lavender Beauty Bar in a skincare ritual",
+      src: "/brand-assets/audit-media/video/home-welcome-ritual-2x3.webp",
+      alt: "Wonder Lavender and Aloe Vera Beauty Bars in a skincare ritual",
     },
   },
 
-  // The visual between the welcome notes (slide 31: "AI video" goes here).
+  // The video banner between the welcome notes. Its text is the client's new copy (audit slides
+  // 11–12: "Replace this text" / "New text for this page"): the first line leads, the rest follow.
   film: {
-    eyebrow: "A little pause in the day",
-    heading: { before: "Let the day", emphasis: "soften." },
-    body: "A quiet, imagined moment with Wonder. A reminder that an everyday ritual can still feel like your own.",
-    caption: "Campaign film · Sound off",
+    heading: { before: "Premium care", emphasis: "in every bar." },
+    lines: ["Creamy lather, lasting fragrance.", "Crafted with care. Made to wonder."],
     src: "/brand-assets/videos/wonder-collection.mp4",
     poster: "/brand-assets/videos/wonder-collection-poster.webp",
-    label: "Wonder campaign film: all five beauty bars surrounded by lather",
+    label: "All five Wonder Beauty Bars surrounded by lather",
   },
 
   // Slide 6 + designer note "Eco-friendly box packaging is a selling point: give it space on Home".
   design: {
     statement: "Elegance and design go into every pack, so your soap feels like a little luxury and not just a bathroom basic.",
+    // Audit slides 13–14: the statement sits over a picture that stays put while the page scrolls
+    // (alchimiasoap.it reference), so the film above flows into it instead of a hard cut to cream.
+    backdrop: {
+      src: "/brand-assets/campaign/bathroom-ritual.webp",
+      alt: "",
+    },
     eco: {
       eyebrow: "Eco-friendly box packaging",
       heading: "A better way to wrap luxury.",
@@ -65,32 +146,24 @@ export const home = {
         "Instead of traditional wrappers and plastic packaging, Wonder comes in eco-friendly box packaging.",
         "It helps reduce our carbon footprint and gives you a luxury experience at an affordable price, because every customer matters to us.",
       ],
+      // Audit slide 15 ("add better image"): the approved studio lineup render of all five boxes,
+      // framed tighter. width/height = the file's pixel size; `packshot` = product on a white studio
+      // background (shown on the clay well). This one has its own backdrop, and is shown whole.
       image: {
-        src: "/brand-assets/products/lineup-packs.webp",
-        alt: "All five Wonder Beauty Bars in their illustrated boxes",
+        src: "/brand-assets/audit-media/image/home-packaging-lineup.webp",
+        alt: "All five Wonder Beauty Bars in their illustrated boxes: Coconut, Aloe Vera, Lemon, Lavender and Rose",
+        width: 1800,
+        height: 900,
+        packshot: false as boolean,
       },
     },
     closing: "We love quality and beauty, and we want you to find both in every bar.",
   },
 
-  // Slides 25, 26, 30: all five flavours, "Every scent tells a story", "Wonder, wherever you are."
-  scents: {
-    eyebrow: site.taglines.everyScent,
-    heading: site.taglines.wherever,
-    footnote: "Concept artwork, imagined for the Wonder world.",
-  },
-
-  // Slides 7–8.
+  // Slides 7–8. Labels set larger and the mission centred in its panel (audit slides 17–18).
   mission: {
     eyebrow: "Our mission",
     text: "To make everyday luxury accessible to all, with a gentle, moisturising, beautifully scented beauty bar made with care for every skin type, at a price everyone can afford.",
-    image: {
-      src: "/brand-assets/videos/lavender-lather-poster.webp",
-      video: "/brand-assets/videos/lavender-lather.mp4",
-      alt: "Wonder Lavender Beauty Bar with lavender sprigs and soft lather",
-      width: 900,
-      height: 1200,
-    },
   },
   vision: {
     eyebrow: "Our vision",
@@ -98,11 +171,12 @@ export const home = {
     signOff: "From us to you.",
     // Slide 8 notes: optional second vision line.
     second: "To become the most loved everyday beauty bar in the region, and a name that travels.",
+    // Audit slide 19 ("change image"): a supplied campaign still not used elsewhere on the site.
     image: {
-      src: "/brand-assets/campaign/rose-ritual.webp",
-      alt: "Wonder Rose Beauty Bar beside folded towels and rose petals",
-      width: 1200,
-      height: 801,
+      src: "/brand-assets/audit-media/image/home-vision.webp",
+      alt: "A Wonder Beauty Bar resting on a silver tray over soft satin",
+      width: 1024,
+      height: 683,
     },
   },
 
@@ -113,15 +187,17 @@ export const home = {
     more: { label: "See the whole collection", href: "/collection" },
   },
 
-  // "Visuals of where Wonder is sold … linking to Around the World" (slide 3). Real photographs.
-  // width/height = the WebP's pixel size; the strip sizes columns so every photo fits uncropped.
+  // The strip linking to Around the World (slide 3). Audit slide 21 ("supply new images"): the store
+  // photos (previous packaging, other brands in the basket) moved to Around the World's "Spotted at"
+  // collage, and two supplied campaign stills take their place. They show no shop or place, so they
+  // carry no captions. width/height = the WebP's pixel size; the strip fits every photo uncropped.
   world: {
     eyebrow: "Around the world",
     heading: site.taglines.everydayLuxury,
     cta: { label: "See Wonder around the world", href: "/around-the-world" },
     photos: [
-      { src: "/brand-assets/lifestyle/in-store.webp", width: 801, height: 1200, alt: "Wonder Beauty Soap in a shopping basket in a store", caption: "A moment in a shop" },
-      { src: "/brand-assets/lifestyle/collection-basket.webp", width: 1200, height: 801, alt: "Wonder Beauty Soap packages in a shopping basket", caption: "Everyday discoveries" },
+      // One picture (declutter pass 2026-11-21; it was two).
+      { src: "/brand-assets/audit-media/image/home-world-landscape.webp", width: 1800, height: 1200, alt: "Hands lathering a Wonder Beauty Bar" },
     ],
   },
 

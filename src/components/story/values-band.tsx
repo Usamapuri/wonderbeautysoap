@@ -1,11 +1,15 @@
-import { Lines } from "@/components/brand/lines"
+import { SplitText } from "@/components/brand/split-text"
 import { revealGroup } from "@/lib/reveal"
 import { cn } from "@/lib/utils"
 
 export type ValueCell = { label: string; heading: readonly string[]; body: string }
 
-// The original's .story-values band: three cells divided by 1px hairlines, middle cell tinted.
-// On hover a cell's gradient slides a shade warmer (same idea as .card-pop, without the lift).
+// The "Why Wonder?" band the client liked (brief decision 2026-10-25): three cells divided by 1px
+// hairlines, the middle one tinted; on hover a cell's gradient slides a shade warmer.
+// Owner request 2026-11-21: larger headings and no dead space. Even padding on all sides, the label,
+// heading and body set as one block that sits at the top of the cell, a wider body measure, and the
+// two-line heading kept to the same line count as the others where it fits (it wraps naturally),
+// so equal-height cells no longer leave a large empty lower half.
 export function ValuesBand({ cells, className }: { cells: readonly ValueCell[]; className?: string }) {
   return (
     <div {...revealGroup} className={cn("grid gap-px border-y border-rule bg-ink/18 md:grid-cols-3", className)}>
@@ -13,15 +17,15 @@ export function ValuesBand({ cells, className }: { cells: readonly ValueCell[]; 
         <div
           key={v.label}
           className={cn(
-            "bg-linear-to-b bg-size-[100%_200%] bg-top px-[26px] pt-[38px] pb-[42px] transition-[background-position] duration-700 ease-[cubic-bezier(.2,.7,.2,1)] hover:bg-bottom sm:px-[clamp(22px,5vw,70px)] sm:pt-[55px] sm:pb-[65px]",
+            "flex flex-col gap-4 bg-linear-to-b bg-size-[100%_200%] bg-top p-[clamp(26px,3.6vw,52px)] transition-[background-position] duration-700 ease-[cubic-bezier(.2,.7,.2,1)] hover:bg-bottom sm:gap-5",
             i === 1 ? "from-wheat via-wheat to-stone" : "from-parchment via-parchment to-wheat",
           )}
         >
           <span className="text-[8px] uppercase tracking-[0.17em] text-ink-muted">{v.label}</span>
-          <h3 className="font-display mt-[27px] mb-[17px] text-[45px] sm:text-[clamp(38px,4vw,58px)]">
-            <Lines lines={v.heading} />
+          <h3 className="font-display text-[clamp(44px,4.6vw,68px)] leading-[0.95] text-balance">
+            <SplitText text={v.heading.join(" ")} />
           </h3>
-          <p className="max-w-[260px] text-[11px] leading-[1.85] text-ink-soft">{v.body}</p>
+          <p className="max-w-[44ch] text-[13px] leading-[1.75] text-ink-soft">{v.body}</p>
         </div>
       ))}
     </div>

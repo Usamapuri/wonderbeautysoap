@@ -1,57 +1,62 @@
-import Image from "next/image"
 import Link from "next/link"
 import { ArrowDown } from "lucide-react"
 
 import { Eyebrow } from "@/components/brand/eyebrow"
+import { HeroArt, heroArtVars } from "@/components/home/hero-art"
 import { Button } from "@/components/ui/button"
 import { SplitText } from "@/components/brand/split-text"
 import { home } from "@/content/home"
-import { site } from "@/content/site"
 
-// The Bolt prototype's opening, kept as the client asked (deck slide 4): bronze glow, a faint
-// circle, "Scent. / Lather. / Wonder." with the middle word italic and indented. The campaign image
-// is the LCP element, so it is preloaded.
+// The first screen (audit slides 1–2: "I want the first loading page to be a video"): the layered
+// lifestyle campaign picture (hero-art.tsx), graded golden caramel, whose scene plays as a slow, gentle
+// loop behind the still layer of real boxes. The copy has the earlier hero's treatment, as the client
+// asked (2026-11-21: "use this colour combination", "text in white", "same spacing and font"): the Bolt
+// opening "Scent. / Lather. / Wonder.", middle word italic and indented, in white (#fff: the earlier cream
+// at 80-85% opacity falls below 4.5:1 on the gold), with the earlier hero's type scale and spacing
+// (eyebrow → heading 32px, heading → sub-line 32px, sub-line → button 36px). Its sizes are capped only
+// where the picture needs it (globals.css .hero-copy): on wide screens the column stops short of her hands
+// and the text ends above the boxes on the ledge; on phones and upright tablets all copy stays in the top
+// 35% of the frame, above the glow around her hair, and on phones the button sits below her hands. The plate's poster is the
+// LCP image: eager, high priority, no <link rel="preload"> (two art-directed candidates).
 export function Hero() {
   const { hero } = home
   const [first, middle, last] = hero.headline
   return (
     <section
       aria-labelledby="hero-heading"
-      className="bronze-glow relative isolate grid items-center gap-12 overflow-hidden px-[22px] pt-[60px] pb-[72px] sm:px-[clamp(24px,6vw,96px)] md:min-h-[min(820px,calc(100svh-108px))] md:grid-cols-[1.05fr_0.95fr] md:gap-[clamp(32px,5vw,80px)] md:py-20"
+      style={heroArtVars(hero.art)}
+      className="relative isolate overflow-hidden bg-bronze text-white [container-type:inline-size]"
     >
-      <span aria-hidden className="pointer-events-none absolute top-[6%] right-[-18%] -z-10 aspect-square w-[min(860px,110vw)] rounded-full border border-paper/20" />
+      <HeroArt art={hero.art} />
 
-      <div className="rise-group relative">
-        <Eyebrow tone="cream">{hero.eyebrow}</Eyebrow>
-        <h1 id="hero-heading" className="font-display mt-8 text-[clamp(76px,21vw,118px)] leading-[0.86] text-paper md:text-[clamp(96px,10.5vw,170px)]">
-          <span className="block">
-            <SplitText text={first} now />
-          </span>
-          <span className="block pl-[0.4em] italic">
-            <SplitText text={middle} now start={1} />
-          </span>
-          <span className="block">
-            <SplitText text={last} now start={2} />
-          </span>
-        </h1>
-        <p className="mt-8 max-w-[430px] text-[13px] leading-[1.8] text-paper/85">{hero.sub}</p>
-        <div className="mt-9 flex flex-wrap items-center gap-3.5">
+      <div className="hero-copy hero-copy-desk wrap-wide relative z-30 px-[22px] sm:px-[clamp(24px,6vw,96px)]">
+        {/* No max-width utility here: on wide screens .hero-copy-desk sets it from the product's position. */}
+        <div className="rise-group">
+          <Eyebrow tone="white">{hero.eyebrow}</Eyebrow>
+          <h1 id="hero-heading" className="hero-title font-display leading-[0.86] text-white">
+            <span className="block">
+              <SplitText text={first} now />
+            </span>
+            <span className="block pl-[0.4em] italic">
+              <SplitText text={middle} now start={1} />
+            </span>
+            <span className="block">
+              <SplitText text={last} now start={2} />
+            </span>
+          </h1>
+          {/* Width and the gaps above the heading and the sub-line come from .hero-title / .hero-sub in
+              globals.css (they change with the picture); no margin or max-width utilities here, which would
+              override them. */}
+          <p className="hero-sub text-[13px] leading-[1.8] text-white">{hero.sub}</p>
+        </div>
+        {/* The small "Scent · Glow · Wonder" line that sat under the button was dropped in the declutter
+            pass (2026-11-21): it repeated the heading, and the promise strip follows directly. */}
+        <div className="rise-group">
           <Button asChild variant="wonder" size="wonder">
             <Link href={hero.primaryCta.href}>
               {hero.primaryCta.label} <ArrowDown aria-hidden className="size-3.5" />
             </Link>
           </Button>
-          <Button asChild variant="wonder-light" size="wonder">
-            <Link href={hero.secondaryCta.href}>{hero.secondaryCta.label}</Link>
-          </Button>
-        </div>
-        <p className="mt-12 text-[9px] font-medium uppercase tracking-[0.42em] text-paper/70">{site.taglines.promiseWords.join(" · ")}</p>
-      </div>
-
-      <div className="relative animate-[rise-in_0.85s_0.2s_both]">
-        {/* Keep the original slow float; stopped for reduced motion. */}
-        <div className="relative mx-auto aspect-[6/5] w-full max-w-[600px] animate-[float_7s_ease-in-out_1.2s_infinite] overflow-hidden rounded-lg shadow-pop motion-reduce:animate-none">
-          <Image src={hero.image.src} alt={hero.image.alt} fill preload sizes="(max-width: 850px) 100vw, 45vw" className="object-cover" />
         </div>
       </div>
     </section>
