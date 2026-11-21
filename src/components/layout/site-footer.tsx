@@ -22,9 +22,9 @@ const itemClass = "inline-flex min-h-9 items-center text-[12px] text-paper/80 tr
 export function SiteFooter() {
   return (
     <footer className="overflow-hidden bg-ink text-paper">
-      <div className="grid gap-x-8 gap-y-10 px-[22px] pt-16 pb-12 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_1.3fr] md:px-[clamp(22px,4vw,64px)] md:pt-20">
+      <div className="wrap-wide grid gap-x-8 gap-y-10 px-[22px] pt-16 pb-12 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_1.3fr] md:px-[clamp(22px,4vw,64px)] md:pt-20">
         <div className="sm:col-span-2 md:col-span-1">
-          <BrandMark tone="cream" className="[&_img]:h-[84px] sm:[&_img]:h-[96px]" />
+          <BrandMark tone="cream" className="[&_img]:h-[54px] sm:[&_img]:h-[60px]" />
           <p className="font-display mt-7 max-w-[280px] text-[30px] leading-[1.05]">{site.taglines.footer}</p>
           <SocialLinks light className="-ml-3 mt-5" />
         </div>
@@ -64,13 +64,13 @@ export function SiteFooter() {
         {site.brand}
       </p>
 
-      <div className="flex flex-col items-center gap-5 border-t border-paper/15 px-[22px] py-6 sm:flex-row sm:justify-between md:px-[clamp(22px,4vw,64px)]">
-        <p className="text-[9px] tracking-[0.12em] text-paper/60">
-          © {site.company}
-        </p>
-        <p className="text-[9px] uppercase tracking-[0.24em] text-paper/60">
-          {site.productLine} · {site.taglines.everydayLuxury.replace(".", "")}
-        </p>
+      <div className="border-t border-paper/15">
+        <div className="wrap-wide flex flex-col items-center gap-5 px-[22px] py-6 sm:flex-row sm:justify-between md:px-[clamp(22px,4vw,64px)]">
+          <p className="text-[9px] tracking-[0.12em] text-paper/60">© {site.company}</p>
+          <p className="text-[9px] uppercase tracking-[0.24em] text-paper/60">
+            {site.productLine} · {site.taglines.everydayLuxury.replace(".", "")}
+          </p>
+        </div>
       </div>
     </footer>
   )

@@ -27,15 +27,17 @@ export const site = {
     // On-pack claim lines (brief §0 rule 4) — keep exactly.
     formula: "Triple Action Formula — Glow | Hydrate | Protect",
     formulaShort: "Triple Action Formula — Glow · Hydrate · Protect",
+    // The three on-pack words alone (Home promise strip, audit slide 8).
+    formulaWords: ["Glow", "Hydrate", "Protect"],
     dermatologist: "Dermatologist Recommended",
   },
   aiDisclaimer:
     "These AI-generated images are campaign concepts created to explore the Wonder world. They are not documentary photographs, customer images or claims about where the products are sold.",
   seo: {
     title: "Royal Basket — Scent. Lather. Wonder.",
-    // Deck slide 5, first line.
+    // The Home welcome's lines, as replaced by the Website Audit deck (2026-11-20, slide 9).
     description:
-      "Wonder is a Pakistani artisan soap brand, made with meticulous attention to detail and with both skin comfort and sensory pleasure in mind.",
+      "Wonder is a premium quality soap brand, made with a promise to hydrate, moisturise and protect your skin. Designed with love and attention.",
   },
 } as const
 
@@ -59,15 +61,17 @@ export const socials = [
 export type Social = (typeof socials)[number]
 
 // The deck's five tabs, in order (slide 2). "In the city" is now "Around the World" (old URL
-// redirects in next.config.ts). The Collection opens a dropdown of the five bars (slide 23).
-export type NavItem = { label: string; href: string; bars?: true }
+// redirects in next.config.ts). The Collection is a plain link to /collection (owner 2026-11-21; the
+// earlier dropdown of the five bars was removed).
+/** `cta`: shown as the header's button (owner request 2026-11-21). Every other item is a plain link. */
+export type NavItem = { label: string; href: string; cta?: true }
 
 export const nav: readonly NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Our Story", href: "/our-story" },
-  { label: "The Collection", href: "/collection", bars: true },
+  { label: "The Collection", href: "/collection" },
   { label: "Around the World", href: "/around-the-world" },
-  { label: "Get in Touch", href: "/contact" },
+  { label: "Get in Touch", href: "/contact", cta: true },
 ]
 
 // The one call to action: bulk orders (deck slide 28 wording; slide 17 "Bulk orders, talk to us").
