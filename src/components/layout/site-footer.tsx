@@ -8,13 +8,13 @@ import { barHref, nav, ordersCta, site } from "@/content/site"
 function Column({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="mb-4 text-[9px] font-medium uppercase tracking-[0.24em] text-gilt">{title}</h2>
+      <h2 className="type-label mb-4 font-medium uppercase tracking-[0.24em] text-gilt">{title}</h2>
       <ul className="flex flex-col">{children}</ul>
     </div>
   )
 }
 
-const itemClass = "inline-flex min-h-9 items-center text-[12px] text-paper/80 transition-colors hover:text-gilt"
+const itemClass = "inline-flex min-h-9 items-center type-copy text-paper/80 transition-colors hover:text-gilt"
 
 // Ink footer on one aligned grid (deck slide 29: "please work on its alignment"): the Royal Basket
 // logo + footer line (slide 19), the five tabs, the five bars, bulk orders. rhode-style oversized
@@ -66,9 +66,9 @@ export function SiteFooter() {
 
       <div className="border-t border-paper/15">
         <div className="wrap-wide flex flex-col items-center gap-5 px-[22px] py-6 sm:flex-row sm:justify-between md:px-[clamp(22px,4vw,64px)]">
-          <p className="text-[9px] tracking-[0.12em] text-paper/60">© {site.company}</p>
-          <p className="text-[9px] uppercase tracking-[0.24em] text-paper/60">
-            {site.productLine} · {site.taglines.everydayLuxury.replace(".", "")}
+          <p className="type-label tracking-[0.12em] text-paper/60">© {site.company}</p>
+          <p className="type-label uppercase tracking-[0.24em] text-paper/60">
+            {site.productLine} · {site.taglines.everydayLuxury}
           </p>
         </div>
       </div>

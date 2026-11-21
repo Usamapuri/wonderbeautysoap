@@ -22,7 +22,7 @@ const headerCtaClass = "aria-[current=page]:ring-1 aria-[current=page]:ring-gold
 // Gold hairline that draws in from the left on hover and stays on the current page.
 const linkClass = (active: boolean) =>
   cn(
-    "relative inline-flex h-10 items-center text-[9px] font-medium uppercase tracking-[0.18em] text-ink transition-colors duration-250 hover:text-gold lg:text-[10px]",
+    "relative inline-flex h-10 items-center type-label font-medium uppercase tracking-[0.18em] text-ink transition-colors duration-250 hover:text-gold lg:type-meta",
     "after:absolute after:bottom-1.5 after:left-0 after:h-px after:bg-gold after:transition-[right] after:duration-250 hover:after:right-0",
     active ? "after:right-0" : "after:right-full",
   )
@@ -46,9 +46,9 @@ export function SiteHeader() {
 
   return (
     <>
-      <div className="flex min-h-8 items-center justify-center bg-ink px-[18px] py-1.5 text-center text-[8px] uppercase tracking-[0.22em] text-paper/80 sm:text-[9px]">
+      <div className="flex min-h-8 items-center justify-center bg-ink px-[18px] py-1.5 text-center type-label uppercase tracking-[0.22em] text-paper/80">
         {site.topline}
-        <span className="hidden sm:inline">&nbsp;· {site.taglines.footer.replace(".", "")}</span>
+        <span className="hidden sm:inline">&nbsp;· {site.taglines.footer}</span>
       </div>
       {/* Sticky, except on very short screens (landscape phones, browser zoomed in), where a pinned
           header would cover too much of the page (audit slide 54). */}
@@ -99,7 +99,7 @@ export function SiteHeader() {
                       href={item.href}
                       onClick={() => setOpen(false)}
                       aria-current={active ? "page" : undefined}
-                      className={cn("block border-t border-rule px-6 py-[17px] text-[10px] font-medium uppercase tracking-[0.18em]", active ? "text-gold" : "text-ink")}
+                      className={cn("block border-t border-rule px-6 py-[17px] type-meta font-medium uppercase tracking-[0.18em]", active ? "text-gold" : "text-ink")}
                     >
                       {item.label}
                     </Link>

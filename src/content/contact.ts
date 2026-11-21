@@ -26,7 +26,7 @@ export const contact = {
   },
   heading: {
     eyebrow: "A note, a question, a hello",
-    title: { before: "Let’s ", emphasis: "talk." },
+    title: { before: "Let’s ", emphasis: "talk" },
     body: "We’d be glad to hear from you. Choose the way that feels easiest.",
   },
   // The email reply line and the "Good to know" medical note were removed (audit slide 47).
@@ -38,7 +38,7 @@ export const contact = {
   },
   bulk: {
     eyebrow: "Bulk & trade",
-    heading: ["Bulk orders", "& stockists."],
+    heading: ["Bulk orders", "& stockists"],
     body: "For bulk orders, retail stocking and distribution enquiries, tell us a little about your business:",
     include: ["Your business name", "Where you are based", "Estimated quantity"],
     // Minimum order quantity, if any — client to confirm (§10). null = not shown.
@@ -59,19 +59,20 @@ export const contact = {
       consent: "You may contact me about my enquiry",
     },
     errors: {
-      name: "Please tell us your name.",
-      email: "Please enter a valid email address.",
-      type: "Please choose an enquiry type.",
-      message: "Please write a little more (at least 10 characters).",
-      consent: "Please confirm we may contact you about your enquiry.",
+      name: "Please tell us your name",
+      email: "Please enter a valid email address",
+      type: "Please choose an enquiry type",
+      message: "Please write a little more (at least 10 characters)",
+      consent: "Please confirm we may contact you about your enquiry",
     },
     submit: "Send enquiry",
     submitting: "Sending…",
-    success: { heading: "Thank you", body: "Thank you — we’ll reply by email." },
+    success: { heading: "Thank you", body: "Thank you — we’ll reply by email" },
     mailtoSuccess: {
       heading: "Almost there",
       body: "Your email app should have opened with your enquiry ready to send. If it didn’t, email us directly at",
     },
+    // The error body keeps its full stop: it runs on into the next sentence ("Or email us directly at …").
     error: { heading: "Something went wrong", body: "Your enquiry couldn’t be sent.", retry: "Try again", fallback: "Or email us directly at" },
     another: "Send another enquiry",
   },
@@ -79,6 +80,6 @@ export const contact = {
   responseTime: null as string | null,
   social: {
     eyebrow: "Keep in touch",
-    heading: "Wonder, in your feed.",
+    heading: "Wonder, in your feed",
   },
 } as const

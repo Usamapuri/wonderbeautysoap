@@ -85,9 +85,9 @@ export type Product = {
   botanical: string
   /** Approved packaging render on the studio background (6:5). */
   image: string
-  /** Display line, e.g. "Meet me in Paris." */
+  /** Display line, e.g. "Meet me in Paris" */
   tagline: string
-  /** Supporting line, e.g. "Soft petals, golden hour." */
+  /** Supporting line, e.g. "Soft petals, golden hour" */
   subLine: string
   /** Short mood line, e.g. "Softly romantic" — also the title of the variety's concept artwork. */
   mood: string
@@ -165,8 +165,8 @@ export const products: Product[] = [
     slug: "rose",
     barColour: "pink",
     variety: "Rose",
-    tagline: "Meet me in Paris.",
-    subLine: "Soft petals, golden hour.",
+    tagline: "Meet me in Paris",
+    subLine: "Soft petals, golden hour",
     mood: "Softly romantic",
     origin: {
       place: "Paris, France",
@@ -185,8 +185,8 @@ export const products: Product[] = [
     slug: "lavender",
     barColour: "lavender",
     variety: "Lavender",
-    tagline: "Countryside romance.",
-    subLine: "Purple fields, slow mornings.",
+    tagline: "Countryside romance",
+    subLine: "Purple fields, slow mornings",
     mood: "Calm in a bar",
     origin: {
       place: "Surrey, UK",
@@ -211,8 +211,8 @@ export const products: Product[] = [
     slug: "aloe-vera",
     barColour: "green",
     variety: "Aloe Vera",
-    tagline: "The K-beauty promise.",
-    subLine: "Fresh, dewy, minimal.",
+    tagline: "The K-beauty promise",
+    subLine: "Fresh, dewy, minimal",
     mood: "Fresh, soothing moisture",
     origin: {
       place: "Seoul, Korea",
@@ -233,8 +233,8 @@ export const products: Product[] = [
     slug: "lemon",
     barColour: "yellow",
     variety: "Lemon",
-    tagline: "An Amalfi sunset.",
-    subLine: "Bright, zesty, golden hour.",
+    tagline: "An Amalfi sunset",
+    subLine: "Bright, zesty, golden hour",
     mood: "A citrus afternoon",
     origin: {
       place: "Amalfi, Italy",
@@ -254,8 +254,8 @@ export const products: Product[] = [
     slug: "coconut",
     barColour: "white",
     variety: "Coconut",
-    tagline: "Sipping coconuts in Bali.",
-    subLine: "Warm, creamy, barefoot.",
+    tagline: "Sipping coconuts in Bali",
+    subLine: "Warm, creamy, barefoot",
     mood: "The island daydream",
     origin: {
       place: "Bali, Indonesia",

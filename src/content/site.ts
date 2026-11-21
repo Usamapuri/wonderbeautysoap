@@ -15,12 +15,12 @@ export const site = {
   topline: "Everyday luxury, within reach",
   // Deck slide 20 "Taglines and lines to place on the site" — spread through the pages.
   taglines: {
-    hero: "Scent. Lather. Wonder.",
-    everyScent: "Every scent tells a story.",
-    everydayLuxury: "Everyday luxury, within reach.",
-    celebration: "Lather that feels like a little celebration.",
-    wherever: "Wonder, wherever you are.",
-    footer: "Made with care, from us to you.",
+    hero: "Scent, Lather, Wonder",
+    everyScent: "Every scent tells a story",
+    everydayLuxury: "Everyday luxury, within reach",
+    celebration: "Lather that feels like a little celebration",
+    wherever: "Wonder, wherever you are",
+    footer: "Made with care, from us to you",
     // Brand promises (slides 20 + 24).
     promises: ["Fragrance", "Premium quality", "Good lather"],
     promiseWords: ["Scent", "Glow", "Wonder"],
@@ -34,7 +34,7 @@ export const site = {
   aiDisclaimer:
     "These AI-generated images are campaign concepts created to explore the Wonder world. They are not documentary photographs, customer images or claims about where the products are sold.",
   seo: {
-    title: "Royal Basket — Scent. Lather. Wonder.",
+    title: "Royal Basket — Scent, Lather, Wonder",
     // The Home welcome's lines, as replaced by the Website Audit deck (2026-11-20, slide 9).
     description:
       "Wonder is a premium quality soap brand, made with a promise to hydrate, moisturise and protect your skin. Designed with love and attention.",
