@@ -10,16 +10,16 @@ import { reveal } from "@/lib/reveal"
 export function CeoPromise() {
   const { ceo } = story
   return (
-    <section aria-labelledby="ceo-heading" className="grid gap-3 px-3 pt-3 sm:px-5 sm:pt-5 md:grid-cols-[0.9fr_1.1fr]">
+    <section aria-labelledby="ceo-heading" className="wrap-wide grid gap-3 px-3 pt-3 sm:gap-5 sm:px-5 sm:pt-5 md:grid-cols-[0.9fr_1.1fr]">
       {/* Square frame = the square concept artwork. */}
       <div {...reveal()} className="tile-pop relative aspect-square bg-clay md:aspect-auto md:min-h-full">
         <Image src={ceo.image.src} alt={ceo.image.alt} fill sizes="(max-width: 850px) 100vw, 45vw" className="object-cover" />
       </div>
-      <div {...reveal(120)} className="rounded-lg bg-ink p-8 text-paper sm:p-12 md:p-16">
+      <div {...reveal(120)} className="panel bg-ink text-paper">
         <Eyebrow tone="gilt">
           <h2 id="ceo-heading">{ceo.eyebrow}</h2>
         </Eyebrow>
-        <p className="font-display mt-7 text-[clamp(30px,3.4vw,48px)] leading-[1.08]">
+        <p className="font-display type-card mt-7">
           <SplitText text={ceo.lead} />
         </p>
         {ceo.body.map((p) => (
