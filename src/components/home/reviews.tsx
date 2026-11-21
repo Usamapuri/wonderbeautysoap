@@ -6,8 +6,8 @@ import { reviews, reviewsSection } from "@/content/reviews"
 import { reveal, revealGroup } from "@/lib/reveal"
 
 // "Kind words, well lathered" — the Bolt prototype's review cards, near the end of Home (deck slide 9), back at
-// the owner's request (phase 3). Reviews flagged `sample` carry a visible "Sample review" tag (real text, dark
-// rose for 4.5:1) until the client supplies real ones; no review structured data is emitted for them.
+// the owner's request (phase 3), with three reviews the owner confirmed as genuine. A review flagged `sample`
+// would carry a visible "Sample review" tag (real text, dark rose for 4.5:1). No review structured data.
 export function Reviews() {
   if (reviews.length === 0) return null
   return (

@@ -1,10 +1,8 @@
 // Customer reviews, near the end of Home (deck slide 9: "Customer reviews at the end").
 //
-// Back at the owner's request (phase 3: "WE NEED TO ADD REVIEWS SECTION IN THE HOMEPAGE"). The three reviews below are
-// SAMPLE copy from the client's Bolt prototype, restored from git (commit 047baf7), not real customers. Each carries
-// `sample: true`, which shows a visible "Sample review" tag on its card; never remove the tag or publish them as real,
-// and add no review structured data for them. To publish a real review, the client supplies the customer's words and
-// permission; add it here without `sample` (and delete the samples), and its tag goes.
+// The site owner confirmed on 2026-11-21 that these three are genuine customer reviews ("they are real"), so they
+// carry no tag. The client should hold each quoted customer's permission to be quoted. A placeholder review can still
+// be marked with `sample: true`, which shows the visible "Sample review" tag on its card. No review structured data.
 
 import type { ProductSlug } from "./products"
 
@@ -13,7 +11,7 @@ export type Review = {
   name: string
   city: string
   bar: ProductSlug
-  /** Placeholder copy: shows the visible "Sample review" tag. Real reviews omit it. */
+  /** Placeholder copy only: shows the visible "Sample review" tag. Genuine reviews omit it. */
   sample?: true
 }
 
@@ -29,20 +27,17 @@ export const reviews: Review[] = [
     name: "Mariam K",
     city: "Lahore",
     bar: "lavender",
-    sample: true,
   },
   {
     quote: "I bought the lemon bar as a gift and ended up keeping it. The scent is bright without being overpowering, and the box feels incredibly special.",
     name: "Ayesha R",
     city: "Karachi",
     bar: "lemon",
-    sample: true,
   },
   {
     quote: "Wonder has the rare combination of a beautiful product and a genuinely thoughtful purpose. Coconut is now a permanent part of my bathroom shelf.",
     name: "Hassan A",
     city: "Islamabad",
     bar: "coconut",
-    sample: true,
   },
 ]

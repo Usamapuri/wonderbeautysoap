@@ -15,8 +15,7 @@ import { home } from "@/content/home"
 // where it's sold; slide 9 — reviews at the end), laid out after the Gisou home page. The scent
 // artwork collage ("Wonder, wherever you are.") was removed (audit slide 16). The design statement and the eco
 // packaging panel were removed at the owner's request (phase 3). Reviews are back at the owner's
-// request (phase 3), near the end as before: three sample reviews, each visibly tagged "Sample review" until
-// real, published-with-permission reviews replace them.
+// request (phase 3), near the end as before: three customer reviews the owner confirmed as genuine.
 export default function HomePage() {
   const { closing } = home
   return (
