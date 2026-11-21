@@ -22,7 +22,7 @@ export const home = {
     // Audit slide 4.
     eyebrow: "Rich, creamy lather in scents you’ll love",
     // Rendered as three lines; the middle word is italic and indented, as in the prototype.
-    headline: ["Scent.", "Lather.", "Wonder."],
+    headline: ["Scent", "Lather", "Wonder"],
     headlineText: site.taglines.hero,
     // Audit slide 5.
     sub: "Beautifully scented soaps with a rich, creamy lather. Premium quality in five flavours.",
@@ -80,18 +80,15 @@ export const home = {
     eyebrow: "Why Wonder?",
     cells: [
       {
-        label: "01 / Why Wonder",
-        heading: ["One bar", "does it all."],
+        heading: ["One bar", "does it all"],
         body: "Intentionally crafted for everyday care, with thoughtful ingredients and scents to help you glow, hydrate and protect.",
       },
       {
-        label: "02 / Why Wonder",
-        heading: ["Affordability."],
+        heading: ["Affordability"],
         body: "From the beginning, we wanted to make premium everyday care more affordable, without compromising on quality.",
       },
       {
-        label: "03 / Why Wonder",
-        heading: ["Nourishing."],
+        heading: ["Nourishing"],
         body: "Gentle everyday cleansing that helps maintain your skin’s natural moisture, leaving it feeling soft and cared for.",
       },
     ] satisfies ValueCell[],
@@ -102,15 +99,15 @@ export const home = {
   welcome: {
     eyebrow: "Welcome",
     // Audit slide 9 (the client's three lines; spelling corrected).
-    heading: ["A premium quality", "soap brand."],
-    lead: ["Made with a promise to hydrate, moisturise and protect your skin.", "Designed with love and attention."],
+    heading: ["A premium quality", "soap brand"],
+    lead: ["Made with a promise to hydrate, moisturise and protect your skin", "Designed with love and attention"],
     // The client's sentences, split into a bold lead and the rest.
     points: [
-      { title: "Carefully selected ingredients,", body: "including fragrant flowers and botanicals." },
-      { title: "Packed with care", body: "by our own people, for you." },
-      { title: "Innovation, experimentation and design", body: "in everyday beauty." },
+      { title: "Carefully selected ingredients,", body: "including fragrant flowers and botanicals" },
+      { title: "Packed with care", body: "by our own people, for you" },
+      { title: "Innovation, experimentation and design", body: "in everyday beauty" },
     ],
-    pull: "Every bar is a small multisensory experience: rich lather, a lovely scent and a feel that stays with you.",
+    pull: "Every bar is a small multisensory experience: rich lather, a lovely scent and a feel that stays with you",
     // Audit slide 10 ("new video and longer"): a ~9 s ritual edit of the supplied clips (Lavender
     // face ritual, Aloe Vera hands lather, Lavender bar lather), 2:3 like the frame, at 1080x1620.
     video: "/brand-assets/audit-media/video/home-welcome-ritual-2x3.mp4",
@@ -123,52 +120,27 @@ export const home = {
   // The video banner between the welcome notes. Its text is the client's new copy (audit slides
   // 11–12: "Replace this text" / "New text for this page"): the first line leads, the rest follow.
   film: {
-    heading: { before: "Premium care", emphasis: "in every bar." },
-    lines: ["Creamy lather, lasting fragrance.", "Crafted with care. Made to wonder."],
+    heading: { before: "Premium care", emphasis: "in every bar" },
+    lines: ["Creamy lather, lasting fragrance", "Crafted with care, made to wonder"],
     src: "/brand-assets/videos/wonder-collection.mp4",
     poster: "/brand-assets/videos/wonder-collection-poster.webp",
     label: "All five Wonder Beauty Bars surrounded by lather",
   },
 
   // Slide 6 + designer note "Eco-friendly box packaging is a selling point: give it space on Home".
-  design: {
-    statement: "Elegance and design go into every pack, so your soap feels like a little luxury and not just a bathroom basic.",
-    // Audit slides 13–14: the statement sits over a picture that stays put while the page scrolls
-    // (alchimiasoap.it reference), so the film above flows into it instead of a hard cut to cream.
-    backdrop: {
-      src: "/brand-assets/campaign/bathroom-ritual.webp",
-      alt: "",
-    },
-    eco: {
-      eyebrow: "Eco-friendly box packaging",
-      heading: "A better way to wrap luxury.",
-      lines: [
-        "Instead of traditional wrappers and plastic packaging, Wonder comes in eco-friendly box packaging.",
-        "It helps reduce our carbon footprint and gives you a luxury experience at an affordable price, because every customer matters to us.",
-      ],
-      // Audit slide 15 ("add better image"): the approved studio lineup render of all five boxes,
-      // framed tighter. width/height = the file's pixel size; `packshot` = product on a white studio
-      // background (shown on the clay well). This one has its own backdrop, and is shown whole.
-      image: {
-        src: "/brand-assets/audit-media/image/home-packaging-lineup.webp",
-        alt: "All five Wonder Beauty Bars in their illustrated boxes: Coconut, Aloe Vera, Lemon, Lavender and Rose",
-        width: 1800,
-        height: 900,
-        packshot: false as boolean,
-      },
-    },
-    closing: "We love quality and beauty, and we want you to find both in every bar.",
-  },
+  // The welcome note's second part (deck slide 6) is gone: the design statement over a fixed backdrop (audit
+  // slides 13–14) and then the eco-friendly packaging panel with its closing line (audit slide 15) were deleted
+  // at the owner's request (phase 3: "DELETE THIS section", "remove a better way to wrap luxury section as well").
 
   // Slides 7–8. Labels set larger and the mission centred in its panel (audit slides 17–18).
   mission: {
     eyebrow: "Our mission",
-    text: "To make everyday luxury accessible to all, with a gentle, moisturising, beautifully scented beauty bar made with care for every skin type, at a price everyone can afford.",
+    text: "To make everyday luxury accessible to all, with a gentle, moisturising, beautifully scented beauty bar made with care for every skin type, at a price everyone can afford",
   },
   vision: {
     eyebrow: "Our vision",
     text: "Our vision is to offer products you can trust. In a world full of big claims and marketing gimmicks, Wonder promises to stay honest: quality ingredients, careful craftsmanship and a product we are proud to stand behind.",
-    signOff: "From us to you.",
+    signOff: "From us to you",
     // Slide 8 notes: optional second vision line.
     second: "To become the most loved everyday beauty bar in the region, and a name that travels.",
     // Audit slide 19 ("change image"): a supplied campaign still not used elsewhere on the site.
@@ -182,7 +154,7 @@ export const home = {
 
   products: {
     eyebrow: "The collection",
-    heading: ["Five botanicals.", "One beauty bar."],
+    heading: ["Five botanicals", "One beauty bar"],
     body: site.taglines.celebration,
     more: { label: "See the whole collection", href: "/collection" },
   },
@@ -203,7 +175,7 @@ export const home = {
 
   closing: {
     eyebrow: site.taglines.everydayLuxury,
-    heading: ["Lather that feels like", "a little celebration."],
+    heading: ["Lather that feels like", "a little celebration"],
     primaryCta: { label: "Explore the collection", href: "/collection" },
     secondaryCta: { label: ordersCta.label, href: ordersCta.href },
   },

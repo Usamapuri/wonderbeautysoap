@@ -28,16 +28,16 @@ export function Welcome() {
           ))}
         </div>
 
-        <ol className="mt-9 max-w-[520px] border-t border-line">
-          {welcome.points.map((p, i) => (
-            <li key={p.title} className="flex items-baseline gap-5 border-b border-line py-4">
-              <span className="font-display text-[22px] leading-none text-gold">{String(i + 1).padStart(2, "0")}</span>
-              <p className="text-[12px] leading-[1.7] text-ink-soft">
+        {/* The points were numbered 01-03 until the owner asked for no numbering (phase 3). */}
+        <ul className="mt-9 max-w-[520px] border-t border-line">
+          {welcome.points.map((p) => (
+            <li key={p.title} className="border-b border-line py-4">
+              <p className="type-copy text-ink-soft">
                 <strong className="font-medium text-ink">{p.title}</strong> {p.body}
               </p>
             </li>
           ))}
-        </ol>
+        </ul>
 
         <p className="font-display mt-9 max-w-[500px] text-[clamp(22px,2.2vw,30px)] leading-[1.2] italic">{welcome.pull}</p>
       </div>
