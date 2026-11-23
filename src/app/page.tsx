@@ -1,3 +1,5 @@
+import type { Metadata } from "next"
+
 import { Lines } from "@/components/brand/lines"
 import { PageCta } from "@/components/brand/page-cta"
 import { CampaignFilm } from "@/components/home/campaign-film"
@@ -16,6 +18,10 @@ import { home } from "@/content/home"
 // artwork collage ("Wonder, wherever you are.") was removed (audit slide 16). The design statement and the eco
 // packaging panel were removed at the owner's request (phase 3). Reviews are back at the owner's
 // request (phase 3), near the end as before: three customer reviews the owner confirmed as genuine.
+// Title and description come from the root layout; the canonical link is per route (resolved against
+// metadataBase, i.e. site.url).
+export const metadata: Metadata = { alternates: { canonical: "/" } }
+
 export default function HomePage() {
   const { closing } = home
   return (

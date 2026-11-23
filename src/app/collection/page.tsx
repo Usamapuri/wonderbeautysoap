@@ -5,7 +5,7 @@ import { CollectionItem } from "@/components/collection/collection-item"
 import { collection } from "@/content/collection"
 import { products } from "@/content/products"
 
-export const metadata: Metadata = collection.seo
+export const metadata: Metadata = { ...collection.seo, alternates: { canonical: "/collection" } }
 
 // The Collection landing page (the header tab opens it; audit slide 38). Brief §4.3 + deck slide 17
 // — exactly five bars in the deck's order, no prices and no buy buttons. The safety-report line

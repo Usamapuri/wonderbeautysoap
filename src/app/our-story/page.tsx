@@ -9,7 +9,7 @@ import { TeamGrid } from "@/components/story/team-grid"
 import { WhoWeAre } from "@/components/story/who-we-are"
 import { story } from "@/content/story"
 
-export const metadata: Metadata = story.seo
+export const metadata: Metadata = { ...story.seo, alternates: { canonical: "/our-story" } }
 
 // Section order: the client's website brief deck, slide 10. Layout after rhode's About page:
 // rounded panels with narrow gutters. The Wonder Room artwork row was removed (audit slides 24–25),

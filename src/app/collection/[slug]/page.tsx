@@ -10,7 +10,7 @@ import { ProductCard } from "@/components/brand/product-card"
 import { SplitText } from "@/components/brand/split-text"
 import { collection } from "@/content/collection"
 import { productBySlug, products } from "@/content/products"
-import { ordersCta } from "@/content/site"
+import { barHref, ordersCta, site } from "@/content/site"
 import { reveal, revealGroup } from "@/lib/reveal"
 
 type Params = PageProps<"/collection/[slug]">["params"]
@@ -25,7 +25,22 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/collection/[slug]">): Promise<Metadata> {
   const product = productBySlug((await params).slug)
   if (!product) return {}
-  return { title: product.variety, description: `${product.name}. ${product.tagline} ${product.subLine}` }
+  // The tagline has no full stop (display line) and the sub-line ends with one, so the description reads
+  // "Wonder Beauty Bar — Rose. Meet me in Paris. Soft petals, golden hour."
+  const title = product.variety
+  const description = `${product.name}. ${product.tagline}. ${product.subLine}`
+  const path = barHref(product.slug)
+  // A child's openGraph/twitter replaces the layout's whole object, so the shared fields are repeated here.
+  // The social title matches the page's <title> (layout template "%s — Royal Basket"); og:url is the canonical
+  // URL on site.url. The og:image still comes from app/opengraph-image.jpg.
+  const socialTitle = `${title} — ${site.brand}`
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: { type: "website", siteName: site.brand, title: socialTitle, description, url: new URL(path, site.url).href },
+    twitter: { card: "summary_large_image", title: socialTitle, description },
+  }
 }
 
 // Everything here depends on the URL's slug, so it sits under <Suspense>: the route's App Shell is

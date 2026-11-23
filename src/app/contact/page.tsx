@@ -11,7 +11,7 @@ import { SplitText } from "@/components/brand/split-text"
 import { contact } from "@/content/contact"
 import { revealGroup } from "@/lib/reveal"
 
-export const metadata: Metadata = contact.seo
+export const metadata: Metadata = { ...contact.seo, alternates: { canonical: "/contact" } }
 
 // Get in Touch (deck slide 19). The site targets bulk orders, so the page's centre is one enquiry
 // card: the bulk brief (left) and the form (right) share a frame, height and shadow. The reply-line

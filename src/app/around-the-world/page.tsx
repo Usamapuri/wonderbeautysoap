@@ -6,7 +6,7 @@ import { WorldHero } from "@/components/world/world-hero"
 import { WorldRegions } from "@/components/world/world-regions"
 import { world } from "@/content/world"
 
-export const metadata: Metadata = world.seo
+export const metadata: Metadata = { ...world.seo, alternates: { canonical: "/around-the-world" } }
 
 // Around the World (deck slide 18; formerly "In the City"), redesigned on the owner's request
 // (2026-11-21, phase 3): the gold page hero with the title, the four regions as one card on a drawn route,
