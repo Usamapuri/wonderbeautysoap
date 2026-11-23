@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import type { Metadata } from "next"
+import type { Metadata, ResolvingMetadata } from "next"
 import { notFound } from "next/navigation"
 
 import { BarHero } from "@/components/bar/bar-hero"
@@ -22,7 +22,7 @@ export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }))
 }
 
-export async function generateMetadata({ params }: PageProps<"/collection/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/collection/[slug]">, parent: ResolvingMetadata): Promise<Metadata> {
   const product = productBySlug((await params).slug)
   if (!product) return {}
   // The tagline has no full stop (display line) and the sub-line ends with one, so the description reads
@@ -30,15 +30,27 @@ export async function generateMetadata({ params }: PageProps<"/collection/[slug]
   const title = product.variety
   const description = `${product.name}. ${product.tagline}. ${product.subLine}`
   const path = barHref(product.slug)
-  // A child's openGraph/twitter replaces the layout's whole object, so the shared fields are repeated here.
-  // The social title matches the page's <title> (layout template "%s — Royal Basket"); og:url is the canonical
-  // URL on site.url. The og:image still comes from app/opengraph-image.jpg.
+  // Metadata merges shallowly: a page's openGraph/twitter object replaces the layout's whole object, including
+  // the share image from app/opengraph-image.jpg. So the shared fields are repeated here, and the og images are
+  // carried forward from the parent's resolved metadata (as the generateMetadata docs show with `parent`): the
+  // same absolute URL, width, height and type the other routes get. twitter sets no `images` on purpose: Next
+  // then fills twitter:image from the og images, as on every other route (an explicit empty list would block
+  // that). The social title matches the page's <title> (layout template "%s — Royal Basket"); og:url is the
+  // canonical URL on site.url.
+  const resolved = await parent
   const socialTitle = `${title} — ${site.brand}`
   return {
     title,
     description,
     alternates: { canonical: path },
-    openGraph: { type: "website", siteName: site.brand, title: socialTitle, description, url: new URL(path, site.url).href },
+    openGraph: {
+      type: "website",
+      siteName: site.brand,
+      title: socialTitle,
+      description,
+      url: new URL(path, site.url).href,
+      images: resolved.openGraph?.images ?? [],
+    },
     twitter: { card: "summary_large_image", title: socialTitle, description },
   }
 }
