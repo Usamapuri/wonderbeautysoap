@@ -33,7 +33,10 @@ const linkClass = (active: boolean) =>
 export function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
-  // Once the page scrolls, the header tightens and lifts off the content with a soft shadow.
+  // Once the page scrolls, the header lifts off the content with a soft shadow. Only paint changes: the
+  // header keeps one height at every scroll position. It used to shrink 76 → 64px past 24px of scroll, inside
+  // the 32px announcement bar while the header was still in the page flow; with scroll anchoring that looped
+  // and made the top of the screen vibrate (client error deck, slide 27).
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -46,7 +49,8 @@ export function SiteHeader() {
 
   return (
     <>
-      <div className="flex min-h-8 items-center justify-center bg-ink px-[18px] py-1.5 text-center type-label uppercase tracking-[0.22em] text-paper/80">
+      {/* overflow-anchor: none on the bar and the header, so the browser never picks them as scroll anchors. */}
+      <div className="flex min-h-8 items-center justify-center bg-ink px-[18px] py-1.5 text-center type-label uppercase tracking-[0.22em] text-paper/80 [overflow-anchor:none]">
         {site.topline}
         <span className="hidden sm:inline">&nbsp;· {site.taglines.footer}</span>
       </div>
@@ -54,9 +58,9 @@ export function SiteHeader() {
           header would cover too much of the page (audit slide 54). */}
       <header
         data-scrolled={scrolled || undefined}
-        className="group sticky top-0 z-30 border-b border-header-rule bg-paper/95 backdrop-blur-md transition-[box-shadow,background-color] duration-300 ease-[cubic-bezier(.2,.7,.2,1)] data-scrolled:bg-paper/90 data-scrolled:shadow-[0_8px_24px_#25231d14] [@media(max-height:480px)]:static"
+        className="group sticky top-0 z-30 border-b [overflow-anchor:none] border-header-rule bg-paper/95 backdrop-blur-md transition-[box-shadow,background-color] duration-300 ease-[cubic-bezier(.2,.7,.2,1)] data-scrolled:bg-paper/90 data-scrolled:shadow-[0_8px_24px_#25231d14] [@media(max-height:480px)]:static"
       >
-        <div className="wrap-wide flex h-(--header-height) items-center justify-between gap-6 px-[22px] transition-[height] duration-300 ease-[cubic-bezier(.2,.7,.2,1)] group-data-scrolled:h-[60px] md:px-[clamp(22px,4vw,64px)] md:group-data-scrolled:h-[64px] [&>a:first-child_img]:transition-[height] [&>a:first-child_img]:duration-300 group-data-scrolled:[&>a:first-child_img]:h-[26px]">
+        <div className="wrap-wide flex h-(--header-height) items-center justify-between gap-6 px-[22px] md:px-[clamp(22px,4vw,64px)]">
           <BrandMark />
 
           {/* The header's former "Bulk orders" button was removed (audit slide 6). */}
