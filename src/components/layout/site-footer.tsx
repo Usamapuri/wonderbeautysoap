@@ -47,11 +47,8 @@ export function SiteFooter() {
           ))}
         </Column>
         <Column title="Bulk orders">
-          <li>
-            <a href={`mailto:${site.email}`} className={`${itemClass} underline decoration-gilt/60 underline-offset-4`}>
-              {site.email}
-            </a>
-          </li>
+          {/* Plain, selectable text, not a mailto link (client error deck, slide 29: "Just display our email"). */}
+          <li className="inline-flex min-h-9 items-center type-copy break-all text-paper/80 select-all">{site.email}</li>
           <li>
             <Link href={ordersCta.href} className={itemClass}>
               {ordersCta.label}

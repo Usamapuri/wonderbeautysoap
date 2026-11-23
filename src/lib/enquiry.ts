@@ -1,58 +1,64 @@
-// The only place contact-form submissions are sent (brief §5.2). Swap the transport here
-// (e.g. a route handler + Resend) without touching the page.
+// The only place contact-form submissions are sent from the browser (brief §5.2). The form posts to
+// /api/enquiry, which validates and e-mails it (Resend). Only when the server answers "handoff" does the
+// browser post to Formspree itself, as it did before. There is no email-app (mailto) fallback: when nothing
+// is configured the visitor is told the message could not be sent (client error deck, slide 29).
 
-import { enquiryTypes, productOptions, type EnquiryType } from "@/content/contact"
-import { integrations, site } from "@/content/site"
+import { integrations } from "@/content/site"
+import { enquirySubject, productLabel, typeLabel, HONEYPOT, type Enquiry, type FormResult } from "@/lib/forms"
 
-export type Enquiry = {
-  name: string
-  email: string
-  type: EnquiryType
-  product: string
-  message: string
-  consent: boolean
-}
+export type { Enquiry }
 
-export type EnquiryResult = "sent" | "mailto"
-
-const typeLabel = (type: EnquiryType) => enquiryTypes.find((t) => t.value === type)?.label ?? type
-const productLabel = (product: string) => productOptions.find((p) => p.value === product)?.label ?? "Not specified"
-
-/** Subject pattern the client triages by: `[Website] <Enquiry type> — <Name>`. */
-export const enquirySubject = (e: Pick<Enquiry, "type" | "name">) => `[Website] ${typeLabel(e.type)} — ${e.name}`
+export type EnquiryResult =
+  | { status: "sent" }
+  | { status: "unavailable" }
+  | { status: "invalid"; errors: Record<string, string> }
+  /** Network or provider failure, or too many attempts: worth trying again later. */
+  | { status: "error" }
 
 export async function submitEnquiry(enquiry: Enquiry, honeypot = ""): Promise<EnquiryResult> {
-  const subject = enquirySubject(enquiry)
-
-  if (!integrations.formspreeId) {
-    // Not wired yet: hand the visitor a pre-filled email draft instead (the starter's behaviour).
-    const body = [
-      enquiry.message,
-      "",
-      `Name: ${enquiry.name}`,
-      `Email: ${enquiry.email}`,
-      `Enquiry type: ${typeLabel(enquiry.type)}`,
-      `Product: ${productLabel(enquiry.product)}`,
-    ].join("\n")
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    return "mailto"
+  let result: FormResult
+  try {
+    const res = await fetch("/api/enquiry", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ ...enquiry, [HONEYPOT]: honeypot }),
+    })
+    result = (await res.json()) as FormResult
+  } catch {
+    return { status: "error" }
   }
 
-  const res = await fetch(`https://formspree.io/f/${integrations.formspreeId}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({
-      name: enquiry.name,
-      email: enquiry.email,
-      _replyto: enquiry.email,
-      _subject: subject,
-      enquiryType: typeLabel(enquiry.type),
-      product: productLabel(enquiry.product),
-      message: enquiry.message,
-      consent: enquiry.consent ? "Yes" : "No",
-      _gotcha: honeypot,
-    }),
-  })
-  if (!res.ok) throw new Error(`Formspree responded ${res.status}`)
-  return "sent"
+  switch (result.status) {
+    case "sent":
+    case "unavailable":
+    case "invalid":
+      return result
+    case "handoff":
+      return integrations.formspreeId ? sendToFormspree(integrations.formspreeId, enquiry, honeypot) : { status: "unavailable" }
+    default:
+      return { status: "error" }
+  }
+}
+
+async function sendToFormspree(id: string, enquiry: Enquiry, honeypot: string): Promise<EnquiryResult> {
+  try {
+    const res = await fetch(`https://formspree.io/f/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        name: enquiry.name,
+        email: enquiry.email,
+        _replyto: enquiry.email,
+        _subject: enquirySubject(enquiry),
+        enquiryType: typeLabel(enquiry.type),
+        product: productLabel(enquiry.product || "none"),
+        message: enquiry.message,
+        consent: enquiry.consent ? "Yes" : "No",
+        _gotcha: honeypot,
+      }),
+    })
+    return res.ok ? { status: "sent" } : { status: "error" }
+  } catch {
+    return { status: "error" }
+  }
 }

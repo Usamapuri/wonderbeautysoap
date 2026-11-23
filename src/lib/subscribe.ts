@@ -1,14 +1,47 @@
-// Email-list sign-up via Mailchimp's embedded-form endpoint (brief §5.1). The plain endpoint has
-// no CORS, so this uses its JSONP variant (`/subscribe/post-json?...&c=<callback>`). No API key.
+// Email-list sign-up (brief §5.1; client error deck, slide 30). The pop-up posts to /api/subscribe, which
+// validates the address and, with no Mailchimp form configured, e-mails it to the enquiry inbox (Resend).
+// When a Mailchimp form is configured the server answers "handoff" and the browser signs up through
+// Mailchimp's embedded-form endpoint as before. That endpoint has no CORS, so it uses its JSONP variant
+// (`/subscribe/post-json?...&c=<callback>`). No API key.
 
 import { integrations } from "@/content/site"
+import { HONEYPOT, type FormResult } from "@/lib/forms"
+
+export type SubscribeResult = "sent" | "unavailable" | "invalid" | "error"
+
+export async function subscribe(email: string, honeypot = ""): Promise<SubscribeResult> {
+  let result: FormResult
+  try {
+    const res = await fetch("/api/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ email, [HONEYPOT]: honeypot }),
+    })
+    result = (await res.json()) as FormResult
+  } catch {
+    return "error"
+  }
+  switch (result.status) {
+    case "sent":
+    case "unavailable":
+    case "invalid":
+      return result.status
+    case "handoff":
+      if (!integrations.mailchimpAction) return "unavailable"
+      try {
+        await subscribeMailchimp(integrations.mailchimpAction, email)
+        return "sent"
+      } catch {
+        return "error"
+      }
+    default:
+      return "error"
+  }
+}
 
 type MailchimpResponse = { result: "success" | "error"; msg: string }
 
-export async function subscribe(email: string): Promise<void> {
-  const action = integrations.mailchimpAction
-  if (!action) throw new Error("Mailchimp is not configured (NEXT_PUBLIC_MAILCHIMP_ACTION)")
-
+async function subscribeMailchimp(action: string, email: string): Promise<void> {
   const url = new URL(action.replace("/subscribe/post?", "/subscribe/post-json?"))
   const u = url.searchParams.get("u")
   const id = url.searchParams.get("id")

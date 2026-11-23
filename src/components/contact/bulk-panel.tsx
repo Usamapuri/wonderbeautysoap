@@ -22,9 +22,8 @@ export function BulkPanel() {
       {bulk.minimumOrder && <p className="type-copy mt-5 text-paper/85">{bulk.minimumOrder}</p>}
       <div className="mt-auto pt-10">
         <p className="type-label uppercase tracking-[0.2em] text-paper/70">{details.emailLabel}</p>
-        <a href={`mailto:${site.email}`} className="mt-2 inline-flex min-h-10 items-center text-[14px] text-paper underline decoration-paper/50 underline-offset-4 hover:decoration-paper">
-          {site.email}
-        </a>
+        {/* Plain, selectable text, not a mailto link (client error deck, slide 29: "Just display our email"). */}
+        <p className="mt-2 inline-flex min-h-10 items-center text-[14px] break-all text-paper select-all">{site.email}</p>
       </div>
     </aside>
   )

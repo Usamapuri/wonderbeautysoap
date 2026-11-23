@@ -3,6 +3,7 @@
 // set them here (null = hidden). Never invent contact details or an SLA.
 
 import { products } from "./products"
+import { site } from "./site"
 
 // Bulk order first and pre-selected: the site targets bulk orders only.
 export const enquiryTypes = [
@@ -56,23 +57,22 @@ export const contact = {
       productHint: "(optional)",
       productPlaceholder: "Any bar",
       message: "Message",
-      consent: "You may contact me about my enquiry",
+      consent: "You may contact me about my enquiry.",
     },
     errors: {
-      name: "Please tell us your name",
-      email: "Please enter a valid email address",
-      type: "Please choose an enquiry type",
-      message: "Please write a little more (at least 10 characters)",
-      consent: "Please confirm we may contact you about your enquiry",
+      name: "Please tell us your name.",
+      email: "Please enter a valid email address.",
+      type: "Please choose an enquiry type.",
+      message: "Please write a little more (at least 10 characters).",
+      consent: "Please confirm we may contact you about your enquiry.",
     },
     submit: "Send enquiry",
     submitting: "Sending…",
-    success: { heading: "Thank you", body: "Thank you — we’ll reply by email" },
-    mailtoSuccess: {
-      heading: "Almost there",
-      body: "Your email app should have opened with your enquiry ready to send. If it didn’t, email us directly at",
-    },
-    // The error body keeps its full stop: it runs on into the next sentence ("Or email us directly at …").
+    success: { heading: "Thank you", body: "Thank you — we’ll reply by email." },
+    // No email-app (mailto) step any more (client error deck, slide 29): the "Almost there" panel is gone.
+    // `unavailable`: no sending service is configured, so nothing was sent; `error`: the send failed. Both
+    // end with the address shown as plain text, then a full stop (contact-form.tsx).
+    unavailable: { heading: "Message not sent", body: "Sorry, we couldn’t send your message right now. Please email us at" },
     error: { heading: "Something went wrong", body: "Your enquiry couldn’t be sent.", retry: "Try again", fallback: "Or email us directly at" },
     another: "Send another enquiry",
   },
@@ -82,4 +82,20 @@ export const contact = {
     eyebrow: "Keep in touch",
     heading: "Wonder, in your feed",
   },
+} as const
+
+// The automatic confirmation e-mailed to a visitor after their enquiry reached the inbox (owner, 2026-11-24:
+// "professional and client friendly and subtle"). Fixed text only: it never repeats what the visitor wrote,
+// because anyone can type someone else's address. The greeting may use a first name that passes a strict
+// check (src/lib/server/mail.ts); otherwise it reads "Hello,". Edit the wording here; both the plain-text and
+// the HTML version are built from it.
+export const enquiryConfirmation = {
+  subject: "Thank you for getting in touch",
+  greeting: (firstName: string | null) => (firstName ? `Hello ${firstName},` : "Hello,"),
+  paragraphs: [
+    `Thank you for contacting ${site.company}. We have received your message, and a member of our team will be in touch soon.`,
+    "If there is anything you would like to add in the meantime, simply reply to this email.",
+  ],
+  signOff: "Warm regards,",
+  signature: [site.company, site.domain],
 } as const

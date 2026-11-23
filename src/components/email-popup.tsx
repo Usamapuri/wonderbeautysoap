@@ -3,13 +3,13 @@
 import { useEffect, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
 import { Loader2 } from "lucide-react"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { popup } from "@/content/popup"
+import { subscribeSchema } from "@/lib/forms"
 import { subscribe } from "@/lib/subscribe"
 
 // Brief §5.1 rules.
@@ -56,6 +56,7 @@ export function EmailPopup() {
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<Status>("idle")
   const [error, setError] = useState<string | null>(null)
+  const [honeypot, setHoneypot] = useState("")
 
   // Arm the trigger once per page load.
   useEffect(() => {
@@ -102,20 +103,22 @@ export function EmailPopup() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!z.email().safeParse(email.trim()).success) {
+    // The same check the server makes (src/lib/forms.ts).
+    if (!subscribeSchema.safeParse({ email: email.trim() }).success) {
       setError(popup.errors.invalid)
       return
     }
     setError(null)
     setStatus("submitting")
-    try {
-      await subscribe(email.trim())
+    const result = await subscribe(email.trim(), honeypot)
+    if (result === "sent") {
       write({ ...read(), subscribed: true })
       setStatus("success")
-    } catch {
-      setStatus("error")
-      setError(popup.errors.failed)
+      return
     }
+    // Never a fake success: "unavailable" means no list service is configured and nothing was saved.
+    setStatus("error")
+    setError(result === "invalid" ? popup.errors.invalid : result === "unavailable" ? popup.errors.unavailable : popup.errors.failed)
   }
 
   return (
@@ -156,6 +159,11 @@ export function EmailPopup() {
                 aria-describedby={error ? "popup-error" : undefined}
                 className="mt-2 h-auto rounded-lg border-ink/25 bg-parchment px-3 py-[13px] text-xs md:text-xs"
               />
+              {/* Honeypot: hidden from people, filled by bots (sr-only clips it, so the scrolling sheet gains no width). */}
+              <div aria-hidden className="sr-only">
+                <label htmlFor="popup-gotcha">Leave this empty</label>
+                <input id="popup-gotcha" name="_gotcha" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+              </div>
               {error && (
                 <p id="popup-error" role="alert" className="type-small mt-2 text-destructive">
                   {error}

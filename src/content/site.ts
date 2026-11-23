@@ -4,12 +4,18 @@
 // orders only, so every call to action leads to the bulk-order enquiry.
 // Edit here only — every page and component reads from this file.
 
+// The site's canonical origin, the ONE place the domain is written. Everything else derives from it:
+// metadataBase (and with it every canonical link and the og:image URL), robots.txt and sitemap.xml.
+// www is the primary domain on Vercel (set by the owner on 2026-11-23); the apex redirects to it at the
+// platform level, so no host redirect exists in next.config.ts (one there would loop).
+const url = "https://www.royalbasketgroup.com"
+
 export const site = {
   brand: "Royal Basket",
   productLine: "Wonder Beauty Bar",
   company: "Royal Basket Group",
-  domain: "www.royalbasketgroup.com",
-  url: "https://www.royalbasketgroup.com",
+  domain: new URL(url).host,
+  url,
   email: "hello@royalbasketgroup.com",
   founded: 2019,
   topline: "Everyday luxury, within reach",
@@ -41,14 +47,16 @@ export const site = {
   },
 } as const
 
-// Third-party endpoints (brief §5). Public URLs, not secrets. Set once the client's accounts exist (§9).
+// Browser-side third-party endpoints (brief §5). Public values, not secrets; NEXT_PUBLIC_ values are
+// inlined at build time, so changing them needs a redeploy. The server-side mail settings (RESEND_API_KEY,
+// ENQUIRY_TO, ENQUIRY_FROM) are read only in src/lib/server/mail.ts. See DELIVERY-NOTES "Form and list".
 export const integrations = {
-  // Formspree form ID, e.g. "xyzabcde" from https://formspree.io/f/xyzabcde. While null, the contact
-  // form falls back to opening a pre-filled email draft to site.email.
+  // Formspree form ID, e.g. "xyzabcde" from https://formspree.io/f/xyzabcde. Used for the contact form
+  // only when the server has no Resend key (/api/enquiry decides). There is no email-app fallback.
   formspreeId: process.env.NEXT_PUBLIC_FORMSPREE_ID ?? null,
   // Mailchimp embedded-form action URL (Audience → Signup forms → Embedded form), e.g.
-  // https://<dc>.list-manage.com/subscribe/post?u=<u>&id=<id>&f_id=<f>. While null, sign-ups fail
-  // with the pop-up's error state — the site must not launch without it.
+  // https://<dc>.list-manage.com/subscribe/post?u=<u>&id=<id>&f_id=<f>. When set, the pop-up signs people
+  // up there; otherwise /api/subscribe emails each sign-up to the enquiry inbox (needs RESEND_API_KEY).
   mailchimpAction: process.env.NEXT_PUBLIC_MAILCHIMP_ACTION ?? null,
 }
 

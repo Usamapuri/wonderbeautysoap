@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { ArrowRight, Loader2 } from "lucide-react"
-import { z } from "zod"
 
 import { Eyebrow } from "@/components/brand/eyebrow"
 import { Button } from "@/components/ui/button"
@@ -16,24 +15,17 @@ import { SplitText } from "@/components/brand/split-text"
 import { contact, enquiryTypes, productOptions, type EnquiryType } from "@/content/contact"
 import { site } from "@/content/site"
 import { submitEnquiry, type Enquiry } from "@/lib/enquiry"
+import { enquirySchema, fieldErrors } from "@/lib/forms"
 import { cn } from "@/lib/utils"
 
 const { form } = contact
 const typeValues = enquiryTypes.map((t) => t.value) as [EnquiryType, ...EnquiryType[]]
 const productValues = productOptions.map((p) => p.value) as string[]
 
-const schema = z.object({
-  name: z.string().trim().min(1, form.errors.name),
-  email: z.email(form.errors.email),
-  type: z.enum(typeValues, form.errors.type),
-  product: z.string(),
-  message: z.string().trim().min(10, form.errors.message),
-  consent: z.boolean().refine(Boolean, form.errors.consent),
-})
-
-type Values = Omit<Enquiry, "type"> & { type: EnquiryType | "" }
+type Values = Omit<Enquiry, "type" | "product"> & { type: EnquiryType | ""; product: string }
 type Errors = Partial<Record<keyof Values, string>>
-type Status = "idle" | "submitting" | "sent" | "mailto" | "error"
+// "sent": delivered. "unavailable": no sending service is configured, nothing was sent. "error": failed.
+type Status = "idle" | "submitting" | "sent" | "unavailable" | "error"
 
 // The site targets bulk orders only, so "Bulk order" is pre-selected (developer decision 2026-10-25).
 const empty: Values = { name: "", email: "", type: "bulk", product: "", message: "", consent: false }
@@ -77,21 +69,24 @@ export function ContactForm() {
     if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }))
   }
 
+  const showErrors = (next: Errors) => {
+    setErrors(next)
+    document.getElementById(`enquiry-${Object.keys(next)[0]}`)?.focus()
+  }
+
   async function send() {
-    const parsed = schema.safeParse(values)
-    if (!parsed.success) {
-      const next: Errors = {}
-      for (const issue of parsed.error.issues) next[issue.path[0] as keyof Values] ??= issue.message
-      setErrors(next)
-      document.getElementById(`enquiry-${Object.keys(next)[0]}`)?.focus()
+    // The same schema the server checks (src/lib/forms.ts).
+    const parsed = enquirySchema.safeParse(values)
+    if (!parsed.success) return showErrors(fieldErrors(parsed.error) as Errors)
+    setStatus("submitting")
+    const result = await submitEnquiry(parsed.data, honeypot)
+    if (result.status === "invalid") {
+      setStatus("idle")
+      if (Object.keys(result.errors).length) showErrors(result.errors as Errors)
+      else setStatus("error")
       return
     }
-    setStatus("submitting")
-    try {
-      setStatus(await submitEnquiry({ ...parsed.data, product: parsed.data.product || "none" }, honeypot))
-    } catch {
-      setStatus("error")
-    }
+    setStatus(result.status)
   }
 
   const reset = () => {
@@ -100,11 +95,8 @@ export function ContactForm() {
     setStatus("idle")
   }
 
-  const mailLink = (
-    <a href={`mailto:${site.email}`} className="underline decoration-gold underline-offset-4 hover:text-gold">
-      {site.email}
-    </a>
-  )
+  // The address as plain, selectable text (client: "email app doesn't open. Just display our email").
+  const address = <span className="font-medium text-ink select-all">{site.email}</span>
 
   return (
     // The right pane of the enquiry card on Get in Touch (the bulk brief is the left pane); the card
@@ -119,26 +111,26 @@ export function ContactForm() {
         <SplitText text={form.heading} now />
       </h2>
 
-      {status === "sent" || status === "mailto" || status === "error" ? (
+      {status === "sent" || status === "unavailable" || status === "error" ? (
         <div role="status" className="p-card rounded-lg border border-gold/50 bg-parchment">
           <h3 ref={panelRef} tabIndex={-1} className="font-display text-[32px] tracking-normal outline-none">
-            {status === "sent" ? form.success.heading : status === "mailto" ? form.mailtoSuccess.heading : form.error.heading}
+            {status === "sent" ? form.success.heading : status === "unavailable" ? form.unavailable.heading : form.error.heading}
           </h3>
           <p className="mt-3 text-xs leading-[1.8] text-ink-soft">
             {status === "sent" && form.success.body}
-            {status === "mailto" && (
+            {status === "unavailable" && (
               <>
-                {form.mailtoSuccess.body} {mailLink}.
+                {form.unavailable.body} {address}.
               </>
             )}
             {status === "error" && (
               <>
-                {form.error.body} {form.error.fallback} {mailLink}.
+                {form.error.body} {form.error.fallback} {address}.
               </>
             )}
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            {status === "error" && (
+            {status !== "sent" && (
               <Button variant="wonder" size="wonder" onClick={send}>
                 {form.error.retry}
               </Button>
