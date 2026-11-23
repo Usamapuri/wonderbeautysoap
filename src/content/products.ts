@@ -7,8 +7,12 @@
 //   description       — audit slides 28, 30, 32, 34, 36, word for word, one string per paragraph.
 //                       It answers the brief's "scent description" request (slide 17). One exception,
 //                       on the user's instruction: Lavender's free-of line drops "sulfates" (see Lavender).
-//   ingredients       — audit slides 29, 31, 33, 35, 37, word for word (after "Ingredients: "). Do not
-//                       "correct" spellings or punctuation without the client's written confirmation.
+//   language fixes    — 2026-11-24, at the owner's instruction (client's wording kept, slips only): British
+//                       spelling as on the rest of the site ("flavours" in Rose, "moisturising" in Aloe Vera) and a
+//                       typographic apostrophe in Coconut's origin story. Ingredients and claims untouched.
+//   ingredients       — the client's "Website Errors" deck (2026-11-23, slides 17–21), word for word; it
+//                       replaces the audit's lists (slides 29–37). Do not "correct" spellings or punctuation
+//                       (e.g. "Water Solvent", "Talcum Powder") without the client's written confirmation.
 //   netWeight         — audit slide 28: 125 g for every flavour.
 //   views             — audit slide 26: front, left, right, back, inside (owner 2026-11-21: Left and Right
 //                       replace the flat Side panels). Only real pack artwork is shown; views
@@ -41,15 +45,25 @@ export type CampaignImage = { src: string; width: number; height: number; alt: s
 const campaignArt = "/brand-assets/home-hero-art"
 
 /**
+ * Version suffix for every art file served with a query under home-hero-art/ (the five backs, the three page
+ * heroes and the Our Story travel picture), so a file replaced in place is fetched afresh. It is the only
+ * `?v=` in src/. Bump it whenever one of them is replaced, together with next.config.ts
+ * `images.localPatterns`: next/image only optimizes a local src whose query matches exactly.
+ * r9 (2026-11-24): the five backs replaced again with the typo-corrected back artwork.
+ */
+export const ART_VERSION = "?v=r9"
+
+/**
  * Back view pictures (owner 2026-11-21): a pack-shot scene (a blank carton drawn by Sol) with the
  * client's real dieline back panel placed on it, sized like the Front view (960×800), at
- * public/brand-assets/home-hero-art/<slug>-back.webp. The owner chose to publish the back panel as
- * printed, with only "RETAIL PRICE RS. 150/-" patched out; DELIVERY-NOTES lists what that panel shows
- * that differs from the site. The panel is the same on all five packs (only the box's bottom face
- * differs). A flavour without an entry here has no Back tab.
+ * public/brand-assets/home-hero-art/<slug>-back.webp. Since 2026-11-23 the panel is the client's new
+ * per-flavour back artwork (Website Errors deck, slides 22–26), with that flavour's own ingredient list;
+ * the retail price is removed, and since 2026-11-24 its printed slips are corrected in the picture at the
+ * owner's instruction (the client's print file still has them). DELIVERY-NOTES keeps the record. A flavour without an entry here has no
+ * Back tab. The files are replaced in place, so `ART_VERSION` busts caches.
  */
 const backAltFor = (variety: string) =>
-  `Back of the Wonder ${variety} pack, turned over: the printed back panel with the product description, ingredients, net weight and maker`
+  `Back of the Wonder ${variety} pack, turned over: the printed back panel with the product description, the ${variety} ingredient list, the maker's details and the net weight`
 const backArt: Partial<Record<ProductSlug, string>> = {
   rose: backAltFor("Rose"),
   lavender: backAltFor("Lavender"),
@@ -85,9 +99,9 @@ export type Product = {
   botanical: string
   /** Approved packaging render on the studio background (6:5). */
   image: string
-  /** Display line, e.g. "Meet me in Paris" */
+  /** Display line (display italic, no full stop), e.g. "Meet me in Paris" */
   tagline: string
-  /** Supporting line, e.g. "Soft petals, golden hour" */
+  /** Supporting line under the tagline, a body line with its full stop, e.g. "Soft petals, golden hour." */
   subLine: string
   /** Short mood line, e.g. "Softly romantic" — also the title of the variety's concept artwork. */
   mood: string
@@ -97,7 +111,7 @@ export type Product = {
   artwork: { src: string; alt: string }
   /** Product description from the client's audit, one string per paragraph, word for word. */
   description: string[]
-  /** Ingredients from the client's audit, word for word (the list after "Ingredients: "). */
+  /** Ingredients from the client's Website Errors deck (slides 17–21), word for word. */
   ingredients: string
   /** Net weight (audit slide 28). */
   netWeight: string
@@ -130,7 +144,7 @@ const product = (p: Input): Product => {
     { id: "left", kind: "image", label: label.left, src: `${campaignArt}/${p.slug}-side-left.webp`, alt: `${name}: the box's left end, with the W monogram, and the front receding to the right`, blend: true },
     { id: "right", kind: "image", label: label.right, src: `${campaignArt}/${p.slug}-side-right.webp`, alt: `${name}: the box's right end, with "Wonder Beauty Bar" printed upright, and the front receding to the left`, blend: true },
     // Back: shown for every flavour listed in `backArt` (no visible placeholder otherwise).
-    ...(backAlt ? [{ id: "back", kind: "image", label: label.back, src: `${campaignArt}/${p.slug}-back.webp`, alt: backAlt, blend: true } satisfies ProductView] : []),
+    ...(backAlt ? [{ id: "back", kind: "image", label: label.back, src: `${campaignArt}/${p.slug}-back.webp${ART_VERSION}`, alt: backAlt, blend: true } satisfies ProductView] : []),
     {
       id: "inside",
       kind: "cutout",
@@ -166,19 +180,19 @@ export const products: Product[] = [
     barColour: "pink",
     variety: "Rose",
     tagline: "Meet me in Paris",
-    subLine: "Soft petals, golden hour",
+    subLine: "Soft petals, golden hour.",
     mood: "Softly romantic",
     origin: {
       place: "Paris, France",
       story: "Paris, the city of love, is where I met my wife. How could I not make a Rose? Soft, romantic and timeless.",
     },
     artwork: { src: "/brand-assets/flavors/rose-bar.webp", alt: "Rose concept artwork: a pink Wonder bar with rose petals and lather" },
-    // Audit slides 34 (description) and 35 (ingredients), word for word.
+    // Audit slide 34 (description), word for word apart from "flavours" (was "flavors"); ingredients from the Website Errors deck, slide 17.
     description: [
-      "It starts with love, as do all things made in Paris: a love of beauty, artistry, and quality found throughout the local markets. Our curated assortment of modern fragrances is inspired by journeys through these markets, which celebrate flavors, aromas, and life. Enriched with the skin-caring ingredient Rose, our soap gently removes dirt and grime, leaving skin feeling loved and a fragrance that stays with you.",
+      "It starts with love, as do all things made in Paris: a love of beauty, artistry, and quality found throughout the local markets. Our curated assortment of modern fragrances is inspired by journeys through these markets, which celebrate flavours, aromas, and life. Enriched with the skin-caring ingredient Rose, our soap gently removes dirt and grime, leaving skin feeling loved and a fragrance that stays with you.",
     ],
     ingredients:
-      "Sodium Palmate, Sodium Palm Kernelate, Sodium Laurate, Sodium Hydroxide, Sodium Sulphate, Sodium Chloride, Potassium Hydroxide, Tetrasodium EDTA, Talcum Powder Water Solvent, Propylene Glycol, Sorbitol, Stearic Acid, Citric Acid, Glycerine, Sine Adipe Lac, Castor Oil, Olea Europaea Fruit Oil, Rose Flower Oil, CI 77891 Titanium Dioxide, CI 45410 Pink Colourant",
+      "Castor Oil, Glycerine, Lauric Acid, Linoleic Acid, Myristic Acid, Palmitic Acid, Pink Colourant (CI45410), Potassium Hydroxide, Propylene Glycol, Rosa Damascena Flower Oil, Sodium Chloride, Sodium Hydroxide, Sodium Laurate, Sodium Laureth Sulphate, Sodium Palm Kernelate, Sodium Palmate, Sodium Sulphate, Stearic Acid, Talcum Powder, Tetrasodium EDTA, Titanium Dioxide (CI77891), Water Solvent",
     accent: "var(--botanical-rose)",
   }),
   product({
@@ -186,7 +200,7 @@ export const products: Product[] = [
     barColour: "lavender",
     variety: "Lavender",
     tagline: "Countryside romance",
-    subLine: "Purple fields, slow mornings",
+    subLine: "Purple fields, slow mornings.",
     mood: "Calm in a bar",
     origin: {
       place: "Surrey, UK",
@@ -194,16 +208,17 @@ export const products: Product[] = [
         "I spent years living in the UK, where I discovered rows of purple lavender stretching to the horizon. Mayfield Lavender in Surrey is one of the best-known lavender fields in the country. That calm, quiet feeling became our Lavender bar.",
     },
     artwork: { src: "/brand-assets/flavors/lavender-bar.webp", alt: "Lavender concept artwork: a purple Wonder bar with lavender sprigs and lather" },
-    // Audit slides 28 (description) and 29 (ingredients), word for word, with one client-directed change:
-    // "sulfates" is removed from the free-of sentence because the bar contains Sodium Sulphate (the user
-    // confirmed Lavender has sulphate, 2026-11-21). Sodium Sulphate stays in the ingredients.
+    // Audit slide 28 (description), word for word, with one client-directed change: "sulfates" is removed
+    // from the free-of sentence because the bar contains sulphates (the user confirmed Lavender has sulphate,
+    // 2026-11-21; the new list names Sodium Sulphate and Sodium Laureth Sulphate). Ingredients from the
+    // Website Errors deck, slide 18.
     description: [
       "Our signature scent, Lavender, is a charismatic and intensely botanical fragrance. Inspired by the endless fields of lavender in Mayfield, Surrey, it is floral and sweet, with green and spicy notes.",
       "The rich yet gently cleansing formula of our Lavender Soap Bar creates a creamy lather that cleanses without stripping the skin. Designed for everyday use, this bar leaves skin feeling refreshed, soft, and lightly scented with calming lavender.",
       "Free of parabens, paraffins, phthalates, GMOs, and petrochemicals. Treat yourself to our luxuriously rich bar soap, delicately scented and made with pure ingredients.",
     ],
     ingredients:
-      "Sodium Palmate, Sodium Palm Kernelate, Sodium Laurate, Sodium Hydroxide, Sodium Sulphate, Sodium Chloride, Potassium Hydroxide, Tetrasodium EDTA, Talcum Powder Water Solvent, Propylene Glycol, Sorbitol, Stearic Acid, Citric Acid, Glycerine, Sine Adipe Lac, Castor Oil, Olea Europaea Fruit Oil, Lavandula Angustifolia Flower Oil, CI 77891 Titanium Dioxide, CI 77742 Purple Colourant",
+      "Castor Oil, Glycerine, Lauric Acid, Lavandula Angustifolia Flower Oil, Linoleic Acid, Myristic Acid, Palmitic Acid, Potassium Hydroxide, Propylene Glycol, Purple Colourant (CI77742), Sodium Chloride, Sodium Hydroxide, Sodium Laurate, Sodium Laureth Sulphate, Sodium Palm Kernelate, Sodium Palmate, Sodium Sulphate, Stearic Acid, Talcum Powder, Tetrasodium EDTA, Titanium Dioxide (CI77891), Water Solvent",
     film: suppliedFilm("lavender", "Lavender", "the purple bar among lavender sprigs as foam rises, then lathered on the face"),
     accent: "var(--botanical-lavender)",
   }),
@@ -212,7 +227,7 @@ export const products: Product[] = [
     barColour: "green",
     variety: "Aloe Vera",
     tagline: "The K-beauty promise",
-    subLine: "Fresh, dewy, minimal",
+    subLine: "Fresh, dewy, minimal.",
     mood: "Fresh, soothing moisture",
     origin: {
       place: "Seoul, Korea",
@@ -220,12 +235,12 @@ export const products: Product[] = [
         "As a skincare enthusiast, aloe vera had to be part of the collection. Korean skincare introduced me to aloe vera as a staple for soothing, fresh and hydrated-feeling skin.",
     },
     artwork: { src: "/brand-assets/flavors/aloe-vera-bar.webp", alt: "Aloe Vera concept artwork: a green Wonder bar with fresh aloe leaves" },
-    // Audit slides 36 (description) and 37 (ingredients), word for word.
+    // Audit slide 36 (description), word for word apart from "moisturising" (was "moisturizing"); ingredients from the Website Errors deck, slide 20.
     description: [
-      "Immerse yourself in a rich lather and a delightful scent while treating your skin to a nourishing cleanse. This soap works in two ways: it gently removes the impurities that cause dull skin, and it cares for your skin while preserving its natural balance. Made with aloe vera, well known for its soothing, moisturizing, and protective properties, it is suitable for all skin types.",
+      "Immerse yourself in a rich lather and a delightful scent while treating your skin to a nourishing cleanse. This soap works in two ways: it gently removes the impurities that cause dull skin, and it cares for your skin while preserving its natural balance. Made with aloe vera, well known for its soothing, moisturising, and protective properties, it is suitable for all skin types.",
     ],
     ingredients:
-      "Sodium Palmate, Sodium Palm Kernelate, Sodium Laurate, Sodium Hydroxide, Sodium Sulphate, Sodium Chloride, Potassium Hydroxide, Tetrasodium EDTA, Talcum Powder Water Solvent, Propylene Glycol, Sorbitol, Stearic Acid, Citric Acid, Glycerine, Sine Adipe Lac, Castor Oil, Olea Europaea Fruit Oil, Aloe Barbadensis Extract, CI 77891 Titanium Dioxide, CI 61570 Green Colourant",
+      "Aloe Barbadensis Flower Oil, Castor Oil, Glycerine, Green Colourant (CI61570), Lauric Acid, Linoleic Acid, Myristic Acid, Palmitic Acid, Potassium Hydroxide, Propylene Glycol, Sodium Chloride, Sodium Hydroxide, Sodium Laurate, Sodium Laureth Sulphate, Sodium Palm Kernelate, Sodium Palmate, Sodium Sulphate, Stearic Acid, Talcum Powder, Tetrasodium EDTA, Titanium Dioxide (CI77891), Water Solvent",
     film: suppliedFilm("aloe-vera", "Aloe Vera", "aloe gel dripping from a leaf onto the green bar, then lathered between the hands"),
     accent: "var(--botanical-aloe-vera)",
   }),
@@ -234,7 +249,7 @@ export const products: Product[] = [
     barColour: "yellow",
     variety: "Lemon",
     tagline: "An Amalfi sunset",
-    subLine: "Bright, zesty, golden hour",
+    subLine: "Bright, zesty, golden hour.",
     mood: "A citrus afternoon",
     origin: {
       place: "Amalfi, Italy",
@@ -242,12 +257,12 @@ export const products: Product[] = [
         "Wonder was born in Amalfi, on a sunny afternoon, while I was eating a lemon sorbet. The fresh, bright citrus stopped me in my tracks. I thought: I want my soap to smell like this.",
     },
     artwork: { src: "/brand-assets/flavors/lemon-bar.webp", alt: "Lemon concept artwork: a yellow Wonder bar with lemon slices and lather" },
-    // Audit slides 30 (description) and 31 (ingredients), word for word.
+    // Audit slide 30 (description), word for word; ingredients from the Website Errors deck, slide 19.
     description: [
       "Each of these incredibly nourishing, balancing, hydrating, and protective delights starts with a powerful foundation that includes Lemon. These natural wonders have antibacterial, humectant, and antioxidant properties. All are fragranced with the clear, sweet scent of fresh, zesty lemon, which reminds you of Italian sorbets and sunsets in Amalfi. Freshness and summer love are what this bar encapsulates.",
     ],
     ingredients:
-      "Sodium Palmate, Sodium Palm Kernelate, Sodium Laurate, Sodium Hydroxide, Sodium Sulphate, Sodium Chloride, Potassium Hydroxide, Tetrasodium EDTA, Talcum Powder Water Solvent, Propylene Glycol, Sorbitol, Stearic Acid, Citric Acid, Glycerine, Sine Adipe Lac, Castor Oil, Olea Europaea Fruit Oil, Leomon Peel Oil, CI 77891 Titanium Dioxide, CI 47005 Yellow Colourant",
+      "Castor Oil, Citrus Limon Oil, Glycerine, Lauric Acid, Linoleic Acid, Myristic Acid, Palmitic Acid, Potassium Hydroxide, Propylene Glycol, Sodium Chloride, Sodium Hydroxide, Sodium Laurate, Sodium Laureth Sulphate, Sodium Palm Kernelate, Sodium Palmate, Sodium Sulphate, Stearic Acid, Talcum Powder, Tetrasodium EDTA, Titanium Dioxide (CI77891), Water Solvent, Yellow Colourant (CI47005)",
     accent: "var(--botanical-lemon)",
   }),
   product({
@@ -255,20 +270,20 @@ export const products: Product[] = [
     barColour: "white",
     variety: "Coconut",
     tagline: "Sipping coconuts in Bali",
-    subLine: "Warm, creamy, barefoot",
+    subLine: "Warm, creamy, barefoot.",
     mood: "The island daydream",
     origin: {
       place: "Bali, Indonesia",
       story:
-        "Bali was our honeymoon. Warm sand, ocean air and coconut everywhere. I can't imagine travelling without coconut, so it came home with me, in a bar.",
+        "Bali was our honeymoon. Warm sand, ocean air and coconut everywhere. I can’t imagine travelling without coconut, so it came home with me, in a bar.",
     },
     artwork: { src: "/brand-assets/flavors/coconut-bar.webp", alt: "Coconut concept artwork: a white Wonder bar with coconut halves and creamy lather" },
-    // Audit slides 32 (description) and 33 (ingredients), word for word.
+    // Audit slide 32 (description), word for word; ingredients from the Website Errors deck, slide 21.
     description: [
       "This refreshing, cooling coconut scent floods your skin and provides a sense of relief on hot summer days. Coconut has the vibrant freshness of the air after a thunderstorm, and the refreshing feeling of a shower under a waterfall, creating a decadent bathing experience. This bar also has anti-ageing properties that will leave your skin silky soft and radiant. This is summer in a bar!",
     ],
     ingredients:
-      "Sodium Palmate, Sodium Palm Kernelate, Sodium Laurate, Sodium Hydroxide, Sodium Sulphate, Sodium Chloride, Potassium Hydroxide, Tetrasodium EDTA, Talcum Powder Water Solvent, Propylene Glycol, Sorbitol, Stearic Acid, Citric Acid, Glycerine, Sine Adipe Lac, Castor Oil, Olea Europaea Fruit Oil, Coconut Oil, CI 77891 Titanium Dioxide",
+      "Castor Oil, Cocos Nucifera Oil, Glycerine, Lauric Acid, Linoleic Acid, Myristic Acid, Palmitic Acid, Potassium Hydroxide, Propylene Glycol, Sodium Chloride, Sodium Hydroxide, Sodium Laurate, Sodium Laureth Sulphate, Sodium Palm Kernelate, Sodium Palmate, Sodium Sulphate, Stearic Acid, Talcum Powder, Tetrasodium EDTA, Titanium Dioxide (CI77891), Water Solvent",
     accent: "var(--botanical-coconut)",
   }),
 ]

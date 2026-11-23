@@ -8,6 +8,7 @@
 
 import type { PageHeroArt } from "@/components/brand/page-hero"
 
+import { ART_VERSION } from "./products"
 import { ordersCta, site } from "./site"
 
 export const story = {
@@ -27,12 +28,12 @@ export const story = {
     titleLines: 2,
     cta: { label: "Who we are", href: "#who-we-are" },
     art: {
-      src: "/brand-assets/home-hero-art/our-story-hero.webp?v=r7",
+      src: `/brand-assets/home-hero-art/our-story-hero.webp${ART_VERSION}`,
       width: 2400,
       height: 1350,
       position: "70% 50%",
       calm: { x: 0.42, y: 1 },
-      mobile: { src: "/brand-assets/home-hero-art/our-story-hero-mobile.webp?v=r7", width: 1260, height: 2240, position: "50% 100%", calm: { x: 1, y: 0.36 } },
+      mobile: { src: `/brand-assets/home-hero-art/our-story-hero-mobile.webp${ART_VERSION}`, width: 1260, height: 2240, position: "50% 100%", calm: { x: 1, y: 0.36 } },
       alt: "Campaign image: a lavender Wonder bar on a lit stone plinth, with ten plain bottles and jars in shadow behind it",
     } satisfies PageHeroArt,
   },
@@ -40,7 +41,7 @@ export const story = {
   // Slide 11.
   whoWeAre: {
     eyebrow: "Who we are",
-    lead: "At Royal Basket, our philosophy is to create premium quality soap that leaves your skin hydrated and happy, at a price that’s easy on the pocket",
+    lead: "At Royal Basket, our philosophy is to create premium quality soap that leaves your skin hydrated and happy, at a price that’s easy on the pocket.",
     body: "We believe a daily ritual should feel special, smell wonderful, and be kind to your skin.",
   },
 
@@ -55,24 +56,24 @@ export const story = {
   // words above each flavour's origin story (products.ts → origin).
   wonderRoom: {
     eyebrow: "Wonder Room",
-    heading: "Every journey has a story, this is ours",
+    heading: "Every journey has a story. This is ours.",
   },
 
   // Slide 15 (hidden in the deck), laid out like rhode's "A note from Hailey" (slide 14).
   founder: {
     eyebrow: "A note from the founder",
-    lead: "I’ve always been a one-bar person",
+    lead: "I’ve always been a one-bar person.",
     lines: [
       "Soap for my hair. My body. My hands. My face. I never understood why we needed ten different bottles when one good bar could do it all.",
-      "So I made it",
-      "One bar you never want to travel without",
+      "So I made it.",
+      "One bar you never want to travel without.",
       "Premium quality that leaves your skin soft and happy, and stays easy on your pocket. That’s my promise.",
     ],
     signature: "Founder",
     company: site.company,
     // Phase 3 illustration (AI-generated scene, Sol, with the client's real lavender bar photo laid in the tin).
     image: {
-      src: "/brand-assets/home-hero-art/our-story-travel.webp",
+      src: `/brand-assets/home-hero-art/our-story-travel.webp${ART_VERSION}`,
       width: 1440,
       height: 1800,
       position: "50% 45%",
@@ -83,13 +84,13 @@ export const story = {
   // Slide 16 — draft wording, Ali to approve.
   ceo: {
     eyebrow: "CEO’s promise",
-    lead: "At Wonder, we believe the things we use every day should be kind to us",
+    lead: "At Wonder, we believe the things we use every day should be kind to us.",
     body: [
       "Soap is the simplest ritual there is. You use it every morning, every night, and it touches the skin of everyone you love. So it should be good: gentle, honest, and within reach for everyone, not just a few.",
       "That’s the standard our whole team works to, every day.",
     ],
     promise: "My promise to you: gentle on your skin, honest in what we make, and always affordable. Every bar of Wonder is made with the same care we would want for our own families.",
-    thanks: "Thank you for letting Wonder be part of your day",
+    thanks: "Thank you for letting Wonder be part of your day.",
     signature: "CEO",
     company: site.company,
     image: {

@@ -9,6 +9,7 @@
 
 import type { PageHeroArt } from "@/components/brand/page-hero"
 
+import { ART_VERSION } from "./products"
 import { site } from "./site"
 
 export type Region = {
@@ -39,12 +40,12 @@ export const world = {
     // The travel-route picture, regraded gold for the shared page hero (owner, phase 3), white title in the calm
     // top-left (x 0-42%, y 0-45%; the pins and thread start at about y 47%) and across the top ~32% on phones.
     art: {
-      src: `${art}/world-hero.webp?v=r6`,
+      src: `${art}/world-hero.webp${ART_VERSION}`,
       width: 2400,
       height: 1350,
       position: "50% 50%",
       calm: { x: 0.42, y: 0.45 },
-      mobile: { src: `${art}/world-hero-mobile.webp?v=r6`, width: 1260, height: 2240, position: "50% 100%", calm: { x: 1, y: 0.32 } },
+      mobile: { src: `${art}/world-hero-mobile.webp${ART_VERSION}`, width: 1260, height: 2240, position: "50% 100%", calm: { x: 1, y: 0.32 } },
       alt: "Campaign image: a travel route of brass pins and thread ending in a paper plane, with Wonder boxes and bars tumbling into a woven basket, in warm gold light",
     } satisfies PageHeroArt,
   },

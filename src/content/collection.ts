@@ -5,6 +5,7 @@
 
 import type { PageHeroArt } from "@/components/brand/page-hero"
 
+import { ART_VERSION } from "./products"
 import { ordersCta, site } from "./site"
 
 export const collection = {
@@ -26,12 +27,12 @@ export const collection = {
     titleLines: 4,
     formula: site.taglines.formula,
     art: {
-      src: "/brand-assets/home-hero-art/collection-hero.webp?v=r7",
+      src: `/brand-assets/home-hero-art/collection-hero.webp${ART_VERSION}`,
       width: 2400,
       height: 1350,
       position: "70% 50%",
       calm: { x: 0.4, y: 1 },
-      mobile: { src: "/brand-assets/home-hero-art/collection-hero-mobile.webp?v=r7", width: 1260, height: 2240, position: "50% 100%", calm: { x: 1, y: 0.36 } },
+      mobile: { src: `/brand-assets/home-hero-art/collection-hero-mobile.webp${ART_VERSION}`, width: 1260, height: 2240, position: "50% 100%", calm: { x: 1, y: 0.36 } },
       alt: "Campaign image: the five Wonder boxes and bars floating with their botanicals against a warm gold wall: Rose, Lavender, Coconut, Lemon and Aloe Vera",
     } satisfies PageHeroArt,
   },

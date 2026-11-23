@@ -17,7 +17,7 @@ export type Review = {
 
 export const reviewsSection = {
   heading: ["Kind words,", "well lathered"],
-  body: "A few notes from people who make Wonder part of their everyday",
+  body: "A few notes from people who make Wonder part of their everyday.",
   sampleLabel: "Sample review",
 } as const
 

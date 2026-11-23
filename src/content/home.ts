@@ -100,14 +100,14 @@ export const home = {
     eyebrow: "Welcome",
     // Audit slide 9 (the client's three lines; spelling corrected).
     heading: ["A premium quality", "soap brand"],
-    lead: ["Made with a promise to hydrate, moisturise and protect your skin", "Designed with love and attention"],
+    lead: ["Made with a promise to hydrate, moisturise and protect your skin.", "Designed with love and attention."],
     // The client's sentences, split into a bold lead and the rest.
     points: [
-      { title: "Carefully selected ingredients,", body: "including fragrant flowers and botanicals" },
-      { title: "Packed with care", body: "by our own people, for you" },
-      { title: "Innovation, experimentation and design", body: "in everyday beauty" },
+      { title: "Carefully selected ingredients,", body: "including fragrant flowers and botanicals." },
+      { title: "Packed with care", body: "by our own people, for you." },
+      { title: "Innovation, experimentation and design", body: "in everyday beauty." },
     ],
-    pull: "Every bar is a small multisensory experience: rich lather, a lovely scent and a feel that stays with you",
+    pull: "Every bar is a small multisensory experience: rich lather, a lovely scent and a feel that stays with you.",
     // Audit slide 10 ("new video and longer"): a ~9 s ritual edit of the supplied clips (Lavender
     // face ritual, Aloe Vera hands lather, Lavender bar lather), 2:3 like the frame, at 1080x1620.
     video: "/brand-assets/audit-media/video/home-welcome-ritual-2x3.mp4",
@@ -121,7 +121,7 @@ export const home = {
   // 11–12: "Replace this text" / "New text for this page"): the first line leads, the rest follow.
   film: {
     heading: { before: "Premium care", emphasis: "in every bar" },
-    lines: ["Creamy lather, lasting fragrance", "Crafted with care, made to wonder"],
+    lines: ["Creamy lather, lasting fragrance.", "Crafted with care. Made to wonder."],
     src: "/brand-assets/videos/wonder-collection.mp4",
     poster: "/brand-assets/videos/wonder-collection-poster.webp",
     label: "All five Wonder Beauty Bars surrounded by lather",
@@ -135,7 +135,7 @@ export const home = {
   // Slides 7–8. Labels set larger and the mission centred in its panel (audit slides 17–18).
   mission: {
     eyebrow: "Our mission",
-    text: "To make everyday luxury accessible to all, with a gentle, moisturising, beautifully scented beauty bar made with care for every skin type, at a price everyone can afford",
+    text: "To make everyday luxury accessible to all, with a gentle, moisturising, beautifully scented beauty bar made with care for every skin type, at a price everyone can afford.",
   },
   vision: {
     eyebrow: "Our vision",
@@ -155,7 +155,9 @@ export const home = {
   products: {
     eyebrow: "The collection",
     heading: ["Five botanicals", "One beauty bar"],
-    body: site.taglines.celebration,
+    // The tagline as a sentence: here it is the paragraph under the heading, so it keeps its full stop (owner
+    // rule: headings without, paragraphs with). The closing band's heading below stays without one.
+    body: `${site.taglines.celebration}.`,
     more: { label: "See the whole collection", href: "/collection" },
   },
 
