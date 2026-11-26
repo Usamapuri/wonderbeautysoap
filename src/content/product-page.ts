@@ -1,6 +1,6 @@
 // Labels for each flavour page (/collection/[slug]) added for the client's website audit
 // (2026-11, "Website Audit .pptx"):
-//   slide 26 — "We need to show front, back, side, inside on each flavour" (sides shown as Left and Right)
+//   slide 26 — pack views for each flavour (the owner removed the side views on 2026-11-26)
 //   slide 27 — "Add description and ingredients on each flavour"
 //   slide 28 — "Do add net weight of the soap for each flavour – 125 grms"
 //   slide 44 — "Actual video of soap" (Lavender and Aloe Vera only; supplied clips)
@@ -11,8 +11,6 @@ export const productPage = {
     /** Accessible name of the view switcher, after the variety: "Lavender pack views". */
     list: "pack views",
     front: "Front",
-    left: "Left",
-    right: "Right",
     back: "Back",
     inside: "Inside",
     video: "Video",

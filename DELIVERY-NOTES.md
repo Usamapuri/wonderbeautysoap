@@ -2,6 +2,44 @@
 
 Open placeholders, samples, interim assets and decisions, per brief §0 rule 3. Keep this current: the site cannot launch while anything under "Open placeholders" or "Samples" is reachable (`grep -rn "placeholder(\|sample: true" src/content`).
 
+## Soap contour and flavour galleries (2026-11-27)
+
+- Each flavour gallery now shows Front, Back and Inside in one row, with Video on Lavender and Aloe Vera. The two side views were removed at the owner's request.
+- The owner confirmed the Home hero should stay as originally approved, including its desktop and mobile stills, box layers and motion.
+- GPT-6.2 Sol at high reasoning directed built-in ImageGen edits to the lower soap contours. Local composites preserve the original framing, embossing, pack artwork and scene details. New `-rounded.webp` assets cover the five flavour cards, both Our Story hero sizes, the founder's travel image, the Home vision image, the Home film poster and the Lavender video poster.
+- The other visible soap stills were reviewed at their source sizes. The Collection and Around the World hero bars and the Inside cutouts already have curved contours. The hands and lather in the Home hero and Home world strip, and the shell dish in the CEO panel, cover the relevant edges.
+
+<details>
+<summary>ImageGen prompts by asset</summary>
+
+The photo or a crop around the soap was the edit target in each case. Selected outputs were registered to the source and composited into just the lower contour, including the immediate contact area the tighter silhouette revealed. The original crop, colours, crown, existing soap lettering, visible packaging and unrelated image area came from the source.
+
+**Rose collection card**
+
+> Precision local crop retouch of the input product photo. Keep this exact camera, framing, pixel positions, logo typography, pink shade, gloss/highlight, studio table, gold-rimmed shallow disk and any visible package exactly as shown. The one edit is the lower third of the pink soap only. Its bottom presently has a broad long slightly flattened segment meeting the gold plate. Resculpt the soap from its existing oval crown and locked original 'Wonder' type into a naturally molded glossy lens-shaped pebble: smooth continuous convex curvature on lower silhouette, receding under at the sides, rounded lower face with a very narrow central contact on the original immovable dish. Make the continuous natural curve visible and subtly volumetric with gentle matching sculptural shading; no horizontal seam, bevel stripe, slab, or flat edge. Let the original gold dish interior/background show through the newly cleared small wedges above the rim. Keep original center and top outline untouched. Keep everything outside immediate soap region exactly the input. Return the exact same view and crop.
+
+**Lavender, Aloe Vera, Lemon and Coconut collection cards** (replace [colour] with `lavender purple`, `fresh pale aloe green`, `warm pastel lemon yellow`, or `ivory cream`)
+
+> Precision local crop product photography retouch. This is a [colour] Wonder beauty bar standing on a thin gold-rimmed metal disk. Preserve the exact camera, framing, pixel positions, original Wonder engraving, color, light, top profile, glossy texture, countertop, packaging and props. Edit only the bar's lower third. It meets the rim in a long slightly flattened segment. Make its underside a smoothly convex three-dimensional lens-shaped pebble, curving under at both lower shoulders and meeting the exact existing gold disk at its original center with a narrow contact point. Do not move the disk or retouch the existing bright metal front lip. Where slightly narrowed soap shoulders expose areas that were behind the soap, show the gold-colored interior of the thin disk and table as appropriate. Keep the soap's original top outline, existing wordmark and lighting untouched. Reproduce the same crop.
+
+**Our Story desktop hero, mobile hero and travel illustration** (replace [place] with `on the travertine plinth in front of bottles`, `on the small circular tavertine plinth in front of bottles`, or `in the open round gold tin on top of linen`)
+
+> Edit this exact commercial photograph crop of a lavender soap [place]. Preserve exact lighting, colors, crop, angle, background, surroundings, surface, position, top of the soap, droplets, lavender color, and existing Wonder embossing. Edit only its bottom third. The near-facing lower rim is a clearly delineated dark stepped strip with a partial flat base. Sculpt it into a smoothly convex rounded underside that rolls under itself, taking slight mass away from the bottom corners with smoothly receding lower shoulders and a continuous convex lower outline. Keep the lowest central point, and preserve a narrow realistic contact shadow. Gently shade the lower area into the original lavender upper surface for round pebble volume with no visible seam, belt, rim, vertical cylindrical edge or hard bevel. Use the exact original view, keep everything unchanged outside the local soap area.
+
+**Home vision**
+
+> Retouch this exact still life used on the Royal Basket Wonder beauty bar website. Use the original composition and same full frame, position, scaling, oblique camera, silver ornate tray, satin, warm reflected light, ivory soap and exact original Wonder embossed glyphs pixel unchanged. Edit only the lowest-facing side of the bar, now seen as a narrow flat beige bevel strip around the lower-left and bottom opening onto the tray. Sculpt that strip into a smoothly rounded underside, with soft, continuous highlights/shading into the original soap face, a molded glossy oval pebble bar with smooth lower profile, no abrupt stripe, rim or puck edge. Make the bottom appear softly and convincingly curved and three-dimensional while retaining the same upper silhouette and existing ivory finish. Keep the silver tray and fabric identical. Use the exact same frame.
+
+**Lavender video poster**
+
+> Precision local retouch of this exact film still. Retain exact lavender Wonder bar's position, crown, lavender shade, glossy surface, lowercase/uppercase serif Wonder embossing and all of the wood, existing lighting and shadow, water drops, foreground leaf and lavender flowers at the same fixed positions. Edit only the lower third of the existing bar. Its bottom currently has a flat dark horizontal slab and a side-wall ridge. Recurve the lower soap silhouette into a fully convex, smooth pebble, with the lower sides gently tucking under and a natural soft rounded gradation from the lavender top into the bottom. No slab wall, seam, or ridge. Preserve the lowest point in the center where it sits on the exact original wooden surface, and restore the tiny visible corners of the wood. Keep the front lavender flower sprig and green leaf occluding it exactly as original. Maintain crop. Deliver exactly the same photo and artwork except for the soap's rounded bottom.
+
+**Home collection video poster**
+
+> Precision local crop retouch of this exact group photo as a video poster. Five translucent pastel Wonder beauty bars, order and location exactly as input with the same views, same natural pastel shades, existing letterforms, overlap, reflections, tiny shadows, crop and background. Only retouch their visible lower profiles and near-facing undersides where they meet the surface. Turn the near-horizontal bottom segments into natural, smoothly convex rounded pebble contours, each tapering slightly at the lower shoulders and smoothly turning under to contact the glossy original ground at a small point. Preserve original lowest center points of all bars and their shadows/reflections. No abrupt bevel, belt, wall or slab lip. Art direct a small local edit only, match the same crop and original positions exactly.
+
+</details>
+
 ## Website Errors fixes (2026-11-23)
 
 Source: the client's `Website Errors.pptx` (repo root, 30 slides). The deck's text describes problems; the decisions below are the developer's and the owner's.

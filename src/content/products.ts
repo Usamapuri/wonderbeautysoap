@@ -14,13 +14,13 @@
 //                       replaces the audit's lists (slides 29–37). Do not "correct" spellings or punctuation
 //                       (e.g. "Water Solvent", "Talcum Powder") without the client's written confirmation.
 //   netWeight         — audit slide 28: 125 g for every flavour.
-//   views             — audit slide 26: front, left, right, back, inside (owner 2026-11-21: Left and Right
-//                       replace the flat Side panels). Only real pack artwork is shown; views
+//   views             — front, back and inside (owner 2026-11-26 removed the two side views).
+//                       Only real pack artwork is shown; views
 //                       with no approved artwork are left out (no visible placeholders). Inside shows the
 //                       bar in its own colour (`barColour`, owner-confirmed): the client's soap photo, cut
 //                       out; Coconut is the untouched photo, and the other four have their colour applied
 //                       digitally (an approximation until the client photographs each coloured bar), so the
-//                       view never calls them photographs. A fifth "Video" view (audit slide 44) is added
+//                       view never calls them photographs. A "Video" view (audit slide 44) is added
 //                       where a supplied product film exists (`film`).
 //   campaign          — AI-made campaign images of the real product (public/brand-assets/home-hero-art/):
 //                       `collection` (1:1) is the card image wherever a flavour card appears. Flavour pages
@@ -35,7 +35,7 @@ export type ProductSlug = "rose" | "lavender" | "aloe-vera" | "lemon" | "coconut
 
 /** One view in the flavour page's pack gallery. All fields are serialisable (client component). */
 export type ProductView =
-  | { id: "front" | "left" | "right" | "back"; kind: "image"; label: string; src: string; alt: string; /** packshot on white: multiply onto the clay well */ blend: boolean }
+  | { id: "front" | "back"; kind: "image"; label: string; src: string; alt: string; /** packshot on white: multiply onto the clay well */ blend: boolean }
   | { id: "inside"; kind: "cutout"; label: string; src: string; width: number; height: number; alt: string; note: string }
   | { id: "video"; kind: "video"; label: string; src: string; poster: string; alt: string }
 
@@ -45,8 +45,8 @@ export type CampaignImage = { src: string; width: number; height: number; alt: s
 const campaignArt = "/brand-assets/home-hero-art"
 
 /**
- * Version suffix for every art file served with a query under home-hero-art/ (the five backs, the three page
- * heroes and the Our Story travel picture), so a file replaced in place is fetched afresh. It is the only
+ * Version suffix for art files replaced in place under home-hero-art/ (the five backs and the Collection
+ * and Around the World heroes), so the new file is fetched afresh. It is the only
  * `?v=` in src/. Bump it whenever one of them is replaced, together with next.config.ts
  * `images.localPatterns`: next/image only optimizes a local src whose query matches exactly.
  * r9 (2026-11-24): the five backs replaced again with the typo-corrected back artwork.
@@ -87,7 +87,7 @@ export type ProductFilm = { src: string; poster: string; alt: string }
 // `scene` describes what the edit actually shows (checked frame by frame), for the alt text.
 const suppliedFilm = (slug: ProductSlug, variety: string, scene: string): ProductFilm => ({
   src: `/brand-assets/audit-media/video/flavour-${slug}-6x5.mp4`,
-  poster: `/brand-assets/audit-media/video/flavour-${slug}-6x5.webp`,
+  poster: `/brand-assets/audit-media/video/flavour-${slug}-6x5${slug === "lavender" ? "-rounded" : ""}.webp`,
   alt: `Wonder Beauty Bar — ${variety}: ${scene}`,
 })
 
@@ -140,9 +140,6 @@ const product = (p: Input): Product => {
   const backAlt = backArt[p.slug]
   const views: ProductView[] = [
     { id: "front", kind: "image", label: label.front, src: image, alt: `${name}: the box, front view`, blend: true },
-    // Left and Right (owner 2026-11-21, replacing the flat end panels): pack shots of the box's two ends.
-    { id: "left", kind: "image", label: label.left, src: `${campaignArt}/${p.slug}-side-left.webp`, alt: `${name}: the box's left end, with the W monogram, and the front receding to the right`, blend: true },
-    { id: "right", kind: "image", label: label.right, src: `${campaignArt}/${p.slug}-side-right.webp`, alt: `${name}: the box's right end, with "Wonder Beauty Bar" printed upright, and the front receding to the left`, blend: true },
     // Back: shown for every flavour listed in `backArt` (no visible placeholder otherwise).
     ...(backAlt ? [{ id: "back", kind: "image", label: label.back, src: `${campaignArt}/${p.slug}-back.webp${ART_VERSION}`, alt: backAlt, blend: true } satisfies ProductView] : []),
     {
@@ -165,7 +162,7 @@ const product = (p: Input): Product => {
     campaign: {
       // All five share one set-up (checked): the box upright behind the bar on a gold-rimmed dish.
       collection: {
-        src: `${campaignArt}/${p.slug}-collection.webp`,
+        src: `${campaignArt}/${p.slug}-collection-rounded.webp`,
         width: 1254,
         height: 1254,
         alt: `Campaign image: the Wonder ${p.variety} box standing behind ${bar} on a gold-rimmed dish, against a warm taupe backdrop`,

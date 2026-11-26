@@ -8,7 +8,6 @@
 
 import type { PageHeroArt } from "@/components/brand/page-hero"
 
-import { ART_VERSION } from "./products"
 import { ordersCta, site } from "./site"
 
 export const story = {
@@ -20,7 +19,8 @@ export const story = {
   // Gold page hero (owner, phase 3: "make the our story bit more illustrative and dont be generic be creative
   // and golden theme should be followed"; same treatment as Home). The picture shows the founder's idea: one
   // Wonder bar in golden light, ten plain bottles in shadow. An AI-generated scene (Sol) with the client's
-  // real lavender bar photo standing on the plinth. Calm area: the left ~42% (16:9) and the top ~38% (9:16).
+  // real lavender bar photo standing on the plinth, retouched along the lower edge.
+  // Calm area: the left ~42% (16:9) and the top ~38% (9:16).
   hero: {
     eyebrow: site.company,
     title: { before: "Our", emphasis: "Story" },
@@ -28,12 +28,12 @@ export const story = {
     titleLines: 2,
     cta: { label: "Who we are", href: "#who-we-are" },
     art: {
-      src: `/brand-assets/home-hero-art/our-story-hero.webp${ART_VERSION}`,
+      src: "/brand-assets/home-hero-art/our-story-hero-rounded.webp",
       width: 2400,
       height: 1350,
       position: "70% 50%",
       calm: { x: 0.42, y: 1 },
-      mobile: { src: `/brand-assets/home-hero-art/our-story-hero-mobile.webp${ART_VERSION}`, width: 1260, height: 2240, position: "50% 100%", calm: { x: 1, y: 0.36 } },
+      mobile: { src: "/brand-assets/home-hero-art/our-story-hero-mobile-rounded.webp", width: 1260, height: 2240, position: "50% 100%", calm: { x: 1, y: 0.36 } },
       alt: "Campaign image: a lavender Wonder bar on a lit stone plinth, with ten plain bottles and jars in shadow behind it",
     } satisfies PageHeroArt,
   },
@@ -71,9 +71,9 @@ export const story = {
     ],
     signature: "Founder",
     company: site.company,
-    // Phase 3 illustration (AI-generated scene, Sol, with the client's real lavender bar photo laid in the tin).
+    // Phase 3 illustration (AI-generated scene, Sol, with the client's lavender bar retouched in the tin).
     image: {
-      src: `/brand-assets/home-hero-art/our-story-travel.webp${ART_VERSION}`,
+      src: "/brand-assets/home-hero-art/our-story-travel-rounded.webp",
       width: 1440,
       height: 1800,
       position: "50% 45%",
