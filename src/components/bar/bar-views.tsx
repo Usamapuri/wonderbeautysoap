@@ -64,8 +64,7 @@ function Stage({ view }: { view: ProductView }) {
         </figure>
       )
     case "cutout":
-      // The bar from inside the box: the client's own soap photo, cut out, standing in the clay well
-      // with a soft drop shadow. Contained with room around it, so the whole bar always shows.
+      // The cutout sits in the clay well with a soft drop shadow and room to show the entire oval.
       return (
         <figure className={cn(STAGE, "m-0")}>
           <div className="absolute inset-x-[16%] top-[14%] bottom-[22%]">

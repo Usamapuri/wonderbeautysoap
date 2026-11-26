@@ -17,10 +17,9 @@
 //   views             — front, back and inside (owner 2026-11-26 removed the two side views).
 //                       Only real pack artwork is shown; views
 //                       with no approved artwork are left out (no visible placeholders). Inside shows the
-//                       bar in its own colour (`barColour`, owner-confirmed): the client's soap photo, cut
-//                       out; Coconut is the untouched photo, and the other four have their colour applied
-//                       digitally (an approximation until the client photographs each coloured bar), so the
-//                       view never calls them photographs. A "Video" view (audit slide 44) is added
+//                       bar in its own colour (`barColour`, owner-confirmed), with the cutout reshaped
+//                       to match the owner's oval-bar references. Four shades are digital approximations
+//                       until the client photographs each coloured bar. A "Video" view (audit slide 44) is added
 //                       where a supplied product film exists (`film`).
 //   campaign          — AI-made campaign images of the real product (public/brand-assets/home-hero-art/):
 //                       `collection` (1:1) is the card image wherever a flavour card appears. Flavour pages
@@ -72,9 +71,8 @@ const backArt: Partial<Record<ProductSlug, string>> = {
   coconut: backAltFor("Coconut"),
 }
 
-/** The bar from inside the box (981×700, transparent): the client's soap photo, cut out and edge-cleaned,
- *  coloured per flavour (see `views` above). */
-const insideCutout = (slug: ProductSlug) => ({ src: `${campaignArt}/wonder-soap-${slug}.webp`, width: 981, height: 700 })
+/** Transparent oval bar, coloured per flavour for the Inside stage and thumbnail. */
+const insideCutout = (slug: ProductSlug) => ({ src: `${campaignArt}/wonder-soap-${slug}-oval.webp`, width: 981, height: 700 })
 
 /** Film of the soap (audit slide 44), from the media pipeline. */
 export type ProductFilm = { src: string; poster: string; alt: string }
