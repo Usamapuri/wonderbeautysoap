@@ -8,19 +8,16 @@ import { CampaignVideo } from "@/components/brand/campaign-video"
 import type { ProductView } from "@/content/products"
 import { cn } from "@/lib/utils"
 
-// The flavour's pack, view by view (audit slide 26: "front, back, side, inside on each flavour").
+// The flavour's pack and the bar inside.
 // WAI-ARIA tabs (Radix): the thumbnails are a tablist, so arrow keys / Home / End move between views,
 // and each view is a labelled tabpanel. Every stage keeps the pack render's 6:5 frame, so switching
 // views never shifts the layout. A view without approved artwork is left out (owner 2026-11-21: no
-// visible placeholders). Front, Left, Right and Back are pack shots; Inside shows the bar.
+// visible placeholders). Front and Back are pack shots; Inside shows the bar.
 
 const STAGE = "relative aspect-[6/5] overflow-hidden rounded-lg bg-clay shadow-pop"
 const STAGE_SIZES = "(max-width: 850px) calc(100vw - 48px), 52vw"
-// Thumbnails: up to six slots (front, left, right, back, inside, video), each at most 84px wide and the
-// same size on every flavour. One row from the small breakpoint up (narrower in the two-column layout on
-// small laptops); on phones three per row, so the larger labels (phase 3 type step) fit under each
-// thumbnail. BarSkeleton mirrors this grid.
-const THUMB_ROW = "grid grid-cols-[repeat(3,minmax(0,84px))] gap-1.5 sm:grid-cols-[repeat(6,minmax(0,84px))] sm:gap-3"
+// One row of up to four thumbnails, each at most 84px wide. BarSkeleton mirrors this grid.
+const THUMB_ROW = "grid grid-cols-[repeat(4,minmax(0,84px))] gap-1.5 sm:gap-3"
 
 export function BarViews({ views, variety, listLabel }: { views: ProductView[]; variety: string; listLabel: string }) {
   return (

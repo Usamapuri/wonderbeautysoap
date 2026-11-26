@@ -123,7 +123,7 @@ export const home = {
     heading: { before: "Premium care", emphasis: "in every bar" },
     lines: ["Creamy lather, lasting fragrance.", "Crafted with care. Made to wonder."],
     src: "/brand-assets/videos/wonder-collection.mp4",
-    poster: "/brand-assets/videos/wonder-collection-poster.webp",
+    poster: "/brand-assets/videos/wonder-collection-poster-rounded.webp",
     label: "All five Wonder Beauty Bars surrounded by lather",
   },
 
@@ -143,9 +143,9 @@ export const home = {
     signOff: "From us to you",
     // Slide 8 notes: optional second vision line.
     second: "To become the most loved everyday beauty bar in the region, and a name that travels.",
-    // Audit slide 19 ("change image"): a supplied campaign still not used elsewhere on the site.
+    // Audit slide 19 campaign still, with the lower edge of the bar retouched.
     image: {
-      src: "/brand-assets/audit-media/image/home-vision.webp",
+      src: "/brand-assets/audit-media/image/home-vision-rounded.webp",
       alt: "A Wonder Beauty Bar resting on a silver tray over soft satin",
       width: 1024,
       height: 683,
